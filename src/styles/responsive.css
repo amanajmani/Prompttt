@@ -1,0 +1,210 @@
+/* Mobile-First Responsive Utilities */
+
+/* Container Classes */
+.container-mobile {
+  width: 100%;
+  max-width: 100%;
+  padding-left: 1rem; /* 16px */
+  padding-right: 1rem; /* 16px */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-tablet {
+  max-width: 768px;
+}
+
+.container-desktop {
+  max-width: 1024px;
+}
+
+.container-wide {
+  max-width: 1280px;
+}
+
+/* Responsive Grid System */
+.grid-mobile {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .grid-mobile {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-mobile {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-mobile {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Touch-Friendly Interactive Elements */
+.touch-target {
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.touch-target-comfortable {
+  min-height: var(--touch-target-comfortable);
+  min-width: var(--touch-target-comfortable);
+}
+
+.touch-target-large {
+  min-height: var(--touch-target-large);
+  min-width: var(--touch-target-large);
+}
+
+/* Mobile Navigation Utilities */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: var(--color-primary-bg);
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: blur(8px);
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 280px;
+  height: 100vh;
+  background: var(--color-primary-bg);
+  border-right: 1px solid var(--color-border);
+  transition: left var(--duration-normal);
+  z-index: 60;
+}
+
+.mobile-menu.open {
+  left: 0;
+}
+
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 55;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-normal), visibility var(--duration-normal);
+}
+
+.mobile-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Responsive Spacing */
+.spacing-mobile {
+  padding: 1rem; /* 16px mobile */
+}
+
+@media (min-width: 768px) {
+  .spacing-mobile {
+    padding: 2rem; /* 32px tablet+ */
+  }
+}
+
+@media (min-width: 1024px) {
+  .spacing-mobile {
+    padding: 3rem; /* 48px desktop+ */
+  }
+}
+
+/* Mobile-First Flexbox Utilities */
+.flex-mobile-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .flex-mobile-col {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* Hide/Show on Different Screens */
+.mobile-only {
+  display: block;
+}
+
+.tablet-up {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+  
+  .tablet-up {
+    display: block;
+  }
+}
+
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .desktop-only {
+    display: block;
+  }
+}
+
+/* Mobile-Optimized Cards */
+.card-mobile {
+  background: var(--color-secondary-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  transition: all var(--duration-normal);
+}
+
+.card-mobile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+@media (min-width: 768px) {
+  .card-mobile {
+    padding: 1.5rem;
+  }
+}
+
+/* Safe Area Support for Mobile Devices */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-area-left {
+  padding-left: env(safe-area-inset-left);
+}
+
+.safe-area-right {
+  padding-right: env(safe-area-inset-right);
+}
