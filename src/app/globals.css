@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import './responsive.css';
+@import '../styles/responsive.css';
 
 /* PROMPTTT Design System - Core Variables */
 :root {
@@ -94,13 +94,7 @@
   /* Border Radius */
   --radius: var(--radius);
 
-  /* Mobile-First Responsive Breakpoints */
-  --breakpoint-xs: var(--breakpoint-xs);
-  --breakpoint-sm: var(--breakpoint-sm);
-  --breakpoint-md: var(--breakpoint-md);
-  --breakpoint-lg: var(--breakpoint-lg);
-  --breakpoint-xl: var(--breakpoint-xl);
-  --breakpoint-2xl: var(--breakpoint-2xl);
+  /* Mobile-First Responsive Breakpoints - Use Tailwind's built-in breakpoints */
 
   /* Touch-Friendly Sizes */
   --touch-target-min: var(--touch-target-min);
