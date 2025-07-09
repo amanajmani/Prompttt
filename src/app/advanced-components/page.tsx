@@ -58,19 +58,17 @@ export default function AdvancedComponentsPage() {
       <Container size="xl" padding="lg">
         {/* Page Header */}
         <Section padding="md">
-          <FadeIn>
-            <div className="text-center">
-              <h1 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-high mb-4">
-                Advanced Components & Patterns
-              </h1>
-              <p className="text-medium text-sm sm:text-base lg:text-lg mb-6">
-                Milestone 6: Complete component library with modals, navigation, forms, layouts, and animations
-              </p>
-              <div className="flex justify-center">
-                <ThemeToggle />
-              </div>
+          <div className="text-center">
+            <h1 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-high mb-4">
+              Advanced Components & Patterns
+            </h1>
+            <p className="text-medium text-sm sm:text-base lg:text-lg mb-6">
+              Milestone 6: Complete component library with modals, navigation, forms, layouts, and animations
+            </p>
+            <div className="flex justify-center">
+              <ThemeToggle />
             </div>
-          </FadeIn>
+          </div>
         </Section>
 
         <Divider />
