@@ -57,7 +57,7 @@ export default function AdvancedComponentsPage() {
 
       <Container size="xl" padding="lg">
         {/* Page Header */}
-        <Section padding="lg">
+        <Section padding="md">
           <FadeIn>
             <div className="text-center">
               <h1 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-high mb-4">
@@ -76,9 +76,9 @@ export default function AdvancedComponentsPage() {
         <Divider />
 
         {/* Modal & Dialog Components */}
-        <Section padding="lg">
+        <Section padding="md">
           <Reveal>
-            <h2 className="font-heading font-bold text-xl sm:text-2xl text-high mb-6">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl text-high mb-4 sm:mb-6 text-center sm:text-left">
               Modal & Dialog Components
             </h2>
           </Reveal>
@@ -120,9 +120,9 @@ export default function AdvancedComponentsPage() {
         <Divider />
 
         {/* Layout Components */}
-        <Section padding="lg">
+        <Section padding="md">
           <Reveal>
-            <h2 className="font-heading font-bold text-xl sm:text-2xl text-high mb-6">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl text-high mb-4 sm:mb-6 text-center sm:text-left">
               Layout Components
             </h2>
           </Reveal>
@@ -173,9 +173,9 @@ export default function AdvancedComponentsPage() {
         <Divider />
 
         {/* Form Components */}
-        <Section padding="lg">
+        <Section padding="md">
           <Reveal>
-            <h2 className="font-heading font-bold text-xl sm:text-2xl text-high mb-6">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl text-high mb-4 sm:mb-6 text-center sm:text-left">
               Advanced Form System
             </h2>
           </Reveal>
@@ -257,9 +257,9 @@ export default function AdvancedComponentsPage() {
         <Divider />
 
         {/* Animation Components */}
-        <Section padding="lg">
+        <Section padding="md">
           <Reveal>
-            <h2 className="font-heading font-bold text-xl sm:text-2xl text-high mb-4 sm:mb-6">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl text-high mb-4 sm:mb-6 text-center sm:text-left">
               Animation System
             </h2>
           </Reveal>
@@ -267,7 +267,7 @@ export default function AdvancedComponentsPage() {
           <Stagger staggerDelay={150}>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               <Card className="text-center p-4 sm:p-6">
-                <Bounce intensity="normal" delay={500}>
+                <Bounce intensity="normal" delay={0} repeat={true}>
                   <div className="w-12 h-12 sm:w-16 sm:h-16 bg-accent rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center">
                     <Play className="text-white" size={20} />
                   </div>
@@ -277,11 +277,12 @@ export default function AdvancedComponentsPage() {
               </Card>
 
               <Card className="text-center p-4 sm:p-6">
-                <Pulse intensity="normal" color="rgba(0, 169, 255, 0.2)">
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center">
-                    <Heart className="text-white" size={20} />
-                  </div>
-                </Pulse>
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center relative">
+                  <Pulse intensity="normal" color="rgba(34, 197, 94, 0.4)" repeat={true}>
+                    <div className="absolute inset-0 rounded-full"></div>
+                  </Pulse>
+                  <Heart className="text-white relative z-10" size={20} />
+                </div>
                 <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Pulse Animation</h3>
                 <p className="text-medium text-xs sm:text-sm">Subtle pulsing for notifications</p>
               </Card>
@@ -339,13 +340,13 @@ export default function AdvancedComponentsPage() {
         </Section>
 
         {/* Footer */}
-        <Section padding="lg">
+        <Section padding="md">
           <FadeIn>
-            <div className="text-center pt-8 border-t border-border">
-              <h2 className="font-heading font-bold text-accent mb-2">
+            <div className="text-center pt-6 sm:pt-8 border-t border-border">
+              <h2 className="font-heading font-bold text-accent mb-2 text-lg sm:text-xl">
                 Milestone 6: Advanced Components & Patterns - COMPLETE
               </h2>
-              <p className="text-medium">
+              <p className="text-medium text-sm sm:text-base">
                 Production-ready component library with modals, navigation, forms, layouts, and animations
               </p>
             </div>
