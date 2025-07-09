@@ -15,7 +15,6 @@ import {
   FormField,
   FormInput,
   FormTextarea,
-  FormSelect,
   FormSubmit,
   Button,
   Card,
@@ -210,18 +209,17 @@ export default function AdvancedComponentsPage() {
                       />
                     </FormField>
 
-                    <FormField>
-                      <FormSelect
+                    <FormField name="category" label="Category" required>
+                      <select
                         name="category"
-                        label="Category"
-                        placeholder="Select category"
-                        options={[
-                          { value: 'general', label: 'General Inquiry' },
-                          { value: 'support', label: 'Technical Support' },
-                          { value: 'feedback', label: 'Feedback' }
-                        ]}
+                        className="w-full h-10 px-3 text-sm border border-border rounded-lg transition-colors bg-transparent text-high focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                         required
-                      />
+                      >
+                        <option value="">Select category</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="support">Technical Support</option>
+                        <option value="feedback">Feedback</option>
+                      </select>
                     </FormField>
 
                     <FormField>
