@@ -291,6 +291,7 @@ export default function AdvancedComponentsPage() {
                 <p className="text-medium text-xs sm:text-sm">Hover to see scale effect</p>
               </Card>
             </div>
+            </div>
           </Stagger>
 
           <div className="mt-6 sm:mt-8">
