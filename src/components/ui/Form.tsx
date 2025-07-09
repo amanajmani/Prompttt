@@ -25,7 +25,7 @@ export const useFormContext = () => {
 }
 
 // Form Component
-export interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
+export interface FormProps extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> {
   onSubmit: (data: FormData) => Promise<void> | void
   children: React.ReactNode
   className?: string
@@ -127,7 +127,7 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
           name: name,
           'aria-invalid': error ? 'true' : 'false',
           'aria-describedby': error ? `${name}-error` : undefined
-        })}
+        } as any)}
         
         {error && (
           <div

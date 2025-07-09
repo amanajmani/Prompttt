@@ -188,20 +188,18 @@ export default function AdvancedComponentsPage() {
                 </CardHeader>
                 <CardContent>
                   <Form onSubmit={handleFormSubmit}>
-                    <FormField>
+                    <FormField name="name" label="Full Name" required>
                       <FormInput
                         name="name"
-                        label="Full Name"
                         placeholder="Enter your name"
                         required
                       />
                     </FormField>
 
-                    <FormField>
+                    <FormField name="email" label="Email Address" required>
                       <FormInput
                         name="email"
                         type="email"
-                        label="Email Address"
                         placeholder="Enter your email"
                         required
                       />
@@ -220,10 +218,9 @@ export default function AdvancedComponentsPage() {
                       </select>
                     </FormField>
 
-                    <FormField>
+                    <FormField name="message" label="Message" required>
                       <FormTextarea
                         name="message"
-                        label="Message"
                         placeholder="Enter your message"
                         rows={4}
                         required

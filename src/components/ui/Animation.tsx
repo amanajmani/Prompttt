@@ -28,22 +28,23 @@ export const FadeIn = React.forwardRef<HTMLDivElement, FadeInProps>(
 
     useEffect(() => {
       const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && (!triggerOnce || !hasTriggered)) {
+        (entries) => {
+          const entry = entries[0]
+          if (entry?.isIntersecting && (!triggerOnce || !hasTriggered)) {
             setTimeout(() => {
               setIsVisible(true)
               setHasTriggered(true)
             }, delay)
-          } else if (!triggerOnce && !entry.isIntersecting) {
+          } else if (!triggerOnce && entry && !entry.isIntersecting) {
             setIsVisible(false)
           }
         },
         { threshold: 0.1 }
       )
 
-      const element = ref?.current || document.querySelector(`[data-fade-in]`)
+      const element = typeof ref === 'object' && ref?.current ? ref.current : null
       if (element) {
-        observer.observe(element as Element)
+        observer.observe(element)
       }
 
       return () => observer.disconnect()
@@ -105,15 +106,16 @@ export const Stagger = React.forwardRef<HTMLDivElement, StaggerProps>(
 
     useEffect(() => {
       const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
+        (entries) => {
+          const entry = entries[0]
+          if (entry?.isIntersecting) {
             setTimeout(() => setIsVisible(true), delay)
           }
         },
         { threshold: 0.1 }
       )
 
-      const element = ref?.current
+      const element = typeof ref === 'object' && ref?.current ? ref.current : null
       if (element) {
         observer.observe(element)
       }
@@ -189,11 +191,14 @@ export const Scale = React.forwardRef<HTMLDivElement, ScaleProps>(
     useEffect(() => {
       if (trigger === 'visible') {
         const observer = new IntersectionObserver(
-          ([entry]) => setIsTriggered(entry.isIntersecting),
+          (entries) => {
+            const entry = entries[0]
+            if (entry) setIsTriggered(entry.isIntersecting)
+          },
           { threshold: 0.1 }
         )
 
-        const element = ref?.current
+        const element = typeof ref === 'object' && ref?.current ? ref.current : null
         if (element) {
           observer.observe(element)
         }
@@ -251,17 +256,18 @@ export const Slide = React.forwardRef<HTMLDivElement, SlideProps>(
 
     useEffect(() => {
       const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
+        (entries) => {
+          const entry = entries[0]
+          if (entry?.isIntersecting) {
             setTimeout(() => setIsVisible(true), delay)
-          } else if (!triggerOnce) {
+          } else if (!triggerOnce && entry) {
             setIsVisible(false)
           }
         },
         { threshold: 0.1 }
       )
 
-      const element = ref?.current
+      const element = typeof ref === 'object' && ref?.current ? ref.current : null
       if (element) {
         observer.observe(element)
       }
@@ -321,15 +327,16 @@ export const Bounce = React.forwardRef<HTMLDivElement, BounceProps>(
 
     useEffect(() => {
       const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
+        (entries) => {
+          const entry = entries[0]
+          if (entry?.isIntersecting) {
             setTimeout(() => setIsAnimating(true), delay)
           }
         },
         { threshold: 0.1 }
       )
 
-      const element = ref?.current
+      const element = typeof ref === 'object' && ref?.current ? ref.current : null
       if (element) {
         observer.observe(element)
       }
@@ -470,15 +477,16 @@ export const Reveal = React.forwardRef<HTMLDivElement, RevealProps>(
 
     useEffect(() => {
       const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
+        (entries) => {
+          const entry = entries[0]
+          if (entry?.isIntersecting) {
             setTimeout(() => setIsVisible(true), delay)
           }
         },
         { threshold: 0.1 }
       )
 
-      const element = ref?.current
+      const element = typeof ref === 'object' && ref?.current ? ref.current : null
       if (element) {
         observer.observe(element)
       }
