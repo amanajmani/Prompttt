@@ -20,6 +20,7 @@ export interface ModalProps {
 
 export interface DialogProps extends ModalProps {
   // Dialog is an alias for Modal with semantic meaning
+  dialogSpecific?: boolean
 }
 
 const modalSizes = {
@@ -43,7 +44,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
     showCloseButton = true,
     className,
     ...props
-  }, ref) => {
+  }) => {
     const modalRef = useRef<HTMLDivElement>(null)
     const previousActiveElement = useRef<HTMLElement | null>(null)
 

@@ -71,7 +71,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false)
     const [isFocused, setIsFocused] = React.useState(false)
-    const inputId = id || React.useId()
+    const inputId = React.useId()
+    const finalId = id || inputId
     const isPassword = type === 'password'
     const inputType = isPassword && showPassword ? 'text' : type
 
@@ -85,7 +86,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {/* Label */}
         {label && (
           <label
-            htmlFor={inputId}
+            htmlFor={finalId}
             className="block text-sm font-medium text-high"
           >
             {label}
@@ -103,7 +104,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
           {/* Input field */}
           <input
-            id={inputId}
+            id={finalId}
             type={inputType}
             className={cn(
               inputBaseStyles,
@@ -217,7 +218,8 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     ...props
   }, ref) => {
     const [isFocused, setIsFocused] = React.useState(false)
-    const textareaId = id || React.useId()
+    const textareaId = React.useId()
+    const finalId = id || textareaId
 
     const hasError = !!error
     const hasSuccess = !!success && !hasError
@@ -234,7 +236,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {/* Label */}
         {label && (
           <label
-            htmlFor={textareaId}
+            htmlFor={finalId}
             className="block text-sm font-medium text-high"
           >
             {label}
@@ -244,7 +246,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {/* Textarea container */}
         <div className="relative">
           <textarea
-            id={textareaId}
+            id={finalId}
             rows={rows}
             className={cn(
               inputBaseStyles,

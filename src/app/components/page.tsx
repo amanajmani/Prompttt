@@ -22,7 +22,7 @@ import {
   VideoGridSkeleton,
   ThemeToggle
 } from '@/components/ui'
-import { Search, Heart, Upload, User, Play, Download } from 'lucide-react'
+import { Search, Heart, Upload, Download } from 'lucide-react'
 
 export default function ComponentsPage() {
   return (

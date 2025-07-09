@@ -337,15 +337,6 @@ export const Bounce = React.forwardRef<HTMLDivElement, BounceProps>(
       return () => observer.disconnect()
     }, [delay, ref])
 
-    const getBounceKeyframes = () => {
-      const scale = intensity === 'subtle' ? 1.02 : intensity === 'strong' ? 1.1 : 1.05
-      return {
-        '0%, 20%, 53%, 80%, 100%': { transform: 'translate3d(0, 0, 0)' },
-        '40%, 43%': { transform: `translate3d(0, -${intensity === 'subtle' ? 5 : intensity === 'strong' ? 20 : 10}px, 0) scale(${scale})` },
-        '70%': { transform: `translate3d(0, -${intensity === 'subtle' ? 2 : intensity === 'strong' ? 8 : 4}px, 0)` },
-        '90%': { transform: 'translate3d(0, -2px, 0)' }
-      }
-    }
 
     return (
       <div

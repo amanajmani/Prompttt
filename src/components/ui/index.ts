@@ -80,8 +80,6 @@ export {
   FormField,
   FormInput,
   FormTextarea,
-  FormCheckbox,
-  FormRadio,
   FormFileUpload,
   FormSubmit,
   useFormContext,
@@ -89,8 +87,6 @@ export {
   type FormFieldProps,
   type FormInputProps,
   type FormTextareaProps,
-  type FormCheckboxProps,
-  type FormRadioProps,
   type FormFileUploadProps,
   type FormSubmitProps
 } from './Form'

@@ -428,7 +428,7 @@ export const FormFileUpload = React.forwardRef<HTMLInputElement, FormFileUploadP
     onFileSelect,
     className,
     ...props 
-  }, ref) => {
+  }) => {
     const { setFieldError, clearFieldError } = useFormContext()
     const [dragActive, setDragActive] = useState(false)
     const [selectedFiles, setSelectedFiles] = useState<File[]>([])

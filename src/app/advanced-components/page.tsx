@@ -35,7 +35,6 @@ import { Play, Heart, Upload, Download, Settings, User } from 'lucide-react'
 export default function AdvancedComponentsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-  const [formData, setFormData] = useState<any>({})
 
   const handleFormSubmit = async (data: FormData) => {
     console.log('Form submitted:', data)
@@ -264,82 +263,78 @@ export default function AdvancedComponentsPage() {
         {/* Animation Components */}
         <Section padding="lg">
           <Reveal>
-            <h2 className="font-heading font-bold text-xl sm:text-2xl text-high mb-6">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl text-high mb-4 sm:mb-6">
               Animation System
             </h2>
           </Reveal>
 
-          <Grid cols={3} gap="lg">
-            <Slide direction="left" delay={100}>
-              <Card className="text-center p-6">
+          <Stagger staggerDelay={150}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              <Card className="text-center p-4 sm:p-6">
                 <Bounce intensity="normal" delay={500}>
-                  <div className="w-16 h-16 bg-accent rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <Play className="text-white" size={24} />
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-accent rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center">
+                    <Play className="text-white" size={20} />
                   </div>
                 </Bounce>
-                <h3 className="font-heading font-semibold text-high mb-2">Bounce Animation</h3>
-                <p className="text-medium text-sm">Attention-grabbing bounce effect</p>
+                <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Bounce Animation</h3>
+                <p className="text-medium text-xs sm:text-sm">Attention-grabbing bounce effect</p>
               </Card>
-            </Slide>
 
-            <Slide direction="up" delay={200}>
-              <Card className="text-center p-6">
+              <Card className="text-center p-4 sm:p-6">
                 <Pulse intensity="normal" color="rgba(0, 169, 255, 0.2)">
-                  <div className="w-16 h-16 bg-green-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <Heart className="text-white" size={24} />
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center">
+                    <Heart className="text-white" size={20} />
                   </div>
                 </Pulse>
-                <h3 className="font-heading font-semibold text-high mb-2">Pulse Animation</h3>
-                <p className="text-medium text-sm">Subtle pulsing for notifications</p>
+                <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Pulse Animation</h3>
+                <p className="text-medium text-xs sm:text-sm">Subtle pulsing for notifications</p>
               </Card>
-            </Slide>
 
-            <Slide direction="right" delay={300}>
-              <Card className="text-center p-6">
+              <Card className="text-center p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
                 <Scale trigger="hover" scale={1.1}>
-                  <div className="w-16 h-16 bg-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <Upload className="text-white" size={24} />
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-purple-500 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center">
+                    <Upload className="text-white" size={20} />
                   </div>
                 </Scale>
-                <h3 className="font-heading font-semibold text-high mb-2">Scale Animation</h3>
-                <p className="text-medium text-sm">Hover to see scale effect</p>
+                <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Scale Animation</h3>
+                <p className="text-medium text-xs sm:text-sm">Hover to see scale effect</p>
               </Card>
-            </Slide>
-          </Grid>
+            </div>
+          </Stagger>
 
-          <div className="mt-8">
-            <h3 className="font-heading font-semibold text-lg text-high mb-4">Stagger Animation</h3>
+          <div className="mt-6 sm:mt-8">
+            <h3 className="font-heading font-semibold text-base sm:text-lg text-high mb-3 sm:mb-4">Stagger Animation</h3>
             <Stagger staggerDelay={100}>
-              <Card className="p-4">
-                <Flex align="center" gap="md">
-                  <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center">
-                    <Download className="text-white" size={20} />
+              <Card className="p-3 sm:p-4">
+                <Flex align="center" gap="sm" className="gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Download className="text-white" size={16} />
                   </div>
-                  <div>
-                    <h4 className="font-medium text-high">Item 1</h4>
-                    <p className="text-sm text-medium">Staggered animation item</p>
-                  </div>
-                </Flex>
-              </Card>
-              <Card className="p-4">
-                <Flex align="center" gap="md">
-                  <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
-                    <Settings className="text-white" size={20} />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-high">Item 2</h4>
-                    <p className="text-sm text-medium">Staggered animation item</p>
+                  <div className="min-w-0">
+                    <h4 className="font-medium text-high text-sm sm:text-base">Item 1</h4>
+                    <p className="text-xs sm:text-sm text-medium">Staggered animation item</p>
                   </div>
                 </Flex>
               </Card>
-              <Card className="p-4">
-                <Flex align="center" gap="md">
-                  <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
-                    <User className="text-white" size={20} />
+              <Card className="p-3 sm:p-4">
+                <Flex align="center" gap="sm" className="gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Settings className="text-white" size={16} />
                   </div>
-                  <div>
-                    <h4 className="font-medium text-high">Item 3</h4>
-                    <p className="text-sm text-medium">Staggered animation item</p>
+                  <div className="min-w-0">
+                    <h4 className="font-medium text-high text-sm sm:text-base">Item 2</h4>
+                    <p className="text-xs sm:text-sm text-medium">Staggered animation item</p>
+                  </div>
+                </Flex>
+              </Card>
+              <Card className="p-3 sm:p-4">
+                <Flex align="center" gap="sm" className="gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <User className="text-white" size={16} />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="font-medium text-high text-sm sm:text-base">Item 3</h4>
+                    <p className="text-xs sm:text-sm text-medium">Staggered animation item</p>
                   </div>
                 </Flex>
               </Card>
