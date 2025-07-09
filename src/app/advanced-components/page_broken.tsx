@@ -115,6 +115,38 @@ export default function AdvancedComponentsPage() {
               </CardContent>
             </Card>
           </Stagger>
+          <Stagger staggerDelay={150}>
+            <div>
+              <h3 className="font-heading font-semibold text-lg text-high mb-4">Modal System</h3>
+              <Flex gap="md" wrap={true}>
+                <Button onClick={() => setIsModalOpen(true)}>
+                  Open Modal
+                </Button>
+                <Button 
+                  variant="destructive" 
+                  onClick={() => setIsConfirmOpen(true)}
+                >
+                  Delete Item
+                </Button>
+              </Flex>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Modal Features</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-medium">
+                  <li>• Accessible with proper focus management</li>
+                  <li>• Mobile-first responsive design</li>
+                  <li>• Backdrop blur and overlay click handling</li>
+                  <li>• Escape key support</li>
+                  <li>• Multiple sizes (sm, md, lg, xl, full)</li>
+                  <li>• Confirmation dialogs with loading states</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </Stagger>
         </Section>
 
         <Divider />
@@ -265,32 +297,32 @@ export default function AdvancedComponentsPage() {
           </Reveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            <Card className="text-center p-4 sm:p-6">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-accent rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center animate-bounce">
-                <Play className="text-white" size={20} />
-              </div>
-              <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Bounce Animation</h3>
-              <p className="text-medium text-xs sm:text-sm">Attention-grabbing bounce effect</p>
-            </Card>
-
-            <Card className="text-center p-4 sm:p-6">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center animate-pulse">
-                <Heart className="text-white" size={20} />
-              </div>
-              <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Pulse Animation</h3>
-              <p className="text-medium text-xs sm:text-sm">Subtle pulsing for notifications</p>
-            </Card>
-
-            <Card className="text-center p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
-              <Scale trigger="hover" scale={1.1}>
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-purple-500 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center">
-                  <Upload className="text-white" size={20} />
+              <Card className="text-center p-4 sm:p-6">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-accent rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center animate-bounce">
+                  <Play className="text-white" size={20} />
                 </div>
-              </Scale>
-              <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Scale Animation</h3>
-              <p className="text-medium text-xs sm:text-sm">Hover to see scale effect</p>
-            </Card>
-          </div>
+                <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Bounce Animation</h3>
+                <p className="text-medium text-xs sm:text-sm">Attention-grabbing bounce effect</p>
+              </Card>
+
+              <Card className="text-center p-4 sm:p-6">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center animate-pulse">
+                  <Heart className="text-white" size={20} />
+                </div>
+                <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Pulse Animation</h3>
+                <p className="text-medium text-xs sm:text-sm">Subtle pulsing for notifications</p>
+              </Card>
+
+              <Card className="text-center p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
+                <Scale trigger="hover" scale={1.1}>
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-purple-500 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center">
+                    <Upload className="text-white" size={20} />
+                  </div>
+                </Scale>
+                <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Scale Animation</h3>
+                <p className="text-medium text-xs sm:text-sm">Hover to see scale effect</p>
+              </Card>
+            </div>
 
           <div className="mt-6 sm:mt-8">
             <h3 className="font-heading font-semibold text-base sm:text-lg text-high mb-3 sm:mb-4">Stagger Animation</h3>
