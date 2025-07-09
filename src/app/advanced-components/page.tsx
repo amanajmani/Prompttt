@@ -24,7 +24,6 @@ import {
   FadeIn,
   Stagger,
   Scale,
-  Slide,
   Bounce,
   Pulse,
   Reveal,
