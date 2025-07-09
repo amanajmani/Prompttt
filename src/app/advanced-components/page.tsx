@@ -264,24 +264,18 @@ export default function AdvancedComponentsPage() {
             </h2>
           </Reveal>
 
-          <Stagger staggerDelay={150}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               <Card className="text-center p-4 sm:p-6">
-                <Bounce intensity="normal" delay={0} repeat={true}>
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-accent rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center">
-                    <Play className="text-white" size={20} />
-                  </div>
-                </Bounce>
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-accent rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center animate-bounce">
+                  <Play className="text-white" size={20} />
+                </div>
                 <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Bounce Animation</h3>
                 <p className="text-medium text-xs sm:text-sm">Attention-grabbing bounce effect</p>
               </Card>
 
               <Card className="text-center p-4 sm:p-6">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center relative">
-                  <Pulse intensity="normal" color="rgba(34, 197, 94, 0.4)" repeat={true}>
-                    <div className="absolute inset-0 rounded-full"></div>
-                  </Pulse>
-                  <Heart className="text-white relative z-10" size={20} />
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center animate-pulse">
+                  <Heart className="text-white" size={20} />
                 </div>
                 <h3 className="font-heading font-semibold text-high mb-2 text-sm sm:text-base">Pulse Animation</h3>
                 <p className="text-medium text-xs sm:text-sm">Subtle pulsing for notifications</p>
@@ -301,8 +295,8 @@ export default function AdvancedComponentsPage() {
 
           <div className="mt-6 sm:mt-8">
             <h3 className="font-heading font-semibold text-base sm:text-lg text-high mb-3 sm:mb-4">Stagger Animation</h3>
-            <Stagger staggerDelay={100}>
-              <Card className="p-3 sm:p-4">
+            <div className="space-y-3">
+              <Card className="p-3 sm:p-4 animate-in fade-in slide-in-from-left duration-500 delay-0">
                 <Flex align="center" gap="sm" className="gap-3 sm:gap-4">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent rounded-lg flex items-center justify-center flex-shrink-0">
                     <Download className="text-white" size={16} />
@@ -313,7 +307,7 @@ export default function AdvancedComponentsPage() {
                   </div>
                 </Flex>
               </Card>
-              <Card className="p-3 sm:p-4">
+              <Card className="p-3 sm:p-4 animate-in fade-in slide-in-from-left duration-500 delay-150">
                 <Flex align="center" gap="sm" className="gap-3 sm:gap-4">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Settings className="text-white" size={16} />
@@ -324,7 +318,7 @@ export default function AdvancedComponentsPage() {
                   </div>
                 </Flex>
               </Card>
-              <Card className="p-3 sm:p-4">
+              <Card className="p-3 sm:p-4 animate-in fade-in slide-in-from-left duration-500 delay-300">
                 <Flex align="center" gap="sm" className="gap-3 sm:gap-4">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
                     <User className="text-white" size={16} />
@@ -335,7 +329,7 @@ export default function AdvancedComponentsPage() {
                   </div>
                 </Flex>
               </Card>
-            </Stagger>
+            </div>
           </div>
         </Section>
 
