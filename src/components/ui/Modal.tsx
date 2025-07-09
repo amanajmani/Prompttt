@@ -44,7 +44,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
     showCloseButton = true,
     className,
     ...props
-  }) => {
+  }, ref) => {
     const modalRef = useRef<HTMLDivElement>(null)
     const previousActiveElement = useRef<HTMLElement | null>(null)
 
@@ -115,7 +115,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
         
         {/* Modal */}
         <div
-          ref={modalRef}
+          ref={ref || modalRef}
           role="dialog"
           aria-modal="true"
           aria-labelledby={title ? 'modal-title' : undefined}
