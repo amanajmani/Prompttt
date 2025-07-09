@@ -1,3 +1,5 @@
+'use client'
+
 import { 
   Button, 
   PrimaryButton, 
@@ -27,21 +29,23 @@ export default function ComponentsPage() {
     <div className="min-h-screen bg-primary-bg">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
-        <header className="mb-12 text-center">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h1 className="font-heading font-bold text-3xl sm:text-4xl text-high mb-2">
+        <header className="mb-6 sm:mb-8 lg:mb-12">
+          <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+            <div className="text-center sm:text-left">
+              <h1 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-high mb-2">
                 Component Library
               </h1>
-              <p className="text-medium text-lg">
+              <p className="text-medium text-sm sm:text-base lg:text-lg">
                 Milestone 5: Mobile-First Component Foundation
               </p>
             </div>
-            <ThemeToggle />
+            <div className="flex justify-center sm:justify-end">
+              <ThemeToggle />
+            </div>
           </div>
         </header>
 
-        <div className="space-y-16">
+        <div className="space-y-8 sm:space-y-12 lg:space-y-16">
           {/* Button Components */}
           <section>
             <h2 className="font-heading font-bold text-2xl text-high mb-6">
@@ -206,7 +210,7 @@ export default function ComponentsPage() {
                 <VideoCard
                   title="Cyberpunk City at Night"
                   creator="AI_Artist_Pro"
-                  thumbnail="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=225&fit=crop"
+                  thumbnail="https://picsum.photos/400/225?random=1"
                   duration="0:45"
                   views={12500}
                   likes={892}
@@ -217,7 +221,7 @@ export default function ComponentsPage() {
                 <VideoCard
                   title="Abstract Fluid Dynamics"
                   creator="CreativeAI"
-                  thumbnail="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=225&fit=crop"
+                  thumbnail="https://picsum.photos/400/225?random=2"
                   duration="1:20"
                   views={8300}
                   likes={654}
@@ -229,7 +233,7 @@ export default function ComponentsPage() {
                 <VideoCard
                   title="Dreamy Landscape Morphing"
                   creator="DigitalDreamer"
-                  thumbnail="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=225&fit=crop"
+                  thumbnail="https://picsum.photos/400/225?random=3"
                   duration="2:15"
                   views={15600}
                   likes={1203}
