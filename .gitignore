@@ -45,6 +45,12 @@ next-env.d.ts
 MILESTONE-*-COMPLETE.md
 MILESTONE-*-UPDATED.md
 
+# Project documentation (keep local only)
+PROMPTTT.md
+Roadmap-Enhanced.md
+*.md
+!README.md
+
 # Temporary files
 tmp_*
 .tmp
