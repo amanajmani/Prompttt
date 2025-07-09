@@ -278,40 +278,53 @@ export default function AdvancedComponentsPage() {
           <div className="mt-6 sm:mt-8">
             <h3 className="font-heading font-semibold text-base sm:text-lg text-high mb-3 sm:mb-4">Stagger Animation</h3>
             <div className="space-y-3">
-              <Card className="p-3 sm:p-4 animate-in fade-in slide-in-from-left duration-500 delay-0">
+              <Card className="p-3 sm:p-4 opacity-0 translate-x-[-20px] animate-[fadeInLeft_0.6s_ease-out_0.2s_forwards]">
                 <Flex align="center" gap="sm" className="gap-3 sm:gap-4">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent rounded-lg flex items-center justify-center flex-shrink-0">
                     <Download className="text-white" size={16} />
                   </div>
                   <div className="min-w-0">
                     <h4 className="font-medium text-high text-sm sm:text-base">Item 1</h4>
-                    <p className="text-xs sm:text-sm text-medium">Staggered animation item</p>
+                    <p className="text-xs sm:text-sm text-medium">Slides in first (0.2s delay)</p>
                   </div>
                 </Flex>
               </Card>
-              <Card className="p-3 sm:p-4 animate-in fade-in slide-in-from-left duration-500 delay-150">
+              <Card className="p-3 sm:p-4 opacity-0 translate-x-[-20px] animate-[fadeInLeft_0.6s_ease-out_0.5s_forwards]">
                 <Flex align="center" gap="sm" className="gap-3 sm:gap-4">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Settings className="text-white" size={16} />
                   </div>
                   <div className="min-w-0">
                     <h4 className="font-medium text-high text-sm sm:text-base">Item 2</h4>
-                    <p className="text-xs sm:text-sm text-medium">Staggered animation item</p>
+                    <p className="text-xs sm:text-sm text-medium">Slides in second (0.5s delay)</p>
                   </div>
                 </Flex>
               </Card>
-              <Card className="p-3 sm:p-4 animate-in fade-in slide-in-from-left duration-500 delay-300">
+              <Card className="p-3 sm:p-4 opacity-0 translate-x-[-20px] animate-[fadeInLeft_0.6s_ease-out_0.8s_forwards]">
                 <Flex align="center" gap="sm" className="gap-3 sm:gap-4">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
                     <User className="text-white" size={16} />
                   </div>
                   <div className="min-w-0">
                     <h4 className="font-medium text-high text-sm sm:text-base">Item 3</h4>
-                    <p className="text-xs sm:text-sm text-medium">Staggered animation item</p>
+                    <p className="text-xs sm:text-sm text-medium">Slides in third (0.8s delay)</p>
                   </div>
                 </Flex>
               </Card>
             </div>
+
+            <style jsx>{`
+              @keyframes fadeInLeft {
+                from {
+                  opacity: 0;
+                  transform: translateX(-20px);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateX(0);
+                }
+              }
+            `}</style>
           </div>
         </Section>
 
