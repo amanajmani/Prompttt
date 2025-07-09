@@ -83,7 +83,7 @@ export default function AdvancedComponentsPage() {
             </h2>
           </Reveal>
           
-          <Stagger staggerDelay={150}>
+          <div className="space-y-6">
             <div>
               <h3 className="font-heading font-semibold text-lg text-high mb-4">Modal System</h3>
               <Flex gap="md" wrap={true}>
@@ -114,7 +114,7 @@ export default function AdvancedComponentsPage() {
                 </ul>
               </CardContent>
             </Card>
-          </Stagger>
+          </div>
         </Section>
 
         <Divider />
@@ -127,30 +127,22 @@ export default function AdvancedComponentsPage() {
             </h2>
           </Reveal>
 
-          <Stagger staggerDelay={100}>
+          <div className="space-y-8">
             <div>
               <h3 className="font-heading font-semibold text-lg text-high mb-4">Grid System</h3>
               <Grid cols={4} gap="md">
-                <Scale trigger="hover">
-                  <Card className="h-24 flex items-center justify-center">
-                    <span className="text-medium">Grid 1</span>
-                  </Card>
-                </Scale>
-                <Scale trigger="hover">
-                  <Card className="h-24 flex items-center justify-center">
-                    <span className="text-medium">Grid 2</span>
-                  </Card>
-                </Scale>
-                <Scale trigger="hover">
-                  <Card className="h-24 flex items-center justify-center">
-                    <span className="text-medium">Grid 3</span>
-                  </Card>
-                </Scale>
-                <Scale trigger="hover">
-                  <Card className="h-24 flex items-center justify-center">
-                    <span className="text-medium">Grid 4</span>
-                  </Card>
-                </Scale>
+                <Card className="h-24 flex items-center justify-center hover:scale-105 transition-transform">
+                  <span className="text-medium">Grid 1</span>
+                </Card>
+                <Card className="h-24 flex items-center justify-center hover:scale-105 transition-transform">
+                  <span className="text-medium">Grid 2</span>
+                </Card>
+                <Card className="h-24 flex items-center justify-center hover:scale-105 transition-transform">
+                  <span className="text-medium">Grid 3</span>
+                </Card>
+                <Card className="h-24 flex items-center justify-center hover:scale-105 transition-transform">
+                  <span className="text-medium">Grid 4</span>
+                </Card>
               </Grid>
             </div>
 
@@ -167,7 +159,7 @@ export default function AdvancedComponentsPage() {
                 </Flex>
               </Stack>
             </div>
-          </Stagger>
+          </div>
         </Section>
 
         <Divider />
@@ -181,76 +173,72 @@ export default function AdvancedComponentsPage() {
           </Reveal>
 
           <Grid cols={2} gap="lg">
-            <FadeIn delay={200}>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Contact Form</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Form onSubmit={handleFormSubmit}>
-                    <FormField name="name" label="Full Name" required>
-                      <FormInput
-                        name="name"
-                        placeholder="Enter your name"
-                        required
-                      />
-                    </FormField>
+            <Card>
+              <CardHeader>
+                <CardTitle>Contact Form</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Form onSubmit={handleFormSubmit}>
+                  <FormField name="name" label="Full Name" required>
+                    <FormInput
+                      name="name"
+                      placeholder="Enter your name"
+                      required
+                    />
+                  </FormField>
 
-                    <FormField name="email" label="Email Address" required>
-                      <FormInput
-                        name="email"
-                        type="email"
-                        placeholder="Enter your email"
-                        required
-                      />
-                    </FormField>
+                  <FormField name="email" label="Email Address" required>
+                    <FormInput
+                      name="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      required
+                    />
+                  </FormField>
 
-                    <FormField name="category" label="Category" required>
-                      <select
-                        name="category"
-                        className="w-full h-10 px-3 text-sm border border-border rounded-lg transition-colors bg-transparent text-high focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-                        required
-                      >
-                        <option value="">Select category</option>
-                        <option value="general">General Inquiry</option>
-                        <option value="support">Technical Support</option>
-                        <option value="feedback">Feedback</option>
-                      </select>
-                    </FormField>
+                  <FormField name="category" label="Category" required>
+                    <select
+                      name="category"
+                      className="w-full h-10 px-3 text-sm border border-border rounded-lg transition-colors bg-transparent text-high focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                      required
+                    >
+                      <option value="">Select category</option>
+                      <option value="general">General Inquiry</option>
+                      <option value="support">Technical Support</option>
+                      <option value="feedback">Feedback</option>
+                    </select>
+                  </FormField>
 
-                    <FormField name="message" label="Message" required>
-                      <FormTextarea
-                        name="message"
-                        placeholder="Enter your message"
-                        rows={4}
-                        required
-                      />
-                    </FormField>
+                  <FormField name="message" label="Message" required>
+                    <FormTextarea
+                      name="message"
+                      placeholder="Enter your message"
+                      rows={4}
+                      required
+                    />
+                  </FormField>
 
-                    <FormSubmit>Send Message</FormSubmit>
-                  </Form>
-                </CardContent>
-              </Card>
-            </FadeIn>
+                  <FormSubmit>Send Message</FormSubmit>
+                </Form>
+              </CardContent>
+            </Card>
 
-            <FadeIn delay={400}>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Form Features</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-medium">
-                    <li>• Real-time validation with error states</li>
-                    <li>• Touch-friendly mobile inputs (16px font)</li>
-                    <li>• Loading states and submission handling</li>
-                    <li>• Accessible labels and error announcements</li>
-                    <li>• File upload with drag & drop</li>
-                    <li>• Custom validation rules</li>
-                    <li>• Form context for complex forms</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </FadeIn>
+            <Card>
+              <CardHeader>
+                <CardTitle>Form Features</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-medium">
+                  <li>• Real-time validation with error states</li>
+                  <li>• Touch-friendly mobile inputs (16px font)</li>
+                  <li>• Loading states and submission handling</li>
+                  <li>• Accessible labels and error announcements</li>
+                  <li>• File upload with drag & drop</li>
+                  <li>• Custom validation rules</li>
+                  <li>• Form context for complex forms</li>
+                </ul>
+              </CardContent>
+            </Card>
           </Grid>
         </Section>
 
