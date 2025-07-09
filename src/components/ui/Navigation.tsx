@@ -74,7 +74,7 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
           {...props}
         >
           <div className="container mx-auto px-4">
-            <div className="flex h-14 sm:h-16 items-center justify-between">
+            <div className="flex h-16 items-center justify-between">
               {/* Logo */}
               <Link 
                 href="/"
