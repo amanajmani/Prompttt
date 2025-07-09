@@ -127,7 +127,7 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
           name: name,
           'aria-invalid': error ? 'true' : 'false',
           'aria-describedby': error ? `${name}-error` : undefined
-        } as any)}
+        } as Record<string, unknown>)}
         
         {error && (
           <div
