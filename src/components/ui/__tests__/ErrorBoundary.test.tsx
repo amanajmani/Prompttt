@@ -116,10 +116,13 @@ describe('ErrorBoundary Component', () => {
   it('handles go home button click', async () => {
     const user = userEvent.setup()
     
-    // Mock window.location.href
+    // Mock window.location
+    const mockLocation = { href: '' }
     const originalLocation = window.location
+    
+    // Replace window.location with our mock
     delete (window as any).location
-    window.location = { href: '' } as any
+    window.location = mockLocation as any
 
     render(
       <ErrorBoundary>
@@ -130,9 +133,9 @@ describe('ErrorBoundary Component', () => {
     const homeButton = screen.getByText('Go Home')
     await user.click(homeButton)
 
-    expect(window.location.href).toBe('http://localhost/')
+    expect(mockLocation.href).toBe('/')
     
-    // Restore original location
+    // Restore
     window.location = originalLocation
   })
 
