@@ -135,7 +135,7 @@ export function generateImageProps(
     alt,
     sizes,
     quality: options.quality || config.desktop.quality || 85,
-    priority: options.priority || shouldLoadWithPriority(type as any),
+    priority: options.priority || shouldLoadWithPriority(type as 'logo' | 'hero' | 'above-fold' | 'below-fold'),
     className: options.className,
     // Suggested dimensions for the largest size
     width: config.desktop.width,
