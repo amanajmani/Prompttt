@@ -117,8 +117,7 @@ export const mockTouchEvents = () => {
 
 // Accessibility testing helper
 export const checkAccessibility = async (container: HTMLElement) => {
-  const { axe, toHaveNoViolations } = await import('jest-axe')
-  expect.extend(toHaveNoViolations)
+  const { axe } = await import('jest-axe')
   
   const results = await axe(container)
   expect(results).toHaveNoViolations()
@@ -148,6 +147,7 @@ export const mockIntersectionObserver = (isIntersecting = true) => {
 
 // Theme switching test helper
 export const testThemeSwitch = async (getByRole: (role: string, options?: { name: RegExp }) => HTMLElement) => {
+  const { fireEvent, waitFor } = await import('@testing-library/react')
   const themeToggle = getByRole('button', { name: /switch to light theme/i })
   
   // Test theme switching
@@ -199,6 +199,7 @@ export const testThemeComponent = (
 // Re-export everything from React Testing Library
 export * from '@testing-library/react'
 export { default as userEvent } from '@testing-library/user-event'
+export { fireEvent, waitFor } from '@testing-library/react'
 
 // Export custom render as default
 export { customRender as render }

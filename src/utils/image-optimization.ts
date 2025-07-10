@@ -101,11 +101,11 @@ export function getOptimalImageSize(
   config: ResponsiveImageConfig
 ): { width: number; quality: number } {
   if (viewportWidth <= 640) {
-    return config.mobile
+    return { width: config.mobile.width, quality: config.mobile.quality || 85 }
   } else if (viewportWidth <= 768) {
-    return config.tablet
+    return { width: config.tablet.width, quality: config.tablet.quality || 85 }
   } else {
-    return config.desktop
+    return { width: config.desktop.width, quality: config.desktop.quality || 85 }
   }
 }
 
