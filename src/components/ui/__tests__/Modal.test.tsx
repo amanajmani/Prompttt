@@ -351,11 +351,11 @@ describe('Dialog Component', () => {
 
 describe('ConfirmDialog Component', () => {
   const mockOnConfirm = jest.fn()
-  const mockOnCancel = jest.fn()
+  const mockOnClose = jest.fn()
 
   beforeEach(() => {
     mockOnConfirm.mockClear()
-    mockOnCancel.mockClear()
+    mockOnClose.mockClear()
   })
 
   it('renders with title and message', () => {
@@ -363,7 +363,7 @@ describe('ConfirmDialog Component', () => {
       <ConfirmDialog
         isOpen={true}
         title="Confirm Action"
-        message="Are you sure you want to proceed?"
+        description="Are you sure you want to proceed?"
         onConfirm={mockOnConfirm}
         onCancel={mockOnCancel}
       />
@@ -378,7 +378,7 @@ describe('ConfirmDialog Component', () => {
       <ConfirmDialog
         isOpen={true}
         title="Confirm"
-        message="Message"
+        description="Message"
         onConfirm={mockOnConfirm}
         onCancel={mockOnCancel}
       />
@@ -394,7 +394,7 @@ describe('ConfirmDialog Component', () => {
       <ConfirmDialog
         isOpen={true}
         title="Confirm"
-        message="Message"
+        description="Message"
         onConfirm={mockOnConfirm}
         onCancel={mockOnCancel}
       />
@@ -412,7 +412,7 @@ describe('ConfirmDialog Component', () => {
       <ConfirmDialog
         isOpen={true}
         title="Confirm"
-        message="Message"
+        description="Message"
         onConfirm={mockOnConfirm}
         onCancel={mockOnCancel}
       />
@@ -421,7 +421,7 @@ describe('ConfirmDialog Component', () => {
     const cancelButton = screen.getByText('Cancel')
     await user.click(cancelButton)
 
-    expect(mockOnCancel).toHaveBeenCalledTimes(1)
+    expect(mockOnClose).toHaveBeenCalledTimes(1)
   })
 
   it('renders custom button labels', () => {
@@ -429,9 +429,9 @@ describe('ConfirmDialog Component', () => {
       <ConfirmDialog
         isOpen={true}
         title="Delete Item"
-        message="This action cannot be undone."
-        confirmLabel="Delete"
-        cancelLabel="Keep"
+        description="This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Keep"
         onConfirm={mockOnConfirm}
         onCancel={mockOnCancel}
       />
@@ -446,8 +446,8 @@ describe('ConfirmDialog Component', () => {
       <ConfirmDialog
         isOpen={true}
         title="Delete"
-        message="Delete this item?"
-        type="destructive"
+        description="Delete this item?"
+        variant="destructive"
         onConfirm={mockOnConfirm}
         onCancel={mockOnCancel}
       />
@@ -462,7 +462,7 @@ describe('ConfirmDialog Component', () => {
       <ConfirmDialog
         isOpen={true}
         title="Confirm"
-        message="Message"
+        description="Message"
         isLoading={true}
         onConfirm={mockOnConfirm}
         onCancel={mockOnCancel}

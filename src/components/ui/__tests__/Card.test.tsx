@@ -277,8 +277,8 @@ describe('VideoCard Component', () => {
       
       render(<VideoCard {...mockVideoProps} onPlay={handlePlay} />)
       
-      const card = screen.getByText('Test Video').closest('div[tabindex="0"]')
-      card!.focus()
+      const card = screen.getByText('Test Video').closest('div[tabindex="0"]') as HTMLElement
+      card.focus()
       
       await user.keyboard('{Enter}')
       expect(handlePlay).toHaveBeenCalled()
