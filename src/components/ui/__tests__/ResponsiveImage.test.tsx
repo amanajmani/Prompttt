@@ -12,13 +12,16 @@ import {
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt, className, sizes, priority, quality, ...props }: {
+  default: ({ src, alt, className, sizes, priority, quality, fill, width, height, ...props }: {
     src: string
     alt: string
     className?: string
     sizes?: string
     priority?: boolean
     quality?: number
+    fill?: boolean
+    width?: number
+    height?: number
     [key: string]: unknown
   }) => (
     <img 
@@ -28,6 +31,9 @@ jest.mock('next/image', () => ({
       data-sizes={sizes}
       data-priority={priority?.toString()}
       data-quality={quality?.toString()}
+      data-fill={fill?.toString()}
+      width={width}
+      height={height}
       {...props}
     />
   ),
