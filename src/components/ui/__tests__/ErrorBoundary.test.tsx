@@ -117,8 +117,11 @@ describe('ErrorBoundary Component', () => {
     const user = userEvent.setup()
     
     // Mock window.location.href
-    delete (window as unknown as { location: unknown }).location
-    window.location = { href: '' } as Location
+    const originalLocation = window.location
+    Object.defineProperty(window, 'location', {
+      value: { href: '' },
+      writable: true
+    })
 
     render(
       <ErrorBoundary>

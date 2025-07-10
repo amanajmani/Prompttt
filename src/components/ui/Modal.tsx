@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 import { cn } from '@/utils'
@@ -70,7 +70,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
     }
 
     // Handle focus trap
-    const handleTabKey = (event: KeyboardEvent) => {
+    const handleTabKey = useCallback((event: KeyboardEvent) => {
       const focusableEls = getFocusableElements()
       const firstEl = focusableEls[0]
       const lastEl = focusableEls[focusableEls.length - 1]
@@ -88,7 +88,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
           firstEl?.focus()
         }
       }
-    }
+    }, [])
 
     // Handle escape key and focus management
     useEffect(() => {
@@ -104,7 +104,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
         document.addEventListener('keydown', handleKeyDown)
         return () => document.removeEventListener('keydown', handleKeyDown)
       }
-    }, [isOpen, onClose, closeOnEscape])
+    }, [isOpen, onClose, closeOnEscape, handleTabKey])
 
     // Handle focus management
     useEffect(() => {

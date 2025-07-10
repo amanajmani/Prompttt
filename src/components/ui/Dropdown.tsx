@@ -109,7 +109,7 @@ export const Dropdown = React.forwardRef<HTMLButtonElement, DropdownProps>(
         left: triggerRect.left,
         width: triggerRect.width
       })
-    }, [])
+    }, [maxHeight])
 
     // Handle item selection
     const handleSelect = (item: DropdownItem) => {

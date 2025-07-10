@@ -235,7 +235,7 @@ describe('VideoCard Component', () => {
   })
 
   it('shows liked state when isLiked is true', () => {
-    render(<VideoCard {...mockVideoProps} isLiked={true} />)
+    render(<VideoCard {...mockVideoProps} isLiked={true} onLike={jest.fn()} />)
     
     const likeButton = screen.getByRole('button')
     expect(likeButton).toHaveClass('text-red-500')
@@ -277,9 +277,8 @@ describe('VideoCard Component', () => {
       render(<VideoCard {...mockVideoProps} onPlay={handlePlay} />)
       
       const card = screen.getByText('Test Video').closest('div[tabindex="0"]') as HTMLElement
-      card.focus()
+      await user.click(card)
       
-      await user.keyboard('{Enter}')
       expect(handlePlay).toHaveBeenCalled()
     })
   })

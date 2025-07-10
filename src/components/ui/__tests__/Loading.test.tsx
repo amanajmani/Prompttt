@@ -84,8 +84,8 @@ describe('Skeleton Component', () => {
 
   it('renders multiple lines for text variant', () => {
     render(<Skeleton variant="text" lines={3} />)
-    const container = screen.getByRole('status')
-    const lines = container.querySelectorAll('.h-4')
+    const container = document.querySelector('.animate-pulse')
+    const lines = container?.querySelectorAll('.h-4')
     expect(lines).toHaveLength(3)
   })
 
