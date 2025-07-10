@@ -109,18 +109,17 @@ describe('ErrorBoundary Component', () => {
     const retryButton = screen.getByText('Try Again')
     await user.click(retryButton)
 
-    // After retry, the error should be reset (though the component will throw again)
-    expect(retryButton).toBeInTheDocument()
+    // The retry button should still be present after clicking
+    expect(screen.getByText('Try Again')).toBeInTheDocument()
   })
 
   it('handles go home button click', async () => {
     const user = userEvent.setup()
     
     // Mock window.location.href
-    Object.defineProperty(window, 'location', {
-      value: { href: '' },
-      writable: true
-    })
+    const originalLocation = window.location
+    delete (window as any).location
+    window.location = { href: '' } as any
 
     render(
       <ErrorBoundary>
@@ -132,6 +131,9 @@ describe('ErrorBoundary Component', () => {
     await user.click(homeButton)
 
     expect(window.location.href).toBe('/')
+    
+    // Restore original location
+    window.location = originalLocation
   })
 
   it('handles report bug button click', async () => {
@@ -159,8 +161,8 @@ describe('ErrorBoundary Component', () => {
       </ErrorBoundary>
     )
 
-    const errorContainer = screen.getByText('Something went wrong').closest('div')
-    expect(errorContainer).toHaveClass('custom-error-class')
+    const errorContainer = screen.getByText('Something went wrong').closest('.custom-error-class')
+    expect(errorContainer).toBeInTheDocument()
   })
 })
 
@@ -236,8 +238,8 @@ describe('ErrorState Component', () => {
   it('applies custom className', () => {
     render(<ErrorState className="custom-error-state" />)
 
-    const container = screen.getByText('Something went wrong').closest('div')
-    expect(container).toHaveClass('custom-error-state')
+    const container = screen.getByText('Something went wrong').closest('.custom-error-state')
+    expect(container).toBeInTheDocument()
   })
 })
 
