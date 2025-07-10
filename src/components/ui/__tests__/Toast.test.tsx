@@ -259,7 +259,7 @@ describe('ToastProvider and useToast', () => {
 
     // Dismiss the first toast
     const dismissButtons = screen.getAllByLabelText('Dismiss notification')
-    await user.click(dismissButtons[0])
+    await user.click(dismissButtons[0]!)
 
     await waitFor(() => {
       expect(screen.getByTestId('toast-count')).toHaveTextContent('1')

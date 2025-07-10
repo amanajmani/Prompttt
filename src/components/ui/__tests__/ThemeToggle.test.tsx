@@ -4,10 +4,10 @@ import { ThemeToggle, ThemeToggleCompact } from '../ThemeToggle'
 
 // Mock the theme context
 const mockSetTheme = jest.fn()
-const mockThemeContext = {
-  theme: 'dark' as const,
+let mockThemeContext = {
+  theme: 'dark' as 'light' | 'dark' | 'system',
   setTheme: mockSetTheme,
-  resolvedTheme: 'dark' as const,
+  resolvedTheme: 'dark' as 'light' | 'dark',
 }
 
 jest.mock('@/contexts/ThemeContext', () => ({
@@ -17,8 +17,11 @@ jest.mock('@/contexts/ThemeContext', () => ({
 describe('ThemeToggle Component', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    mockThemeContext.theme = 'dark'
-    mockThemeContext.resolvedTheme = 'dark'
+    mockThemeContext = {
+      theme: 'dark',
+      setTheme: mockSetTheme,
+      resolvedTheme: 'dark',
+    }
   })
 
   describe('Basic functionality', () => {
