@@ -400,7 +400,7 @@ describe('ConfirmDialog Component', () => {
       />
     )
 
-    const confirmButton = screen.getByText('Confirm')
+    const confirmButton = screen.getByRole('button', { name: /confirm/i })
     await user.click(confirmButton)
 
     expect(mockOnConfirm).toHaveBeenCalledTimes(1)
@@ -418,7 +418,7 @@ describe('ConfirmDialog Component', () => {
       />
     )
 
-    const cancelButton = screen.getByText('Cancel')
+    const cancelButton = screen.getByRole('button', { name: /cancel/i })
     await user.click(cancelButton)
 
     expect(mockOnClose).toHaveBeenCalledTimes(1)

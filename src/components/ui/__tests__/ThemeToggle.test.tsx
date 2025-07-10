@@ -142,7 +142,7 @@ describe('ThemeToggle Component', () => {
       
       const buttons = screen.getAllByRole('button')
       buttons.forEach(button => {
-        expect(button).toHaveClass('focus:ring-2')
+        expect(button).toHaveClass('touch-target')
       })
     })
   })

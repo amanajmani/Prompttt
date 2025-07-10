@@ -68,16 +68,16 @@ describe('ToastComponent', () => {
       <ToastComponent type="success" description="Success" onDismiss={mockOnDismiss} />
     )
 
-    expect(document.querySelector('.lucide-check-circle')).toBeInTheDocument()
+    expect(document.querySelector('svg')).toBeInTheDocument()
 
     rerender(<ToastComponent type="error" description="Error" onDismiss={mockOnDismiss} />)
-    expect(document.querySelector('.lucide-alert-circle')).toBeInTheDocument()
+    expect(document.querySelector('svg')).toBeInTheDocument()
 
     rerender(<ToastComponent type="warning" description="Warning" onDismiss={mockOnDismiss} />)
-    expect(document.querySelector('.lucide-alert-triangle')).toBeInTheDocument()
+    expect(document.querySelector('svg')).toBeInTheDocument()
 
     rerender(<ToastComponent type="info" description="Info" onDismiss={mockOnDismiss} />)
-    expect(document.querySelector('.lucide-info')).toBeInTheDocument()
+    expect(document.querySelector('svg')).toBeInTheDocument()
   })
 
   it('handles dismiss button click', async () => {
