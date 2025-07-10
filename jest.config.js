@@ -12,7 +12,7 @@ const config = {
   testEnvironment: 'jsdom',
   
   // Setup files
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   
   // TypeScript configuration
   preset: 'ts-jest/presets/default-esm',
