@@ -61,7 +61,7 @@ export class ErrorBoundary extends Component<Props, State> {
     // You could send this to your error tracking service
   }
 
-  render() {
+  override render() {
     if (this.state.hasError) {
       // Custom fallback UI
       if (this.props.fallback) {

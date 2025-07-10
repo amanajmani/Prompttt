@@ -365,7 +365,7 @@ describe('ConfirmDialog Component', () => {
         title="Confirm Action"
         description="Are you sure you want to proceed?"
         onConfirm={mockOnConfirm}
-        onCancel={mockOnCancel}
+        onClose={mockOnClose}
       />
     )
 
@@ -380,7 +380,7 @@ describe('ConfirmDialog Component', () => {
         title="Confirm"
         description="Message"
         onConfirm={mockOnConfirm}
-        onCancel={mockOnCancel}
+        onClose={mockOnClose}
       />
     )
 
@@ -396,7 +396,7 @@ describe('ConfirmDialog Component', () => {
         title="Confirm"
         description="Message"
         onConfirm={mockOnConfirm}
-        onCancel={mockOnCancel}
+        onClose={mockOnClose}
       />
     )
 
@@ -414,7 +414,7 @@ describe('ConfirmDialog Component', () => {
         title="Confirm"
         description="Message"
         onConfirm={mockOnConfirm}
-        onCancel={mockOnCancel}
+        onClose={mockOnClose}
       />
     )
 
@@ -433,7 +433,7 @@ describe('ConfirmDialog Component', () => {
         confirmText="Delete"
         cancelText="Keep"
         onConfirm={mockOnConfirm}
-        onCancel={mockOnCancel}
+        onClose={mockOnClose}
       />
     )
 
@@ -449,7 +449,7 @@ describe('ConfirmDialog Component', () => {
         description="Delete this item?"
         variant="destructive"
         onConfirm={mockOnConfirm}
-        onCancel={mockOnCancel}
+        onClose={mockOnClose}
       />
     )
 
@@ -465,7 +465,7 @@ describe('ConfirmDialog Component', () => {
         description="Message"
         isLoading={true}
         onConfirm={mockOnConfirm}
-        onCancel={mockOnCancel}
+        onClose={mockOnClose}
       />
     )
 
