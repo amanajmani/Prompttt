@@ -33,7 +33,7 @@
       "@/constants/*": ["./src/constants/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.setup.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.setup.ts"],
   "types": ["jest", "@testing-library/jest-dom", "@types/node"],
   "exclude": ["node_modules"]
 }
