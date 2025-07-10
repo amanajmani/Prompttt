@@ -132,3 +132,15 @@ export {
   type PageTransitionProps,
   type RevealProps
 } from './Animation'
+
+// Responsive Image Components
+export {
+  ResponsiveImage,
+  LogoImage,
+  IconImage,
+  AvatarImage,
+  ThumbnailImage,
+  HeroImage,
+  CardImage,
+  type ResponsiveImageProps
+} from './ResponsiveImage'

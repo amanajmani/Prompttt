@@ -119,6 +119,89 @@ export default function Home() {
             </div>
           </section>
 
+          {/* Responsive Images System */}
+          <section>
+            <h2 className="font-heading font-bold text-high mb-4 sm:mb-6">
+              Responsive Images System
+            </h2>
+            <div className="space-y-6">
+              <div className="card-mobile">
+                <h3 className="font-heading font-semibold text-high mb-4">Multi-Density Support</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-accent rounded flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">1x</span>
+                    </div>
+                    <span className="text-medium text-sm">Standard density (48×48px)</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-accent rounded flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">2x</span>
+                    </div>
+                    <span className="text-medium text-sm">High-DPI displays (96×96px)</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-accent rounded flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">3x</span>
+                    </div>
+                    <span className="text-medium text-sm">Ultra high-DPI (144×144px)</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="card-mobile">
+                <h3 className="font-heading font-semibold text-high mb-4">Responsive Breakpoints</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 bg-secondary-surface rounded border border-border flex items-center justify-center">
+                      <span className="text-high font-mono text-xs">📱</span>
+                    </div>
+                    <span className="text-medium text-sm">Mobile: 320px-640px (optimized sizes)</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 bg-secondary-surface rounded border border-border flex items-center justify-center">
+                      <span className="text-high font-mono text-xs">📟</span>
+                    </div>
+                    <span className="text-medium text-sm">Tablet: 641px-768px (medium sizes)</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 bg-secondary-surface rounded border border-border flex items-center justify-center">
+                      <span className="text-high font-mono text-xs">🖥️</span>
+                    </div>
+                    <span className="text-medium text-sm">Desktop: 769px+ (full resolution)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card-mobile">
+                <h3 className="font-heading font-semibold text-high mb-4">Image Components</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-accent rounded-lg mx-auto mb-2 flex items-center justify-center">
+                      <span className="text-white font-bold">L</span>
+                    </div>
+                    <div className="text-sm font-medium text-high">LogoImage</div>
+                    <div className="text-xs text-medium">Brand logos</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-secondary-surface rounded-full mx-auto mb-2 flex items-center justify-center border border-border">
+                      <span className="text-high font-bold">A</span>
+                    </div>
+                    <div className="text-sm font-medium text-high">AvatarImage</div>
+                    <div className="text-xs text-medium">User avatars</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-8 bg-secondary-surface rounded mx-auto mb-2 flex items-center justify-center border border-border">
+                      <span className="text-high font-bold text-xs">🖼️</span>
+                    </div>
+                    <div className="text-sm font-medium text-high">CardImage</div>
+                    <div className="text-xs text-medium">Content cards</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Current Theme Colors */}
           <section>
             <h2 className="font-heading font-bold text-high mb-4 sm:mb-6">
@@ -150,9 +233,13 @@ export default function Home() {
               <h2 className="font-heading font-bold text-accent mb-2">
                 Milestone 4: Mobile-First Responsive Foundation - COMPLETE
               </h2>
-              <p className="text-medium">
+              <p className="text-medium mb-4">
                 Perfect responsive design that works beautifully on every device
               </p>
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 border border-accent/20 rounded-full">
+                <div className="w-2 h-2 bg-accent rounded-full"></div>
+                <span className="text-accent text-sm font-medium">Including Responsive Images Strategy</span>
+              </div>
             </div>
           </section>
         </main>
