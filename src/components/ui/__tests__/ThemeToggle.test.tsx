@@ -203,7 +203,8 @@ describe('ThemeToggleCompact Component', () => {
   describe('Theme context integration', () => {
     it('responds to theme changes', () => {
       // Test with light theme
-      mockThemeContext.resolvedTheme = 'light'
+      const lightMockContext = { ...mockThemeContext, resolvedTheme: 'light' as const }
+      jest.mocked(require('@/contexts/ThemeContext').useTheme).mockReturnValue(lightMockContext)
       render(<ThemeToggleCompact />)
       
       const button = screen.getByRole('button')
