@@ -1,5 +1,6 @@
 // Jest setup file for PROMPTTT testing
 import '@testing-library/jest-dom'
+import 'jest-axe/extend-expect'
 
 // Mock Next.js router
 jest.mock('next/navigation', () => ({
