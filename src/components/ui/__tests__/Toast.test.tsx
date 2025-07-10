@@ -4,7 +4,7 @@ import { ToastComponent, ToastProvider, useToast, useToastActions } from '../Toa
 
 // Test component to use toast hooks
 const TestToastComponent = () => {
-  const { addToast, removeToast, clearToasts, toasts } = useToast()
+  const { addToast, clearToasts, toasts } = useToast()
   const { success, error, warning, info } = useToastActions()
 
   return (

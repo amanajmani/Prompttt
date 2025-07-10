@@ -9,7 +9,6 @@ import {
   CardFooter,
   VideoCard 
 } from '../Card'
-import { Play, Heart } from 'lucide-react'
 
 describe('Card Component', () => {
   describe('Basic functionality', () => {

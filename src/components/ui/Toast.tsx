@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, createContext, useContext } from 'react'
+import React, { useState, createContext, useContext } from 'react'
 import { createPortal } from 'react-dom'
 import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react'
 import { cn } from '@/utils'
