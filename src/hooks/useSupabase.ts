@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createSupabaseClient } from '@/lib/supabase'
-import { User, Session } from '@supabase/supabase-js'
+import { User } from '@supabase/supabase-js'
 import type { Database } from '@/types/database'
 
 type Profile = Database['public']['Tables']['profiles']['Row']
@@ -111,7 +111,7 @@ export function useVideos(options?: {
   offset?: number
 }) {
   const supabase = useSupabase()
-  const [videos, setVideos] = useState<any[]>([])
+  const [videos, setVideos] = useState<unknown[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [hasMore, setHasMore] = useState(true)
@@ -201,7 +201,7 @@ export function useVideoLikes(videoId: string) {
 
           setIsLiked(!!data)
         }
-      } catch (err) {
+      } catch {
         // Ignore errors for like status
       } finally {
         setLoading(false)

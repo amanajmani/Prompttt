@@ -11,9 +11,9 @@ interface AuthContextType {
   user: User | null
   profile: Profile | null
   loading: boolean
-  signUp: (email: string, password: string, metadata?: { username?: string; full_name?: string }) => Promise<any>
-  signIn: (email: string, password: string) => Promise<any>
-  signInWithOAuth: (provider: 'google' | 'github') => Promise<any>
+  signUp: (email: string, password: string, metadata?: { username?: string; full_name?: string }) => Promise<unknown>
+  signIn: (email: string, password: string) => Promise<unknown>
+  signInWithOAuth: (provider: 'google' | 'github') => Promise<unknown>
   signOut: () => Promise<void>
   resetPassword: (email: string) => Promise<void>
   updatePassword: (password: string) => Promise<void>
@@ -56,10 +56,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Listen for auth changes
     const { data: { subscription } } = authService.onAuthStateChange(
       async (event, session) => {
-        setUser(session?.user ?? null)
+        const user = session?.user as User | undefined
+        setUser(user ?? null)
         
-        if (session?.user) {
-          await fetchProfile(session.user.id)
+        if (user) {
+          await fetchProfile(user.id)
         } else {
           setProfile(null)
         }

@@ -1,7 +1,4 @@
 import { createSupabaseClient } from './supabase'
-import type { Database } from '@/types/database'
-
-type Profile = Database['public']['Tables']['profiles']['Row']
 
 export class AuthService {
   private supabase = createSupabaseClient()
@@ -9,7 +6,7 @@ export class AuthService {
   async signUp(email: string, password: string, metadata?: {
     username?: string
     full_name?: string
-  }) {
+  }): Promise<unknown> {
     const { data, error } = await this.supabase.auth.signUp({
       email,
       password,
@@ -31,7 +28,7 @@ export class AuthService {
     return data
   }
 
-  async signIn(email: string, password: string) {
+  async signIn(email: string, password: string): Promise<unknown> {
     const { data, error } = await this.supabase.auth.signInWithPassword({
       email,
       password
@@ -41,7 +38,7 @@ export class AuthService {
     return data
   }
 
-  async signInWithOAuth(provider: 'google' | 'github') {
+  async signInWithOAuth(provider: 'google' | 'github'): Promise<unknown> {
     const { data, error } = await this.supabase.auth.signInWithOAuth({
       provider,
       options: {
@@ -104,7 +101,7 @@ export class AuthService {
     }
   }
 
-  onAuthStateChange(callback: (event: string, session: any) => void) {
+  onAuthStateChange(callback: (event: string, session: { user?: { id: string; email?: string; user_metadata?: Record<string, unknown> } } | null) => void) {
     return this.supabase.auth.onAuthStateChange(callback)
   }
 }
