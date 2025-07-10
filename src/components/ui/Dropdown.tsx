@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronDown, Check } from 'lucide-react'
 import { cn } from '@/utils'
@@ -79,8 +79,8 @@ export const Dropdown = React.forwardRef<HTMLButtonElement, DropdownProps>(
     const searchRef = useRef<HTMLInputElement>(null)
     const [menuPosition, setMenuPosition] = useState<{ top: number; left: number; width: number }>()
 
-    // Focus trap for accessibility
-    const focusableElements = useRef<HTMLElement[]>([])
+    // Focus trap for accessibility (future enhancement)
+    // const focusableElements = useRef<HTMLElement[]>([])
 
     const selectedItem = items.find(item => item.value === value)
     const filteredItems = searchable 
@@ -91,7 +91,7 @@ export const Dropdown = React.forwardRef<HTMLButtonElement, DropdownProps>(
       : items
 
     // Calculate menu position
-    const calculatePosition = () => {
+    const calculatePosition = useCallback(() => {
       if (!triggerRef.current) return
 
       const triggerRect = triggerRef.current.getBoundingClientRect()
@@ -109,7 +109,7 @@ export const Dropdown = React.forwardRef<HTMLButtonElement, DropdownProps>(
         left: triggerRect.left,
         width: triggerRect.width
       })
-    }
+    }, [])
 
     // Handle item selection
     const handleSelect = (item: DropdownItem) => {
@@ -220,7 +220,7 @@ export const Dropdown = React.forwardRef<HTMLButtonElement, DropdownProps>(
       return () => {
         document.removeEventListener('mousedown', handleClickOutside)
       }
-    }, [isOpen, searchable])
+    }, [isOpen, searchable, calculatePosition])
 
     // Reset search when closed
     useEffect(() => {
@@ -346,7 +346,6 @@ export const Dropdown = React.forwardRef<HTMLButtonElement, DropdownProps>(
           )}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
-          aria-invalid={!!error}
           {...props}
         >
           <span className={cn(

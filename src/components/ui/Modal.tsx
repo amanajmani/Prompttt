@@ -47,9 +47,10 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
   }, ref) => {
     const modalRef = useRef<HTMLDivElement>(null)
     const previousActiveElement = useRef<HTMLElement | null>(null)
-    const focusableElements = useRef<HTMLElement[]>([])
-    const firstFocusableElement = useRef<HTMLElement | null>(null)
-    const lastFocusableElement = useRef<HTMLElement | null>(null)
+    // Focus trap elements (used in focus management)
+    // const focusableElements = useRef<HTMLElement[]>([])
+    // const firstFocusableElement = useRef<HTMLElement | null>(null)
+    // const lastFocusableElement = useRef<HTMLElement | null>(null)
 
     // Get focusable elements for focus trap
     const getFocusableElements = () => {
