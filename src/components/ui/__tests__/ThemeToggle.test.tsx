@@ -204,6 +204,7 @@ describe('ThemeToggleCompact Component', () => {
     it('responds to theme changes', () => {
       // Test with light theme
       const lightMockContext = { ...mockThemeContext, resolvedTheme: 'light' as const }
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       jest.mocked(require('@/contexts/ThemeContext').useTheme).mockReturnValue(lightMockContext)
       render(<ThemeToggleCompact />)
       

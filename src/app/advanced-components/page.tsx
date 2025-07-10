@@ -22,12 +22,8 @@ import {
   CardTitle,
   CardContent,
   FadeIn,
-  Stagger,
   Scale,
-  Bounce,
-  Pulse,
   Reveal,
-  ThemeToggle
 } from '@/components/ui'
 import { Play, Heart, Upload, Download, Settings, User } from 'lucide-react'
 
