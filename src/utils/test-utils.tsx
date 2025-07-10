@@ -147,7 +147,7 @@ export const mockIntersectionObserver = (isIntersecting = true) => {
 }
 
 // Theme switching test helper
-export const testThemeSwitch = async (getByRole: any) => {
+export const testThemeSwitch = async (getByRole: (role: string, options?: { name: RegExp }) => HTMLElement) => {
   const themeToggle = getByRole('button', { name: /switch to light theme/i })
   
   // Test theme switching
@@ -161,8 +161,8 @@ export const testThemeSwitch = async (getByRole: any) => {
 
 // Component testing patterns
 export const testResponsiveComponent = (
-  Component: React.ComponentType<any>,
-  props: any = {}
+  Component: React.ComponentType<Record<string, unknown>>,
+  props: Record<string, unknown> = {}
 ) => {
   describe('Responsive behavior', () => {
     it('renders correctly on mobile', () => {
@@ -180,8 +180,8 @@ export const testResponsiveComponent = (
 }
 
 export const testThemeComponent = (
-  Component: React.ComponentType<any>,
-  props: any = {}
+  Component: React.ComponentType<Record<string, unknown>>,
+  props: Record<string, unknown> = {}
 ) => {
   describe('Theme support', () => {
     it('renders correctly in dark theme', () => {
