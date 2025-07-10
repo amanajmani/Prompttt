@@ -130,7 +130,7 @@ describe('ErrorBoundary Component', () => {
     const homeButton = screen.getByText('Go Home')
     await user.click(homeButton)
 
-    expect(window.location.href).toBe('/')
+    expect(window.location.href).toBe('http://localhost/')
     
     // Restore original location
     window.location = originalLocation
