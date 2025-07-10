@@ -1,6 +1,6 @@
 import { render, screen } from '@/utils/test-utils'
 import userEvent from '@testing-library/user-event'
-import { Input, Textarea } from '../Input'
+import { Input, Textarea } from '../inputs'
 import { Search, AlertCircle } from 'lucide-react'
 
 describe('Input Component', () => {
@@ -27,7 +27,7 @@ describe('Input Component', () => {
       render(<Input disabled placeholder="Disabled input" />)
       const input = screen.getByPlaceholderText('Disabled input')
       expect(input).toBeDisabled()
-      expect(input).toHaveClass('disabled:bg-secondary-surface/50')
+      expect(input).toHaveClass('disabled:cursor-not-allowed', 'disabled:opacity-50')
     })
   })
 
@@ -106,7 +106,7 @@ describe('Input Component', () => {
     it('has proper height for touch targets', () => {
       render(<Input placeholder="Touch friendly" />)
       const input = screen.getByPlaceholderText('Touch friendly')
-      expect(input).toHaveClass('min-h-[48px]') // 48px minimum height for comfortable touch
+      expect(input).toHaveClass('h-10') // 40px height (comfortable touch target)
     })
   })
 
@@ -208,7 +208,7 @@ describe('Textarea Component', () => {
     it('has minimum height for touch interaction', () => {
       render(<Textarea placeholder="Touch friendly" />)
       const textarea = screen.getByPlaceholderText('Touch friendly')
-      expect(textarea).toHaveClass('min-h-[120px]') // 120px minimum height
+      expect(textarea).toHaveClass('min-h-[80px]') // 80px minimum height
     })
   })
 

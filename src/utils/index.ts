@@ -8,6 +8,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+// Re-export abstractions for easy access
+export * from '@/abstractions'
+export * from '@/patterns'
+
 // Format file size
 export function formatFileSize(bytes: number): string {
   if (bytes === 0) return '0 Bytes'
