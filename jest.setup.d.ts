@@ -1,4 +1,7 @@
 // Jest TypeScript declarations
+import '@testing-library/jest-dom'
+import 'jest-axe/extend-expect'
+
 declare global {
   var jest: typeof import('jest')
   var expect: typeof import('@jest/globals').expect

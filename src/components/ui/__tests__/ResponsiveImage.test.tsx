@@ -190,7 +190,7 @@ describe('ResponsiveImage Component', () => {
 describe('Specialized Image Components', () => {
   describe('LogoImage', () => {
     it('renders with logo-specific defaults', () => {
-      render(<LogoImage src="/logo.png" />)
+      render(<LogoImage src="/logo.png" alt="Logo" />)
       
       const image = screen.getByAltText('Logo')
       expect(image).toBeInTheDocument()
@@ -208,7 +208,7 @@ describe('Specialized Image Components', () => {
 
   describe('IconImage', () => {
     it('renders with icon-specific defaults', () => {
-      render(<IconImage src="/icon.png" />)
+      render(<IconImage src="/icon.png" alt="Icon" />)
       
       const image = screen.getByAltText('Icon')
       expect(image).toBeInTheDocument()
@@ -218,7 +218,7 @@ describe('Specialized Image Components', () => {
 
   describe('AvatarImage', () => {
     it('renders with avatar-specific styling', () => {
-      render(<AvatarImage src="/avatar.png" />)
+      render(<AvatarImage src="/avatar.png" alt="Avatar" />)
       
       const image = screen.getByAltText('Avatar')
       expect(image).toBeInTheDocument()
@@ -229,7 +229,7 @@ describe('Specialized Image Components', () => {
 
   describe('ThumbnailImage', () => {
     it('renders with thumbnail-specific styling', () => {
-      render(<ThumbnailImage src="/thumb.png" />)
+      render(<ThumbnailImage src="/thumb.png" alt="Thumbnail" />)
       
       const image = screen.getByAltText('Thumbnail')
       expect(image).toBeInTheDocument()
@@ -240,7 +240,7 @@ describe('Specialized Image Components', () => {
 
   describe('HeroImage', () => {
     it('renders with hero-specific settings', () => {
-      render(<HeroImage src="/hero.png" />)
+      render(<HeroImage src="/hero.png" alt="Hero image" />)
       
       const image = screen.getByAltText('Hero image')
       expect(image).toBeInTheDocument()
@@ -252,7 +252,7 @@ describe('Specialized Image Components', () => {
 
   describe('CardImage', () => {
     it('renders with card-specific styling', () => {
-      render(<CardImage src="/card.png" />)
+      render(<CardImage src="/card.png" alt="Card image" />)
       
       const image = screen.getByAltText('Card image')
       expect(image).toBeInTheDocument()
@@ -287,14 +287,14 @@ describe('Responsive behavior', () => {
 
   describe('Performance optimization', () => {
     it('sets appropriate quality for different image types', () => {
-      render(<LogoImage src="/logo.png" quality={95} />)
+      render(<LogoImage src="/logo.png" alt="Logo" quality={95} />)
       
       const image = screen.getByAltText('Logo')
       expect(image).toHaveAttribute('data-quality', '95')
     })
 
     it('enables priority loading for hero images', () => {
-      render(<HeroImage src="/hero.png" />)
+      render(<HeroImage src="/hero.png" alt="Hero image" />)
       
       const image = screen.getByAltText('Hero image')
       expect(image).toHaveAttribute('data-priority', 'true')
@@ -311,9 +311,9 @@ describe('Accessibility', () => {
   })
 
   it('provides meaningful default alt text for specialized components', () => {
-    render(<LogoImage src="/logo.png" />)
-    render(<IconImage src="/icon.png" />)
-    render(<AvatarImage src="/avatar.png" />)
+    render(<LogoImage src="/logo.png" alt="Logo" />)
+    render(<IconImage src="/icon.png" alt="Icon" />)
+    render(<AvatarImage src="/avatar.png" alt="Avatar" />)
     
     expect(screen.getByAltText('Logo')).toBeInTheDocument()
     expect(screen.getByAltText('Icon')).toBeInTheDocument()

@@ -34,6 +34,6 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.setup.d.ts"],
-  "types": ["jest", "@testing-library/jest-dom", "@types/node"],
+  "types": ["jest", "@testing-library/jest-dom", "@types/node", "jest-axe"],
   "exclude": ["node_modules"]
 }

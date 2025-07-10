@@ -27,7 +27,7 @@ describe('Input Component', () => {
       render(<Input disabled placeholder="Disabled input" />)
       const input = screen.getByPlaceholderText('Disabled input')
       expect(input).toBeDisabled()
-      expect(input).toHaveClass('disabled:opacity-50')
+      expect(input).toHaveClass('disabled:bg-secondary-surface/50')
     })
   })
 
@@ -57,7 +57,7 @@ describe('Input Component', () => {
     it('shows hint text', () => {
       render(<Input hint="Enter at least 8 characters" placeholder="Password" />)
       expect(screen.getByText('Enter at least 8 characters')).toBeInTheDocument()
-      expect(screen.getByText('Enter at least 8 characters')).toHaveClass('text-low')
+      expect(screen.getByText('Enter at least 8 characters')).toHaveClass('text-medium')
     })
   })
 
@@ -93,7 +93,7 @@ describe('Input Component', () => {
       render(<Input type="password" placeholder="Password" />)
       
       const input = screen.getByPlaceholderText('Password')
-      const toggleButton = screen.getByRole('button', { name: /toggle password visibility/i })
+      const toggleButton = screen.getByRole('button', { name: /show password/i })
       
       expect(input).toHaveAttribute('type', 'password')
       
