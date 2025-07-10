@@ -24,8 +24,6 @@ import {
   FadeIn,
   Stagger,
   Scale,
-  Bounce,
-  Pulse,
   Reveal,
   ThemeToggle
 } from '@/components/ui'
