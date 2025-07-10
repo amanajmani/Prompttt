@@ -60,6 +60,39 @@ export {
   type ConfirmDialogProps
 } from './Modal'
 
+// Dropdown Components
+export {
+  Dropdown,
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownSeparator,
+  type DropdownProps,
+  type DropdownMenuProps,
+  type DropdownItem
+} from './Dropdown'
+
+// Toast Components
+export {
+  ToastComponent as Toast,
+  ToastProvider,
+  ToastContainer,
+  useToast,
+  useToastActions,
+  toast,
+  type Toast as ToastType,
+  type ToastProps
+} from './Toast'
+
+// Error Boundary Components
+export {
+  ErrorBoundary,
+  ErrorState,
+  NetworkErrorState,
+  NotFoundState,
+  PermissionErrorState,
+  useErrorHandler
+} from './ErrorBoundary'
+
 // Navigation Components
 export {
   Header,

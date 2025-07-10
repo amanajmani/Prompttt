@@ -47,20 +47,61 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
   }, ref) => {
     const modalRef = useRef<HTMLDivElement>(null)
     const previousActiveElement = useRef<HTMLElement | null>(null)
+    const focusableElements = useRef<HTMLElement[]>([])
+    const firstFocusableElement = useRef<HTMLElement | null>(null)
+    const lastFocusableElement = useRef<HTMLElement | null>(null)
 
-    // Handle escape key
+    // Get focusable elements for focus trap
+    const getFocusableElements = () => {
+      if (!modalRef.current) return []
+      
+      const focusableSelectors = [
+        'button:not([disabled])',
+        'input:not([disabled])',
+        'textarea:not([disabled])',
+        'select:not([disabled])',
+        'a[href]',
+        '[tabindex]:not([tabindex="-1"])',
+        '[contenteditable="true"]'
+      ].join(', ')
+      
+      return Array.from(modalRef.current.querySelectorAll(focusableSelectors)) as HTMLElement[]
+    }
+
+    // Handle focus trap
+    const handleTabKey = (event: KeyboardEvent) => {
+      const focusableEls = getFocusableElements()
+      const firstEl = focusableEls[0]
+      const lastEl = focusableEls[focusableEls.length - 1]
+
+      if (event.shiftKey) {
+        // Shift + Tab
+        if (document.activeElement === firstEl) {
+          event.preventDefault()
+          lastEl?.focus()
+        }
+      } else {
+        // Tab
+        if (document.activeElement === lastEl) {
+          event.preventDefault()
+          firstEl?.focus()
+        }
+      }
+    }
+
+    // Handle escape key and focus management
     useEffect(() => {
-      if (!closeOnEscape) return
-
-      const handleEscape = (event: KeyboardEvent) => {
-        if (event.key === 'Escape' && isOpen) {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape' && closeOnEscape && isOpen) {
           onClose()
+        } else if (event.key === 'Tab' && isOpen) {
+          handleTabKey(event)
         }
       }
 
       if (isOpen) {
-        document.addEventListener('keydown', handleEscape)
-        return () => document.removeEventListener('keydown', handleEscape)
+        document.addEventListener('keydown', handleKeyDown)
+        return () => document.removeEventListener('keydown', handleKeyDown)
       }
     }, [isOpen, onClose, closeOnEscape])
 
