@@ -14,6 +14,15 @@ const config = {
   // Setup files
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   
+  // TypeScript configuration
+  preset: 'ts-jest/presets/default-esm',
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
+  },
+  
   // Module name mapping for absolute imports
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
