@@ -118,7 +118,6 @@ describe('ErrorBoundary Component', () => {
     
     // Mock window.location
     const mockLocation = { href: '' }
-    const originalLocation = window.location
     
     // Replace window.location with our mock
     delete (window as any).location
@@ -134,9 +133,6 @@ describe('ErrorBoundary Component', () => {
     await user.click(homeButton)
 
     expect(mockLocation.href).toBe('/')
-    
-    // Restore
-    window.location = originalLocation
   })
 
   it('handles report bug button click', async () => {
