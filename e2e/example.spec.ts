@@ -9,8 +9,11 @@ test.describe('PROMPTTT Homepage', () => {
     // Check page title
     await expect(page).toHaveTitle(/PROMPTTT/)
     
-    // Check main heading - updated to match actual page content
-    await expect(page.getByRole('heading', { name: 'Design System Preview' })).toBeVisible()
+    // Check main heading - the actual h1 on the page
+    await expect(page.getByRole('heading', { name: 'PROMPTTT' })).toBeVisible()
+    
+    // Check that the design system preview text is visible (it's a paragraph, not heading)
+    await expect(page.getByText('Design System Preview - Milestone 4')).toBeVisible()
   })
 
   test('theme toggle works correctly', async ({ page }) => {
