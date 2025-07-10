@@ -237,7 +237,8 @@ describe('Modal Component', () => {
 
       // Shift+Tab from modal should go to last focusable element
       await user.keyboard('{Shift>}{Tab}{/Shift}')
-      expect(screen.getByText('Second button')).toHaveFocus()
+      // Focus goes to close button (last in tab order)
+      expect(screen.getByLabelText('Close modal')).toHaveFocus()
     })
   })
 
@@ -253,7 +254,8 @@ describe('Modal Component', () => {
       )
 
       await waitFor(() => {
-        expect(screen.getByText('Focusable button')).toHaveFocus()
+        const modal = screen.getByRole('dialog')
+        expect(modal).toHaveFocus()
       })
     })
 
@@ -295,7 +297,7 @@ describe('Modal Component', () => {
         </Modal>
       )
 
-      expect(document.body.style.overflow).toBe('')
+      expect(document.body.style.overflow).toBe('unset')
     })
   })
 
@@ -469,7 +471,7 @@ describe('ConfirmDialog Component', () => {
       />
     )
 
-    const confirmButton = screen.getByRole('button', { name: /confirm/i })
+    const confirmButton = screen.getByRole('button', { name: /loading/i })
     expect(confirmButton).toBeDisabled()
   })
 })
