@@ -27,17 +27,17 @@ export default function AuthErrorPage() {
           </ul>
           
           <div className="flex flex-col gap-3 pt-4">
-            <Button asChild className="w-full">
-              <Link href="/auth/login">
+            <Link href="/auth/login">
+              <Button className="w-full">
                 Try Again
-              </Link>
-            </Button>
+              </Button>
+            </Link>
             
-            <Button variant="outline" asChild className="w-full">
-              <Link href="/">
+            <Link href="/">
+              <Button variant="outline" className="w-full">
                 Go Home
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
           
           <p className="text-xs text-low text-center">

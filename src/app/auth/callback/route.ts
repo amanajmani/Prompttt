@@ -32,13 +32,13 @@ export async function GET(request: NextRequest) {
             .from('profiles')
             .insert({
               id: data.user.id,
-              username: data.user.user_metadata?.preferred_username || 
-                       data.user.user_metadata?.user_name ||
+              username: data.user.user_metadata?.['preferred_username'] || 
+                       data.user.user_metadata?.['user_name'] ||
                        data.user.email?.split('@')[0],
-              full_name: data.user.user_metadata?.full_name || 
-                        data.user.user_metadata?.name,
-              avatar_url: data.user.user_metadata?.avatar_url ||
-                         data.user.user_metadata?.picture,
+              full_name: data.user.user_metadata?.['full_name'] || 
+                        data.user.user_metadata?.['name'],
+              avatar_url: data.user.user_metadata?.['avatar_url'] ||
+                         data.user.user_metadata?.['picture'],
               is_creator: true
             })
 
