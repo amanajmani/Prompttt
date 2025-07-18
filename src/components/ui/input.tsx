@@ -7,6 +7,8 @@ export interface InputProps
    * Additional props can be added here for future extensibility
    * while maintaining backward compatibility and type safety
    */
+  // Future extensibility placeholder - prevents empty interface ESLint error
+  _placeholder?: never;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
