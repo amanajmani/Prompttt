@@ -129,7 +129,7 @@ describe('Button', () => {
   it('renders with correct structure and classes', () => {
     const { container } = render(<Button>Test Button</Button>);
     const button = container.firstChild as HTMLElement;
-    
+
     expect(button.tagName).toBe('BUTTON');
     expect(button).toHaveClass('inline-flex', 'items-center', 'justify-center');
     expect(button).toHaveClass('bg-primary', 'text-primary-foreground');
@@ -144,9 +144,11 @@ describe('Button', () => {
       { variant: 'secondary' as const, expectedClass: 'bg-secondary' },
       { variant: 'ghost' as const, expectedClass: 'hover:bg-accent' },
     ];
-    
+
     variants.forEach(({ variant, expectedClass }) => {
-      const { container } = render(<Button variant={variant}>{variant}</Button>);
+      const { container } = render(
+        <Button variant={variant}>{variant}</Button>
+      );
       const button = container.firstChild as HTMLElement;
       expect(button).toHaveClass(expectedClass);
     });
@@ -159,7 +161,7 @@ describe('Button', () => {
       { size: 'lg' as const, expectedClass: 'h-12' },
       { size: 'icon' as const, expectedClass: 'w-11' },
     ];
-    
+
     sizes.forEach(({ size, expectedClass }) => {
       const { container } = render(<Button size={size}>{size}</Button>);
       const button = container.firstChild as HTMLElement;

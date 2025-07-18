@@ -42,7 +42,7 @@ test.describe('Home Page - Design System', () => {
     // Check heading has responsive typography styles applied
     const heading = page.getByRole('heading', { level: 1 });
     await expect(heading).toBeVisible();
-    
+
     // Verify heading content
     await expect(heading).toHaveText('AI VideoHub');
 
