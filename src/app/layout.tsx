@@ -48,7 +48,12 @@ export default function RootLayout({
         )}
       >
         <SupabaseAuthProvider>
-          <ThemeProvider defaultTheme="system">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
             {children}
             <Toaster />
           </ThemeProvider>
