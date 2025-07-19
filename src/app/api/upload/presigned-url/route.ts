@@ -3,7 +3,7 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { r2Client } from '@/lib/r2-client';
+import { getR2Client } from '@/lib/r2-client';
 import { presignedUrlSchema } from '@/lib/validations';
 import type { Database } from '@/types/database';
 
@@ -89,6 +89,9 @@ export async function POST(request: NextRequest) {
     });
 
     console.log('Generating presigned URL...');
+
+    // Get R2 client instance (lazy initialization)
+    const r2Client = getR2Client();
 
     // Generate pre-signed URL (expires in 5 minutes)
     const presignedUrl = await getSignedUrl(r2Client, putObjectCommand, {
