@@ -5,47 +5,9 @@ import { useTheme } from './theme-provider';
 import { useState, useRef, useEffect } from 'react';
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-  const [effectiveTheme, setEffectiveTheme] = useState<'light' | 'dark'>(
-    'light'
-  );
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Update effective theme when theme changes or on mount
-  useEffect(() => {
-    const updateEffectiveTheme = () => {
-      if (theme === 'system') {
-        // Check if window and matchMedia are available (client-side)
-        if (typeof window !== 'undefined' && window.matchMedia) {
-          const isDark = window.matchMedia(
-            '(prefers-color-scheme: dark)'
-          ).matches;
-          setEffectiveTheme(isDark ? 'dark' : 'light');
-        } else {
-          // Fallback for SSR or environments without matchMedia
-          setEffectiveTheme('light');
-        }
-      } else {
-        setEffectiveTheme(theme);
-      }
-    };
-
-    updateEffectiveTheme();
-
-    // Listen for system theme changes when theme is 'system'
-    if (
-      theme === 'system' &&
-      typeof window !== 'undefined' &&
-      window.matchMedia
-    ) {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      const handleChange = () => updateEffectiveTheme();
-
-      mediaQuery.addEventListener('change', handleChange);
-      return () => mediaQuery.removeEventListener('change', handleChange);
-    }
-  }, [theme]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -78,7 +40,7 @@ export function ThemeToggle() {
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        {effectiveTheme === 'light' ? (
+        {resolvedTheme === 'light' ? (
           <Sun className="h-4 w-4" />
         ) : (
           <Moon className="h-4 w-4" />

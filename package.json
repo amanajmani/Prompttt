@@ -36,7 +36,8 @@
     "zod": "^3.22.4",
     "@upstash/ratelimit": "^1.0.1",
     "@upstash/redis": "^1.25.1",
-    "pino": "^8.17.2"
+    "pino": "^8.17.2",
+    "next-themes": "^0.2.1"
   },
   "devDependencies": {
     "typescript": "^5",
@@ -58,6 +59,7 @@
     "@testing-library/user-event": "^14.0.0",
     "ts-node": "^10.0.0",
     "@playwright/test": "^1.40.0",
-    "@types/jest": "^29.5.0"
+    "@types/jest": "^29.5.0",
+    "pino-pretty": "^10.3.1"
   }
 }

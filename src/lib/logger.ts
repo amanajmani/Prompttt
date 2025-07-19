@@ -9,16 +9,8 @@ const logger = pino({
     },
   },
   timestamp: pino.stdTimeFunctions.isoTime,
-  ...(process.env.NODE_ENV === 'development' && {
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        colorize: true,
-        ignore: 'pid,hostname',
-        translateTime: 'SYS:standard',
-      },
-    },
-  }),
+  // Use simple JSON format for server-side compatibility
+  // Pretty printing is handled by development tools, not the logger itself
 });
 
 export { logger };

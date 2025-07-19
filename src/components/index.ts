@@ -2,6 +2,7 @@
 export { Container } from './container';
 export { ThemeProvider, useTheme } from './theme-provider';
 export { ThemeToggle } from './theme-toggle';
+export { ThemeAwareImage } from './theme-aware-image';
 
 // Auth components
 export { SupabaseAuthProvider } from './auth/supabase-auth-provider';
