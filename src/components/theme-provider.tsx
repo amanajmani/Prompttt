@@ -1,79 +1,103 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { type ThemeProviderProps } from 'next-themes/dist/types';
+import { useEffect } from 'react';
+import { useUser } from '@supabase/auth-helpers-react';
+import { useTheme as useNextTheme } from 'next-themes';
 
-type Theme = 'dark' | 'light' | 'system';
-
-type ThemeProviderProps = {
-  children: React.ReactNode;
-  defaultTheme?: Theme;
-  storageKey?: string;
-};
-
-type ThemeProviderState = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-};
-
-const ThemeProviderContext = createContext<ThemeProviderState | undefined>(
-  undefined
-);
-
-export function ThemeProvider({
-  children,
-  defaultTheme = 'system',
-  storageKey = 'prompttt-ui-theme',
-  ...props
-}: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
-
-  // Read theme from localStorage on mount
-  useEffect(() => {
-    const storedTheme = localStorage.getItem(storageKey) as Theme;
-    if (storedTheme) {
-      setTheme(storedTheme);
-    }
-  }, [storageKey]);
-
-  // Apply theme to document and handle system preference
-  useEffect(() => {
-    const root = window.document.documentElement;
-
-    root.classList.remove('light', 'dark');
-
-    if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-        .matches
-        ? 'dark'
-        : 'light';
-
-      root.classList.add(systemTheme);
-      return;
-    }
-
-    root.classList.add(theme);
-  }, [theme]);
-
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    },
-  };
-
+/**
+ * Enhanced Theme Provider that syncs theme preferences with user account.
+ * Provides server-side theme persistence and cross-device synchronization.
+ */
+export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
-      {children}
-    </ThemeProviderContext.Provider>
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      storageKey="prompttt-ui-theme"
+      {...props}
+    >
+      <ThemeSyncManager>
+        {children}
+      </ThemeSyncManager>
+    </NextThemesProvider>
   );
 }
 
-export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
+/**
+ * Internal component that manages theme synchronization with user account
+ */
+function ThemeSyncManager({ children }: { children: React.ReactNode }) {
+  const { setTheme } = useNextTheme();
+  const user = useUser();
 
-  if (context === undefined)
-    throw new Error('useTheme must be used within a ThemeProvider');
+  // Fetch user's theme preference when they log in
+  useEffect(() => {
+    if (!user) return;
 
-  return context;
-};
+    const fetchUserTheme = async () => {
+      try {
+        const response = await fetch('/api/user/theme');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.theme) {
+            setTheme(data.theme);
+          }
+        } else if (response.status === 500) {
+          // Server error - likely database schema issue, continue with local theme
+          console.warn('Theme preference service unavailable, using local theme preference');
+        }
+      } catch (error) {
+        console.warn('Failed to fetch user theme preference:', error);
+      }
+    };
+
+    fetchUserTheme();
+  }, [user, setTheme]);
+
+  return <>{children}</>;
+}
+
+/**
+ * Enhanced useTheme hook that includes database synchronization
+ */
+export function useTheme() {
+  const themeContext = useNextTheme();
+  const user = useUser();
+
+  const setTheme = async (theme: string) => {
+    // Update theme locally first for immediate UI response
+    themeContext.setTheme(theme);
+
+    // Sync with database if user is authenticated
+    if (user) {
+      try {
+        const response = await fetch('/api/user/theme', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ theme }),
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data.warning) {
+            console.warn('Theme sync warning:', data.warning);
+          }
+        } else {
+          console.warn('Failed to sync theme preference to database - server returned:', response.status);
+        }
+      } catch (error) {
+        console.warn('Failed to sync theme preference to database:', error);
+      }
+    }
+  };
+
+  return {
+    ...themeContext,
+    setTheme,
+  };
+}

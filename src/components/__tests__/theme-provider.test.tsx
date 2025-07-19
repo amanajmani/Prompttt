@@ -1,39 +1,25 @@
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ThemeProvider, useTheme } from '../theme-provider';
 
-// Mock localStorage
-const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
-};
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
-});
+// Mock next-themes
+const mockSetTheme = jest.fn();
+const mockUseTheme = jest.fn();
 
-// Mock window.matchMedia
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
+jest.mock('next-themes', () => ({
+  ThemeProvider: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="next-themes-provider">{children}</div>
+  ),
+  useTheme: () => mockUseTheme(),
+}));
 
 // Test component that uses the theme hook
 function TestComponent() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   return (
     <div>
       <span data-testid="current-theme">{theme}</span>
+      <span data-testid="resolved-theme">{resolvedTheme}</span>
       <button onClick={() => setTheme('light')} data-testid="set-light">
         Set Light
       </button>
@@ -50,138 +36,82 @@ function TestComponent() {
 describe('ThemeProvider', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    localStorageMock.getItem.mockReturnValue(null);
-    document.documentElement.className = '';
+    mockUseTheme.mockReturnValue({
+      theme: 'system',
+      setTheme: mockSetTheme,
+      resolvedTheme: 'light',
+      themes: ['light', 'dark', 'system'],
+    });
   });
 
-  it('provides default theme when no stored theme exists', () => {
+  it('renders next-themes provider wrapper', () => {
     render(
-      <ThemeProvider defaultTheme="light">
+      <ThemeProvider>
         <TestComponent />
       </ThemeProvider>
     );
 
-    expect(screen.getByTestId('current-theme')).toHaveTextContent('light');
+    expect(screen.getByTestId('next-themes-provider')).toBeInTheDocument();
   });
 
-  it('reads theme from localStorage on mount', () => {
-    localStorageMock.getItem.mockReturnValue('dark');
-
+  it('provides theme context through useTheme hook', () => {
     render(
-      <ThemeProvider defaultTheme="light">
+      <ThemeProvider>
         <TestComponent />
       </ThemeProvider>
     );
 
-    expect(screen.getByTestId('current-theme')).toHaveTextContent('dark');
+    expect(screen.getByTestId('current-theme')).toHaveTextContent('system');
+    expect(screen.getByTestId('resolved-theme')).toHaveTextContent('light');
   });
 
-  it('applies theme class to document element', () => {
+  it('allows theme switching through setTheme', () => {
     render(
-      <ThemeProvider defaultTheme="dark">
+      <ThemeProvider>
         <TestComponent />
       </ThemeProvider>
     );
 
-    expect(document.documentElement.classList.contains('dark')).toBe(true);
+    screen.getByTestId('set-dark').click();
+    expect(mockSetTheme).toHaveBeenCalledWith('dark');
   });
 
-  it('handles system theme with dark preference', () => {
-    // Mock system preference for dark theme
-    window.matchMedia = jest.fn().mockImplementation((query) => ({
-      matches: query === '(prefers-color-scheme: dark)' ? true : false,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    }));
-
+  it('handles light theme selection', () => {
     render(
-      <ThemeProvider defaultTheme="system">
+      <ThemeProvider>
         <TestComponent />
       </ThemeProvider>
     );
 
-    expect(document.documentElement.classList.contains('dark')).toBe(true);
+    screen.getByTestId('set-light').click();
+    expect(mockSetTheme).toHaveBeenCalledWith('light');
   });
 
-  it('handles system theme with light preference', () => {
-    // Mock system preference for light theme
-    window.matchMedia = jest.fn().mockImplementation((query) => ({
-      matches: query === '(prefers-color-scheme: dark)' ? false : true,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    }));
-
+  it('handles system theme selection', () => {
     render(
-      <ThemeProvider defaultTheme="system">
+      <ThemeProvider>
         <TestComponent />
       </ThemeProvider>
     );
 
-    expect(document.documentElement.classList.contains('light')).toBe(true);
+    screen.getByTestId('set-system').click();
+    expect(mockSetTheme).toHaveBeenCalledWith('system');
   });
 
-  it('updates theme and persists to localStorage', () => {
-    render(
-      <ThemeProvider defaultTheme="light">
-        <TestComponent />
-      </ThemeProvider>
-    );
-
-    act(() => {
-      screen.getByTestId('set-dark').click();
+  it('works with dark resolved theme', () => {
+    mockUseTheme.mockReturnValue({
+      theme: 'system',
+      setTheme: mockSetTheme,
+      resolvedTheme: 'dark',
+      themes: ['light', 'dark', 'system'],
     });
 
-    expect(screen.getByTestId('current-theme')).toHaveTextContent('dark');
-    expect(localStorageMock.setItem).toHaveBeenCalledWith(
-      'prompttt-ui-theme',
-      'dark'
-    );
-    expect(document.documentElement.classList.contains('dark')).toBe(true);
-  });
-
-  it('throws error when useTheme is used outside provider', () => {
-    // Create a component that will throw during render
-    function ThrowingComponent() {
-      useTheme(); // This should throw
-      return <div>Should not render</div>;
-    }
-
-    // Suppress console.error for this test
-    const consoleSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
-
-    expect(() => {
-      render(<ThrowingComponent />);
-    }).toThrow('useTheme must be used within a ThemeProvider');
-
-    consoleSpy.mockRestore();
-  });
-
-  it('uses custom storage key', () => {
     render(
-      <ThemeProvider defaultTheme="light" storageKey="custom-theme">
+      <ThemeProvider>
         <TestComponent />
       </ThemeProvider>
     );
 
-    act(() => {
-      screen.getByTestId('set-dark').click();
-    });
-
-    expect(localStorageMock.setItem).toHaveBeenCalledWith(
-      'custom-theme',
-      'dark'
-    );
+    expect(screen.getByTestId('resolved-theme')).toHaveTextContent('dark');
   });
 });
