@@ -5,6 +5,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
+import { SupabaseAuthProvider } from '@/components/auth/supabase-auth-provider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -46,10 +47,12 @@ export default function RootLayout({
           satoshi.variable
         )}
       >
-        <ThemeProvider defaultTheme="system">
-          {children}
-          <Toaster />
-        </ThemeProvider>
+        <SupabaseAuthProvider>
+          <ThemeProvider defaultTheme="system">
+            {children}
+            <Toaster />
+          </ThemeProvider>
+        </SupabaseAuthProvider>
       </body>
     </html>
   );

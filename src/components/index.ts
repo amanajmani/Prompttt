@@ -3,6 +3,11 @@ export { Container } from './container';
 export { ThemeProvider, useTheme } from './theme-provider';
 export { ThemeToggle } from './theme-toggle';
 
+// Auth components
+export { SupabaseAuthProvider } from './auth/supabase-auth-provider';
+export { LogoutButton } from './auth/logout-button';
+export { AuthNav } from './auth/auth-nav';
+
 // UI components
 export {
   Button,
