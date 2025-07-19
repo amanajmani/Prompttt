@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { Container } from '@/components/container';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,7 +24,17 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
+  const router = useRouter();
   const supabase = useSupabaseClient();
+  const user = useUser();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+      router.refresh();
+    }
+  }, [user, router]);
 
   const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,6 +92,23 @@ export default function SignupPage() {
       setIsLoading(false);
     }
   };
+
+  // Don't render signup form if user is authenticated
+  if (user) {
+    return (
+      <main className="min-h-screen bg-background py-8 text-foreground md:py-16">
+        <Container>
+          <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center md:min-h-[calc(100vh-8rem)]">
+            <Card className="w-full max-w-md">
+              <CardContent className="p-6 text-center">
+                <p className="text-muted-foreground">Redirecting...</p>
+              </CardContent>
+            </Card>
+          </div>
+        </Container>
+      </main>
+    );
+  }
 
   if (isSuccess) {
     return (
