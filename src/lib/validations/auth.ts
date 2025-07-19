@@ -56,5 +56,7 @@ export const passwordResetSchema = z.object({
 // Export types for TypeScript
 export type SignupInput = z.infer<typeof signupSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
-export type PasswordResetRequestInput = z.infer<typeof passwordResetRequestSchema>;
+export type PasswordResetRequestInput = z.infer<
+  typeof passwordResetRequestSchema
+>;
 export type PasswordResetInput = z.infer<typeof passwordResetSchema>;

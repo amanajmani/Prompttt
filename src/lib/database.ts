@@ -58,7 +58,7 @@ export const profileOperations = {
     }
 
     return data;
-  }
+  },
 };
 
 // Video operations
@@ -108,9 +108,7 @@ export const videoOperations = {
     return data || [];
   },
 
-  async createVideo(
-    video: Tables['videos']['Insert']
-  ): Promise<Video | null> {
+  async createVideo(video: Tables['videos']['Insert']): Promise<Video | null> {
     const { data, error } = await supabase
       .from('videos')
       .insert(video)
@@ -145,10 +143,7 @@ export const videoOperations = {
   },
 
   async deleteVideo(videoId: string): Promise<boolean> {
-    const { error } = await supabase
-      .from('videos')
-      .delete()
-      .eq('id', videoId);
+    const { error } = await supabase.from('videos').delete().eq('id', videoId);
 
     if (error) {
       console.error('Error deleting video:', error);
@@ -160,7 +155,7 @@ export const videoOperations = {
 
   async incrementViewCount(videoId: string): Promise<boolean> {
     const { error } = await supabase.rpc('increment_view_count', {
-      video_id: videoId
+      video_id: videoId,
     });
 
     if (error) {
@@ -169,7 +164,7 @@ export const videoOperations = {
     }
 
     return true;
-  }
+  },
 };
 
 // Like operations
@@ -217,12 +212,10 @@ export const likeOperations = {
         return false;
       }
     } else {
-      const { error } = await supabase
-        .from('likes')
-        .insert({
-          user_id: userId,
-          video_id: videoId
-        });
+      const { error } = await supabase.from('likes').insert({
+        user_id: userId,
+        video_id: videoId,
+      });
 
       if (error) {
         console.error('Error adding like:', error);
@@ -231,7 +224,7 @@ export const likeOperations = {
     }
 
     return true;
-  }
+  },
 };
 
 // Comment operations
@@ -299,5 +292,5 @@ export const commentOperations = {
     }
 
     return true;
-  }
+  },
 };

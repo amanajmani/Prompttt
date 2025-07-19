@@ -16,7 +16,8 @@ export default function Home() {
           <div className="text-center">
             <p className="mx-auto max-w-2xl text-muted-foreground">
               The definitive, curated gallery for the world&apos;s best
-              AI-generated video art. Built with obsessive craft, layer by layer.
+              AI-generated video art. Built with obsessive craft, layer by
+              layer.
             </p>
           </div>
         </div>

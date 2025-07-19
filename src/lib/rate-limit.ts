@@ -5,37 +5,49 @@ import { Redis } from '@upstash/redis';
 let redis: Redis | null = null;
 
 try {
-  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  if (
+    process.env.UPSTASH_REDIS_REST_URL &&
+    process.env.UPSTASH_REDIS_REST_TOKEN
+  ) {
     redis = new Redis({
       url: process.env.UPSTASH_REDIS_REST_URL,
       token: process.env.UPSTASH_REDIS_REST_TOKEN,
     });
   }
 } catch (error) {
-  console.warn('Redis initialization failed, rate limiting will be disabled:', error);
+  console.warn(
+    'Redis initialization failed, rate limiting will be disabled:',
+    error
+  );
 }
 
 // Create rate limiter instances for different endpoints
-export const authRateLimit = redis ? new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(5, '10 s'), // 5 requests per 10 seconds
-  analytics: true,
-  prefix: 'auth',
-}) : null;
+export const authRateLimit = redis
+  ? new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(5, '10 s'), // 5 requests per 10 seconds
+      analytics: true,
+      prefix: 'auth',
+    })
+  : null;
 
-export const uploadRateLimit = redis ? new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(10, '60 s'), // 10 requests per minute for uploads
-  analytics: true,
-  prefix: 'upload',
-}) : null;
+export const uploadRateLimit = redis
+  ? new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(10, '60 s'), // 10 requests per minute for uploads
+      analytics: true,
+      prefix: 'upload',
+    })
+  : null;
 
-export const generalRateLimit = redis ? new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(30, '60 s'), // 30 requests per minute for general API
-  analytics: true,
-  prefix: 'general',
-}) : null;
+export const generalRateLimit = redis
+  ? new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(30, '60 s'), // 30 requests per minute for general API
+      analytics: true,
+      prefix: 'general',
+    })
+  : null;
 
 // Helper function to get client IP address
 export function getClientIP(request: Request): string {
@@ -43,19 +55,19 @@ export function getClientIP(request: Request): string {
   const forwarded = request.headers.get('x-forwarded-for');
   const realIP = request.headers.get('x-real-ip');
   const cfConnectingIP = request.headers.get('cf-connecting-ip');
-  
+
   if (cfConnectingIP) {
     return cfConnectingIP;
   }
-  
+
   if (forwarded) {
     return forwarded.split(',')[0].trim();
   }
-  
+
   if (realIP) {
     return realIP;
   }
-  
+
   // Fallback to a default identifier
   return 'unknown';
 }
@@ -84,7 +96,7 @@ export async function withRateLimit(
 
   const ip = identifier || getClientIP(request);
   const { success, limit, reset, remaining } = await rateLimiter.limit(ip);
-  
+
   return {
     success,
     limit,

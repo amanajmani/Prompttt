@@ -17,7 +17,10 @@ export class AppError extends Error {
 }
 
 export class ValidationError extends AppError {
-  constructor(message: string, public details?: any) {
+  constructor(
+    message: string,
+    public details?: unknown
+  ) {
     super(message, 400, 'VALIDATION_ERROR');
     this.name = 'ValidationError';
   }
@@ -45,7 +48,10 @@ export class NotFoundError extends AppError {
 }
 
 export class RateLimitError extends AppError {
-  constructor(message: string = 'Too many requests', public retryAfter?: number) {
+  constructor(
+    message: string = 'Too many requests',
+    public retryAfter?: number
+  ) {
     super(message, 429, 'RATE_LIMIT_ERROR');
     this.name = 'RateLimitError';
   }
@@ -55,7 +61,7 @@ export class RateLimitError extends AppError {
 interface ErrorResponse {
   error: string;
   code?: string;
-  details?: any;
+  details?: unknown;
   timestamp: string;
   path: string;
   requestId?: string;
@@ -63,64 +69,81 @@ interface ErrorResponse {
 
 // Higher-order function to wrap API handlers with error handling
 export function withErrorHandler(
-  handler: (request: NextRequest, context?: any) => Promise<NextResponse>
+  handler: (request: NextRequest, context?: unknown) => Promise<NextResponse>
 ) {
-  return async (request: NextRequest, context?: any): Promise<NextResponse> => {
+  return async (
+    request: NextRequest,
+    context?: unknown
+  ): Promise<NextResponse> => {
     const startTime = Date.now();
     const requestId = generateRequestId();
-    
+
     try {
       // Add request ID to headers for tracing
       const response = await handler(request, context);
-      
+
       // Log successful requests
       const duration = Date.now() - startTime;
-      logger.info({
-        requestId,
-        method: request.method,
-        url: request.url,
-        statusCode: response.status,
-        duration,
-      }, 'Request completed successfully');
-      
+      logger.info(
+        {
+          requestId,
+          method: request.method,
+          url: request.url,
+          statusCode: response.status,
+          duration,
+        },
+        'Request completed successfully'
+      );
+
       // Add request ID to response headers
       response.headers.set('X-Request-ID', requestId);
-      
+
       return response;
-      
     } catch (error) {
       const duration = Date.now() - startTime;
-      
+
       // Handle different types of errors
       if (error instanceof ZodError) {
         return handleZodError(error, request, requestId);
       }
-      
+
       if (error instanceof AppError) {
         return handleAppError(error, request, requestId, duration);
       }
-      
+
       // Handle unexpected errors
-      return handleUnexpectedError(error as Error, request, requestId, duration);
+      return handleUnexpectedError(
+        error as Error,
+        request,
+        requestId,
+        duration
+      );
     }
   };
 }
 
 // Handle Zod validation errors
-function handleZodError(error: ZodError, request: NextRequest, requestId: string): NextResponse {
-  const details = error.issues.map(issue => ({
+function handleZodError(
+  error: ZodError,
+  request: NextRequest,
+  requestId: string
+): NextResponse {
+  const details = error.issues.map((issue) => ({
     field: issue.path.join('.'),
     message: issue.message,
     code: issue.code,
   }));
-  
-  logger.warn({
-    requestId,
-    method: request.method,
-    url: request.url,
-    validationErrors: details,
-  }, 'Validation error occurred');
-  
+
+  logger.warn(
+    {
+      requestId,
+      method: request.method,
+      url: request.url,
+      validationErrors: details,
+    },
+    'Validation error occurred'
+  );
+
   const errorResponse: ErrorResponse = {
     error: 'Invalid request data',
     code: 'VALIDATION_ERROR',
@@ -129,7 +152,7 @@ function handleZodError(error: ZodError, request: NextRequest, requestId: string
     path: new URL(request.url).pathname,
     requestId,
   };
-  
+
   return NextResponse.json(errorResponse, {
     status: 400,
     headers: { 'X-Request-ID': requestId },
@@ -138,28 +161,31 @@ function handleZodError(error: ZodError, request: NextRequest, requestId: string
 
 // Handle application-specific errors
 function handleAppError(
-  error: AppError, 
-  request: NextRequest, 
+  error: AppError,
+  request: NextRequest,
   requestId: string,
   duration: number
 ): NextResponse {
   // Log error with appropriate level
   const logLevel = error.statusCode >= 500 ? 'error' : 'warn';
-  
-  logger[logLevel]({
-    requestId,
-    method: request.method,
-    url: request.url,
-    statusCode: error.statusCode,
-    duration,
-    error: {
-      name: error.name,
-      message: error.message,
-      code: error.code,
-      stack: error.statusCode >= 500 ? error.stack : undefined,
+
+  logger[logLevel](
+    {
+      requestId,
+      method: request.method,
+      url: request.url,
+      statusCode: error.statusCode,
+      duration,
+      error: {
+        name: error.name,
+        message: error.message,
+        code: error.code,
+        stack: error.statusCode >= 500 ? error.stack : undefined,
+      },
     },
-  }, `Application error: ${error.message}`);
-  
+    `Application error: ${error.message}`
+  );
+
   const errorResponse: ErrorResponse = {
     error: error.message,
     code: error.code,
@@ -167,13 +193,13 @@ function handleAppError(
     path: new URL(request.url).pathname,
     requestId,
   };
-  
+
   // Add retry-after header for rate limit errors
   const headers: Record<string, string> = { 'X-Request-ID': requestId };
   if (error instanceof RateLimitError && error.retryAfter) {
     headers['Retry-After'] = error.retryAfter.toString();
   }
-  
+
   return NextResponse.json(errorResponse, {
     status: error.statusCode,
     headers,
@@ -182,8 +208,8 @@ function handleAppError(
 
 // Handle unexpected errors
 function handleUnexpectedError(
-  error: Error, 
-  request: NextRequest, 
+  error: Error,
+  request: NextRequest,
   requestId: string,
   duration: number
 ): NextResponse {
@@ -195,7 +221,7 @@ function handleUnexpectedError(
     duration,
     userAgent: request.headers.get('user-agent'),
   });
-  
+
   // Return generic error message to client (don't leak implementation details)
   const errorResponse: ErrorResponse = {
     error: 'An unexpected error occurred. Please try again later.',
@@ -204,7 +230,7 @@ function handleUnexpectedError(
     path: new URL(request.url).pathname,
     requestId,
   };
-  
+
   return NextResponse.json(errorResponse, {
     status: 500,
     headers: { 'X-Request-ID': requestId },

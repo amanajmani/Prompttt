@@ -1,4 +1,8 @@
-import { presignedUrlSchema, fileSizeSchema, uploadCompletionSchema } from '../upload';
+import {
+  presignedUrlSchema,
+  fileSizeSchema,
+  uploadCompletionSchema,
+} from '../upload';
 
 describe('Upload Validation Schemas', () => {
   describe('presignedUrlSchema', () => {
@@ -78,7 +82,9 @@ describe('Upload Validation Schemas', () => {
       const result = presignedUrlSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('File name contains invalid characters');
+        expect(result.error.issues[0].message).toBe(
+          'File name contains invalid characters'
+        );
       }
     });
 
@@ -92,7 +98,9 @@ describe('Upload Validation Schemas', () => {
       const result = presignedUrlSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('File type does not match the selected bucket type');
+        expect(result.error.issues[0].message).toBe(
+          'File type does not match the selected bucket type'
+        );
       }
     });
 
@@ -106,7 +114,9 @@ describe('Upload Validation Schemas', () => {
       const result = presignedUrlSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('File type does not match the selected bucket type');
+        expect(result.error.issues[0].message).toBe(
+          'File type does not match the selected bucket type'
+        );
       }
     });
 
@@ -114,20 +124,27 @@ describe('Upload Validation Schemas', () => {
       const invalidData = {
         fileName: 'file.mp4',
         fileType: 'video/mp4',
-        bucketType: 'invalid' as any,
+        bucketType: 'invalid' as 'videos' | 'images',
       };
 
       const result = presignedUrlSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Bucket type must be either "videos" or "images"');
+        expect(result.error.issues[0].message).toBe(
+          'Bucket type must be either "videos" or "images"'
+        );
       }
     });
 
     it('should accept all allowed video types', () => {
-      const videoTypes = ['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo'];
-      
-      videoTypes.forEach(fileType => {
+      const videoTypes = [
+        'video/mp4',
+        'video/webm',
+        'video/quicktime',
+        'video/x-msvideo',
+      ];
+
+      videoTypes.forEach((fileType) => {
         const validData = {
           fileName: `video.${fileType.split('/')[1]}`,
           fileType,
@@ -141,8 +158,8 @@ describe('Upload Validation Schemas', () => {
 
     it('should accept all allowed image types', () => {
       const imageTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-      
-      imageTypes.forEach(fileType => {
+
+      imageTypes.forEach((fileType) => {
         const validData = {
           fileName: `image.${fileType.split('/')[1]}`,
           fileType,
@@ -185,7 +202,9 @@ describe('Upload Validation Schemas', () => {
       const result = fileSizeSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('File size exceeds the maximum allowed limit');
+        expect(result.error.issues[0].message).toBe(
+          'File size exceeds the maximum allowed limit'
+        );
       }
     });
 
@@ -198,7 +217,9 @@ describe('Upload Validation Schemas', () => {
       const result = fileSizeSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('File size exceeds the maximum allowed limit');
+        expect(result.error.issues[0].message).toBe(
+          'File size exceeds the maximum allowed limit'
+        );
       }
     });
 
@@ -211,7 +232,9 @@ describe('Upload Validation Schemas', () => {
       const result = fileSizeSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('File size must be positive');
+        expect(result.error.issues[0].message).toBe(
+          'File size must be positive'
+        );
       }
     });
 
@@ -224,7 +247,9 @@ describe('Upload Validation Schemas', () => {
       const result = fileSizeSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('File size must be positive');
+        expect(result.error.issues[0].message).toBe(
+          'File size must be positive'
+        );
       }
     });
   });
@@ -294,7 +319,9 @@ describe('Upload Validation Schemas', () => {
       const result = uploadCompletionSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('File size must be positive');
+        expect(result.error.issues[0].message).toBe(
+          'File size must be positive'
+        );
       }
     });
   });

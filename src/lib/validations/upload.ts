@@ -8,59 +8,57 @@ const fileNameSchema = z
   .max(255, 'File name is too long')
   .regex(/^[^<>:"/\\|?*]+$/, 'File name contains invalid characters');
 
-// File type validation schemas
-const videoFileTypeSchema = z
-  .string()
-  .refine(
-    (type) => ALLOWED_VIDEO_TYPES.includes(type as any),
-    'Invalid video file type. Supported formats: MP4, WebM, QuickTime, AVI'
-  );
-
-const imageFileTypeSchema = z
-  .string()
-  .refine(
-    (type) => ALLOWED_IMAGE_TYPES.includes(type as any),
-    'Invalid image file type. Supported formats: JPEG, PNG, WebP, GIF'
-  );
+// File type validation (inline in schema)
 
 // Bucket type validation schema
 const bucketTypeSchema = z.enum(['videos', 'images'], {
-  errorMap: () => ({ message: 'Bucket type must be either "videos" or "images"' }),
+  errorMap: () => ({
+    message: 'Bucket type must be either "videos" or "images"',
+  }),
 });
 
 // Pre-signed URL request schema
-export const presignedUrlSchema = z.object({
-  fileName: fileNameSchema,
-  fileType: z.string().min(1, 'File type is required'),
-  bucketType: bucketTypeSchema.default('videos'),
-}).refine(
-  (data) => {
-    if (data.bucketType === 'videos') {
-      return ALLOWED_VIDEO_TYPES.includes(data.fileType as any);
-    } else {
-      return ALLOWED_IMAGE_TYPES.includes(data.fileType as any);
+export const presignedUrlSchema = z
+  .object({
+    fileName: fileNameSchema,
+    fileType: z.string().min(1, 'File type is required'),
+    bucketType: bucketTypeSchema.default('videos'),
+  })
+  .refine(
+    (data) => {
+      if (data.bucketType === 'videos') {
+        return ALLOWED_VIDEO_TYPES.includes(
+          data.fileType as (typeof ALLOWED_VIDEO_TYPES)[number]
+        );
+      } else {
+        return ALLOWED_IMAGE_TYPES.includes(
+          data.fileType as (typeof ALLOWED_IMAGE_TYPES)[number]
+        );
+      }
+    },
+    {
+      message: 'File type does not match the selected bucket type',
+      path: ['fileType'],
     }
-  },
-  {
-    message: 'File type does not match the selected bucket type',
-    path: ['fileType'],
-  }
-);
+  );
 
 // File size validation schema
-export const fileSizeSchema = z.object({
-  size: z.number().positive('File size must be positive'),
-  type: z.enum(['video', 'image']),
-}).refine(
-  (data) => {
-    const maxSize = data.type === 'video' ? 100 * 1024 * 1024 : 10 * 1024 * 1024; // 100MB for videos, 10MB for images
-    return data.size <= maxSize;
-  },
-  {
-    message: 'File size exceeds the maximum allowed limit',
-    path: ['size'],
-  }
-);
+export const fileSizeSchema = z
+  .object({
+    size: z.number().positive('File size must be positive'),
+    type: z.enum(['video', 'image']),
+  })
+  .refine(
+    (data) => {
+      const maxSize =
+        data.type === 'video' ? 100 * 1024 * 1024 : 10 * 1024 * 1024; // 100MB for videos, 10MB for images
+      return data.size <= maxSize;
+    },
+    {
+      message: 'File size exceeds the maximum allowed limit',
+      path: ['size'],
+    }
+  );
 
 // Upload completion schema
 export const uploadCompletionSchema = z.object({

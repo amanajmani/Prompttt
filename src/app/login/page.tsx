@@ -21,7 +21,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
   const router = useRouter();
   const supabase = useSupabaseClient();
   const user = useUser();
@@ -31,6 +32,9 @@ export default function LoginPage() {
     if (user) {
       router.push('/');
       router.refresh();
+    } else {
+      // User is not authenticated, safe to show login form
+      setIsCheckingAuth(false);
     }
   }, [user, router]);
 
@@ -47,7 +51,9 @@ export default function LoginPage() {
 
       if (signInError) {
         if (signInError.message === 'Invalid login credentials') {
-          setError('Invalid email or password. Please check your credentials and try again.');
+          setError(
+            'Invalid email or password. Please check your credentials and try again.'
+          );
         } else {
           setError(signInError.message);
         }
@@ -57,7 +63,7 @@ export default function LoginPage() {
       // Successful login - redirect to homepage
       router.push('/');
       router.refresh();
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
@@ -80,22 +86,24 @@ export default function LoginPage() {
         setError(signInError.message);
       }
       // Note: If successful, user will be redirected to Google and then back to the app
-    } catch (err) {
+    } catch {
       setError('An error occurred during Google login');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Don't render login form if user is authenticated
-  if (user) {
+  // Show loading state while checking authentication or if user is authenticated
+  if (isCheckingAuth || user) {
     return (
       <main className="min-h-screen bg-background py-8 text-foreground md:py-16">
         <Container>
           <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center md:min-h-[calc(100vh-8rem)]">
             <Card className="w-full max-w-md">
               <CardContent className="p-6 text-center">
-                <p className="text-muted-foreground">Redirecting...</p>
+                <p className="text-muted-foreground">
+                  {user ? 'Redirecting...' : 'Loading...'}
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -161,7 +169,7 @@ export default function LoginPage() {
                   className="w-full"
                   disabled={isLoading || !email || !password}
                 >
-                  {isLoading ? 'Signing in...' : 'Sign In'}
+                  {isLoading ? 'Signing in...' : 'Sign In with Email'}
                 </Button>
               </form>
 

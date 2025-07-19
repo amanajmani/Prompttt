@@ -1,4 +1,9 @@
-import { signupSchema, loginSchema, passwordResetRequestSchema, passwordResetSchema } from '../auth';
+import {
+  signupSchema,
+  loginSchema,
+  passwordResetRequestSchema,
+  passwordResetSchema,
+} from '../auth';
 
 describe('Auth Validation Schemas', () => {
   describe('signupSchema', () => {
@@ -26,7 +31,9 @@ describe('Auth Validation Schemas', () => {
       const result = signupSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Username must be at least 3 characters long');
+        expect(result.error.issues[0].message).toBe(
+          'Username must be at least 3 characters long'
+        );
       }
     });
 
@@ -40,7 +47,9 @@ describe('Auth Validation Schemas', () => {
       const result = signupSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Username must not exceed 30 characters');
+        expect(result.error.issues[0].message).toBe(
+          'Username must not exceed 30 characters'
+        );
       }
     });
 
@@ -54,7 +63,9 @@ describe('Auth Validation Schemas', () => {
       const result = signupSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Username can only contain letters, numbers, underscores, and hyphens');
+        expect(result.error.issues[0].message).toBe(
+          'Username can only contain letters, numbers, underscores, and hyphens'
+        );
       }
     });
 
@@ -68,7 +79,9 @@ describe('Auth Validation Schemas', () => {
       const result = signupSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Please enter a valid email address');
+        expect(result.error.issues[0].message).toBe(
+          'Please enter a valid email address'
+        );
       }
     });
 
@@ -82,7 +95,9 @@ describe('Auth Validation Schemas', () => {
       const result = signupSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Password must be at least 8 characters long');
+        expect(result.error.issues[0].message).toBe(
+          'Password must be at least 8 characters long'
+        );
       }
     });
 
@@ -96,7 +111,9 @@ describe('Auth Validation Schemas', () => {
       const result = signupSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toContain('Password must contain at least one uppercase letter');
+        expect(result.error.issues[0].message).toContain(
+          'Password must contain at least one uppercase letter'
+        );
       }
     });
 
@@ -135,7 +152,9 @@ describe('Auth Validation Schemas', () => {
       const result = loginSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Please enter a valid email address');
+        expect(result.error.issues[0].message).toBe(
+          'Please enter a valid email address'
+        );
       }
     });
 
