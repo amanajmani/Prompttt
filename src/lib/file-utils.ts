@@ -14,15 +14,19 @@ export const ALLOWED_IMAGE_TYPES = [
 
 export const MAX_FILE_SIZE = {
   VIDEO: 100 * 1024 * 1024, // 100MB
-  IMAGE: 10 * 1024 * 1024,  // 10MB
+  IMAGE: 10 * 1024 * 1024, // 10MB
 } as const;
 
 export function isValidVideoType(fileType: string): boolean {
-  return ALLOWED_VIDEO_TYPES.includes(fileType as any);
+  return ALLOWED_VIDEO_TYPES.includes(
+    fileType as (typeof ALLOWED_VIDEO_TYPES)[number]
+  );
 }
 
 export function isValidImageType(fileType: string): boolean {
-  return ALLOWED_IMAGE_TYPES.includes(fileType as any);
+  return ALLOWED_IMAGE_TYPES.includes(
+    fileType as (typeof ALLOWED_IMAGE_TYPES)[number]
+  );
 }
 
 export function isValidFileSize(file: File, type: 'video' | 'image'): boolean {
@@ -31,10 +35,17 @@ export function isValidFileSize(file: File, type: 'video' | 'image'): boolean {
 }
 
 export function getFileExtension(fileName: string): string {
-  return fileName.split('.').pop()?.toLowerCase() || '';
+  const parts = fileName.split('.');
+  if (parts.length === 1) {
+    return ''; // No extension
+  }
+  return parts.pop()?.toLowerCase() || '';
 }
 
-export function generateUniqueFileName(originalName: string, userId: string): string {
+export function generateUniqueFileName(
+  originalName: string,
+  userId: string
+): string {
   const timestamp = Date.now();
   const randomString = Math.random().toString(36).substring(2, 15);
   const extension = getFileExtension(originalName);
@@ -43,11 +54,11 @@ export function generateUniqueFileName(originalName: string, userId: string): st
 
 export function formatFileSize(bytes: number): string {
   if (bytes === 0) return '0 Bytes';
-  
+
   const k = 1024;
   const sizes = ['Bytes', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  
+
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
@@ -57,17 +68,17 @@ export function detectBucketType(file: File): 'videos' | 'images' {
   } else if (file.type.startsWith('video/')) {
     return 'videos';
   }
-  
+
   // Fallback based on file extension
   const extension = getFileExtension(file.name);
   const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
   const videoExtensions = ['mp4', 'webm', 'mov', 'avi'];
-  
+
   if (imageExtensions.includes(extension)) {
     return 'images';
   } else if (videoExtensions.includes(extension)) {
     return 'videos';
   }
-  
+
   return 'videos'; // Default fallback
 }

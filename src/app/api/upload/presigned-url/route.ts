@@ -7,12 +7,6 @@ import { r2Client } from '@/lib/r2-client';
 import { presignedUrlSchema } from '@/lib/validations';
 import type { Database } from '@/types/database';
 
-interface PresignedUrlRequest {
-  fileName: string;
-  fileType: string;
-  bucketType?: 'videos' | 'images';
-}
-
 interface PresignedUrlResponse {
   presignedUrl: string;
   publicUrl: string;
@@ -25,7 +19,10 @@ export async function POST(request: NextRequest) {
 
     // Verify user authentication
     const supabase = createRouteHandlerClient<Database>({ cookies });
-    const { data: { session }, error: authError } = await supabase.auth.getSession();
+    const {
+      data: { session },
+      error: authError,
+    } = await supabase.auth.getSession();
 
     if (authError || !session) {
       return NextResponse.json(
@@ -37,13 +34,13 @@ export async function POST(request: NextRequest) {
     // Parse and validate request body
     const body = await request.json();
     console.log('Request body:', body);
-    
+
     const validationResult = presignedUrlSchema.safeParse(body);
     if (!validationResult.success) {
       return NextResponse.json(
-        { 
+        {
           error: 'Invalid request data',
-          details: validationResult.error.issues.map(issue => ({
+          details: validationResult.error.issues.map((issue) => ({
             field: issue.path.join('.'),
             message: issue.message,
           })),
@@ -61,13 +58,15 @@ export async function POST(request: NextRequest) {
     const key = `${bucketType}/${session.user.id}/${timestamp}-${randomString}.${fileExtension}`;
 
     // Get bucket configuration
-    const bucketName = bucketType === 'videos' 
-      ? process.env.R2_BUCKET_NAME 
-      : process.env.R2_IMAGES_BUCKET_NAME;
-    
-    const publicBaseUrl = bucketType === 'videos'
-      ? process.env.R2_PUBLIC_URL
-      : process.env.R2_IMAGES_PUBLIC_URL;
+    const bucketName =
+      bucketType === 'videos'
+        ? process.env.R2_BUCKET_NAME
+        : process.env.R2_IMAGES_BUCKET_NAME;
+
+    const publicBaseUrl =
+      bucketType === 'videos'
+        ? process.env.R2_PUBLIC_URL
+        : process.env.R2_IMAGES_PUBLIC_URL;
 
     if (!bucketName || !publicBaseUrl) {
       return NextResponse.json(
@@ -108,13 +107,12 @@ export async function POST(request: NextRequest) {
     console.log('Presigned URL generated successfully');
 
     return NextResponse.json(response);
-
   } catch (error) {
     console.error('Presigned URL error:', error);
     return NextResponse.json(
-      { 
+      {
         error: 'Internal server error',
-        message: error instanceof Error ? error.message : 'Unknown error'
+        message: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

@@ -23,6 +23,7 @@ export default function SignupPage() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   const router = useRouter();
   const supabase = useSupabaseClient();
@@ -33,6 +34,9 @@ export default function SignupPage() {
     if (user) {
       router.push('/');
       router.refresh();
+    } else {
+      // User is not authenticated, safe to show signup form
+      setIsCheckingAuth(false);
     }
   }, [user, router]);
 
@@ -54,7 +58,9 @@ export default function SignupPage() {
 
       if (signUpError) {
         if (signUpError.message.includes('already registered')) {
-          setError('An account with this email already exists. Please try logging in instead.');
+          setError(
+            'An account with this email already exists. Please try logging in instead.'
+          );
         } else {
           setError(signUpError.message);
         }
@@ -63,7 +69,7 @@ export default function SignupPage() {
 
       // Successful signup
       setIsSuccess(true);
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
@@ -86,22 +92,24 @@ export default function SignupPage() {
         setError(signUpError.message);
       }
       // Note: If successful, user will be redirected to Google and then back to the app
-    } catch (err) {
+    } catch {
       setError('An error occurred during Google signup');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Don't render signup form if user is authenticated
-  if (user) {
+  // Show loading state while checking authentication or if user is authenticated
+  if (isCheckingAuth || user) {
     return (
       <main className="min-h-screen bg-background py-8 text-foreground md:py-16">
         <Container>
           <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center md:min-h-[calc(100vh-8rem)]">
             <Card className="w-full max-w-md">
               <CardContent className="p-6 text-center">
-                <p className="text-muted-foreground">Redirecting...</p>
+                <p className="text-muted-foreground">
+                  {user ? 'Redirecting...' : 'Loading...'}
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -226,7 +234,7 @@ export default function SignupPage() {
                   className="w-full"
                   disabled={isLoading || !email || !password || !username}
                 >
-                  {isLoading ? 'Creating account...' : 'Sign Up'}
+                  {isLoading ? 'Creating account...' : 'Sign Up with Email'}
                 </Button>
               </form>
 

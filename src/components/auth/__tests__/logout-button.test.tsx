@@ -36,7 +36,9 @@ describe('LogoutButton', () => {
 
     render(<LogoutButton />);
 
-    expect(screen.getByRole('button', { name: 'Sign Out' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Sign Out' })
+    ).toBeInTheDocument();
   });
 
   it('does not render when user is not authenticated', () => {
@@ -44,7 +46,9 @@ describe('LogoutButton', () => {
 
     render(<LogoutButton />);
 
-    expect(screen.queryByRole('button', { name: 'Sign Out' })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Sign Out' })
+    ).not.toBeInTheDocument();
   });
 
   it('calls signOut when clicked', async () => {
@@ -78,21 +82,30 @@ describe('LogoutButton', () => {
 
   it('shows loading state when signing out', async () => {
     mockUseUser.mockReturnValue({ id: 'test-user-id' });
-    mockSignOut.mockImplementation(() => new Promise(resolve => setTimeout(() => resolve({ error: null }), 100)));
+    mockSignOut.mockImplementation(
+      () =>
+        new Promise((resolve) =>
+          setTimeout(() => resolve({ error: null }), 100)
+        )
+    );
 
     render(<LogoutButton />);
 
     const logoutButton = screen.getByRole('button', { name: 'Sign Out' });
     fireEvent.click(logoutButton);
 
-    expect(screen.getByRole('button', { name: 'Signing out...' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Signing out...' })
+    ).toBeInTheDocument();
     expect(logoutButton).toBeDisabled();
   });
 
   it('handles logout errors gracefully', async () => {
     mockUseUser.mockReturnValue({ id: 'test-user-id' });
     mockSignOut.mockResolvedValue({ error: { message: 'Logout failed' } });
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
 
     render(<LogoutButton />);
 
@@ -100,7 +113,9 @@ describe('LogoutButton', () => {
     fireEvent.click(logoutButton);
 
     await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('Error signing out:', { message: 'Logout failed' });
+      expect(consoleSpy).toHaveBeenCalledWith('Error signing out:', {
+        message: 'Logout failed',
+      });
     });
 
     // Should not redirect on error
@@ -112,7 +127,9 @@ describe('LogoutButton', () => {
   it('applies custom props correctly', () => {
     mockUseUser.mockReturnValue({ id: 'test-user-id' });
 
-    render(<LogoutButton variant="destructive" size="sm" className="custom-class" />);
+    render(
+      <LogoutButton variant="destructive" size="sm" className="custom-class" />
+    );
 
     const logoutButton = screen.getByRole('button', { name: 'Sign Out' });
     expect(logoutButton).toHaveClass('custom-class');

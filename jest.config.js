@@ -24,6 +24,10 @@ const customJestConfig = {
     '<rootDir>/tests/',
     '<rootDir>/playwright.config.ts',
   ],
+  transformIgnorePatterns: ['node_modules/(?!(isows|@supabase|@radix-ui)/)'],
+  testEnvironmentOptions: {
+    customExportConditions: [''],
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

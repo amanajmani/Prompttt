@@ -7,15 +7,21 @@ import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
 
 interface LogoutButtonProps {
-  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  variant?:
+    | 'default'
+    | 'destructive'
+    | 'outline'
+    | 'secondary'
+    | 'ghost'
+    | 'link';
   size?: 'default' | 'sm' | 'lg' | 'icon';
   className?: string;
 }
 
-export function LogoutButton({ 
-  variant = 'outline', 
+export function LogoutButton({
+  variant = 'outline',
   size = 'default',
-  className 
+  className,
 }: LogoutButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -32,7 +38,7 @@ export function LogoutButton({
 
     try {
       const { error } = await supabase.auth.signOut();
-      
+
       if (error) {
         console.error('Error signing out:', error);
         return;

@@ -1,6 +1,9 @@
 // Re-export database types
 export type { Database } from './database';
 
+// Import Database type for use in type aliases
+import type { Database } from './database';
+
 // Common type aliases for easier use
 export type Profile = Database['public']['Tables']['profiles']['Row'];
 export type Video = Database['public']['Tables']['videos']['Row'];

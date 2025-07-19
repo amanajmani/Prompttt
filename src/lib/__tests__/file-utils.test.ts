@@ -6,7 +6,6 @@ import {
   generateUniqueFileName,
   formatFileSize,
   detectBucketType,
-  MAX_FILE_SIZE,
 } from '../file-utils';
 
 describe('file-utils', () => {
@@ -44,7 +43,7 @@ describe('file-utils', () => {
     it('should validate video file sizes correctly', () => {
       const smallFile = new File([''], 'test.mp4', { type: 'video/mp4' });
       Object.defineProperty(smallFile, 'size', { value: 50 * 1024 * 1024 }); // 50MB
-      
+
       const largeFile = new File([''], 'test.mp4', { type: 'video/mp4' });
       Object.defineProperty(largeFile, 'size', { value: 150 * 1024 * 1024 }); // 150MB
 
@@ -55,7 +54,7 @@ describe('file-utils', () => {
     it('should validate image file sizes correctly', () => {
       const smallFile = new File([''], 'test.jpg', { type: 'image/jpeg' });
       Object.defineProperty(smallFile, 'size', { value: 5 * 1024 * 1024 }); // 5MB
-      
+
       const largeFile = new File([''], 'test.jpg', { type: 'image/jpeg' });
       Object.defineProperty(largeFile, 'size', { value: 15 * 1024 * 1024 }); // 15MB
 
@@ -87,10 +86,10 @@ describe('file-utils', () => {
     it('should generate unique filenames with correct format', () => {
       const originalName = 'test-video.mp4';
       const userId = 'user-123';
-      
+
       const fileName1 = generateUniqueFileName(originalName, userId);
       const fileName2 = generateUniqueFileName(originalName, userId);
-      
+
       expect(fileName1).toMatch(/^user-123\/\d+-[a-z0-9]+\.mp4$/);
       expect(fileName2).toMatch(/^user-123\/\d+-[a-z0-9]+\.mp4$/);
       expect(fileName1).not.toBe(fileName2);
@@ -126,13 +125,15 @@ describe('file-utils', () => {
     it('should fallback to extension detection', () => {
       const videoFile = new File([''], 'test.mp4', { type: '' });
       const imageFile = new File([''], 'test.jpg', { type: '' });
-      
+
       expect(detectBucketType(videoFile)).toBe('videos');
       expect(detectBucketType(imageFile)).toBe('images');
     });
 
     it('should default to videos for unknown types', () => {
-      const unknownFile = new File([''], 'test.unknown', { type: 'application/unknown' });
+      const unknownFile = new File([''], 'test.unknown', {
+        type: 'application/unknown',
+      });
       expect(detectBucketType(unknownFile)).toBe('videos');
     });
   });

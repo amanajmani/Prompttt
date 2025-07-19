@@ -1,8 +1,8 @@
-import { 
-  createVideoSchema, 
-  updateVideoSchema, 
-  videoMetadataSchema, 
-  videoQuerySchema 
+import {
+  createVideoSchema,
+  updateVideoSchema,
+  videoMetadataSchema,
+  videoQuerySchema,
 } from '../video';
 
 describe('Video Validation Schemas', () => {
@@ -68,7 +68,9 @@ describe('Video Validation Schemas', () => {
       const result = createVideoSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Title must not exceed 100 characters');
+        expect(result.error.issues[0].message).toBe(
+          'Title must not exceed 100 characters'
+        );
       }
     });
 
@@ -85,7 +87,9 @@ describe('Video Validation Schemas', () => {
       const result = createVideoSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Prompt must not exceed 2000 characters');
+        expect(result.error.issues[0].message).toBe(
+          'Prompt must not exceed 2000 characters'
+        );
       }
     });
 
@@ -119,7 +123,9 @@ describe('Video Validation Schemas', () => {
       const result = createVideoSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Seed must be a positive number');
+        expect(result.error.issues[0].message).toBe(
+          'Seed must be a positive number'
+        );
       }
     });
 

@@ -29,15 +29,18 @@ export function createLogger(context: string) {
 }
 
 // Helper function to log errors with structured data
-export function logError(error: Error, context?: Record<string, any>) {
-  logger.error({
-    error: {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
+export function logError(error: Error, context?: Record<string, unknown>) {
+  logger.error(
+    {
+      error: {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      },
+      ...context,
     },
-    ...context,
-  }, 'Error occurred');
+    'Error occurred'
+  );
 }
 
 // Helper function to log API requests
@@ -48,11 +51,14 @@ export function logRequest(
   duration: number,
   userId?: string
 ) {
-  logger.info({
-    method,
-    url,
-    statusCode,
-    duration,
-    userId,
-  }, 'API request completed');
+  logger.info(
+    {
+      method,
+      url,
+      statusCode,
+      duration,
+      userId,
+    },
+    'API request completed'
+  );
 }

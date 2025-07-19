@@ -6,7 +6,9 @@ const mockFetch = jest.fn();
 global.fetch = mockFetch;
 
 describe('useR2Upload', () => {
-  const mockFile = new File(['test content'], 'test.mp4', { type: 'video/mp4' });
+  const mockFile = new File(['test content'], 'test.mp4', {
+    type: 'video/mp4',
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -51,13 +53,15 @@ describe('useR2Upload', () => {
     // Verify final state
     expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBe(null);
-    expect(result.current.publicUrl).toBe('https://public-url.example.com/test.mp4');
+    expect(result.current.publicUrl).toBe(
+      'https://public-url.example.com/test.mp4'
+    );
     expect(result.current.progress).toBe(100);
     expect(uploadResult).toBe('https://public-url.example.com/test.mp4');
 
     // Verify API calls
     expect(mockFetch).toHaveBeenCalledTimes(2);
-    
+
     // First call to get presigned URL
     expect(mockFetch).toHaveBeenNthCalledWith(1, '/api/upload/presigned-url', {
       method: 'POST',
@@ -72,13 +76,17 @@ describe('useR2Upload', () => {
     });
 
     // Second call to upload file
-    expect(mockFetch).toHaveBeenNthCalledWith(2, 'https://presigned-url.example.com', {
-      method: 'PUT',
-      body: mockFile,
-      headers: {
-        'Content-Type': 'video/mp4',
-      },
-    });
+    expect(mockFetch).toHaveBeenNthCalledWith(
+      2,
+      'https://presigned-url.example.com',
+      {
+        method: 'PUT',
+        body: mockFile,
+        headers: {
+          'Content-Type': 'video/mp4',
+        },
+      }
+    );
   });
 
   it('should handle API error when getting presigned URL', async () => {
@@ -169,7 +177,9 @@ describe('useR2Upload', () => {
         statusText: 'OK',
       });
 
-    const imageFile = new File(['image content'], 'test.jpg', { type: 'image/jpeg' });
+    const imageFile = new File(['image content'], 'test.jpg', {
+      type: 'image/jpeg',
+    });
 
     await act(async () => {
       await result.current.uploadFile(imageFile, { bucketType: 'images' });
