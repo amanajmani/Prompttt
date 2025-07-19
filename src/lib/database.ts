@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { getSupabaseClient } from './supabase';
 import type { Database } from '@/types/database';
 
 type Tables = Database['public']['Tables'];
@@ -10,6 +10,7 @@ type Comment = Tables['comments']['Row'];
 // Profile operations
 export const profileOperations = {
   async getProfile(userId: string): Promise<Profile | null> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
@@ -28,6 +29,7 @@ export const profileOperations = {
     userId: string,
     updates: Tables['profiles']['Update']
   ): Promise<Profile | null> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('profiles')
       .update(updates)
@@ -46,6 +48,7 @@ export const profileOperations = {
   async createProfile(
     profile: Tables['profiles']['Insert']
   ): Promise<Profile | null> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('profiles')
       .insert(profile)
@@ -64,6 +67,7 @@ export const profileOperations = {
 // Video operations
 export const videoOperations = {
   async getVideos(limit = 20, offset = 0): Promise<Video[]> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('videos')
       .select('*')
@@ -79,6 +83,7 @@ export const videoOperations = {
   },
 
   async getVideoById(videoId: string): Promise<Video | null> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('videos')
       .select('*')
@@ -94,6 +99,7 @@ export const videoOperations = {
   },
 
   async getUserVideos(userId: string): Promise<Video[]> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('videos')
       .select('*')
@@ -109,6 +115,7 @@ export const videoOperations = {
   },
 
   async createVideo(video: Tables['videos']['Insert']): Promise<Video | null> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('videos')
       .insert(video)
@@ -127,6 +134,7 @@ export const videoOperations = {
     videoId: string,
     updates: Tables['videos']['Update']
   ): Promise<Video | null> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('videos')
       .update(updates)
@@ -143,6 +151,7 @@ export const videoOperations = {
   },
 
   async deleteVideo(videoId: string): Promise<boolean> {
+    const supabase = getSupabaseClient();
     const { error } = await supabase.from('videos').delete().eq('id', videoId);
 
     if (error) {
@@ -154,6 +163,7 @@ export const videoOperations = {
   },
 
   async incrementViewCount(videoId: string): Promise<boolean> {
+    const supabase = getSupabaseClient();
     const { error } = await supabase.rpc('increment_view_count', {
       video_id: videoId,
     });
@@ -170,6 +180,7 @@ export const videoOperations = {
 // Like operations
 export const likeOperations = {
   async getLikesForVideo(videoId: string): Promise<Like[]> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('likes')
       .select('*')
@@ -184,6 +195,7 @@ export const likeOperations = {
   },
 
   async getUserLike(userId: string, videoId: string): Promise<Like | null> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('likes')
       .select('*')
@@ -202,6 +214,7 @@ export const likeOperations = {
     const existingLike = await this.getUserLike(userId, videoId);
 
     if (existingLike) {
+      const supabase = getSupabaseClient();
       const { error } = await supabase
         .from('likes')
         .delete()
@@ -212,6 +225,7 @@ export const likeOperations = {
         return false;
       }
     } else {
+      const supabase = getSupabaseClient();
       const { error } = await supabase.from('likes').insert({
         user_id: userId,
         video_id: videoId,
@@ -230,6 +244,7 @@ export const likeOperations = {
 // Comment operations
 export const commentOperations = {
   async getCommentsForVideo(videoId: string): Promise<Comment[]> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('comments')
       .select('*')
@@ -247,6 +262,7 @@ export const commentOperations = {
   async createComment(
     comment: Tables['comments']['Insert']
   ): Promise<Comment | null> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('comments')
       .insert(comment)
@@ -265,6 +281,7 @@ export const commentOperations = {
     commentId: string,
     content: string
   ): Promise<Comment | null> {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from('comments')
       .update({ content })
@@ -281,6 +298,7 @@ export const commentOperations = {
   },
 
   async deleteComment(commentId: string): Promise<boolean> {
+    const supabase = getSupabaseClient();
     const { error } = await supabase
       .from('comments')
       .delete()
