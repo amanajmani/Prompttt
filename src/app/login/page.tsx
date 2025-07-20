@@ -199,6 +199,7 @@ export default function LoginPage() {
                 <Link
                   href="/signup"
                   className="font-medium text-primary underline-offset-4 hover:underline"
+                  data-testid="login-page-signup-link"
                 >
                   Sign up
                 </Link>
