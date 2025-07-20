@@ -3,8 +3,38 @@ import { ThemeAwareImage } from '../theme-aware-image';
 
 // Mock Next.js Image component
 jest.mock('next/image', () => {
-  return function MockImage({ src, alt, ...props }: any) {
-    return <img src={src} alt={alt} {...props} data-testid="theme-aware-image" />;
+  return function MockImage({
+    src,
+    alt,
+    fill,
+    priority,
+    sizes,
+    placeholder,
+    blurDataURL,
+    ...props
+  }: any) {
+    // Only pass DOM-compatible props to img element
+    const domProps: any = {
+      src,
+      alt: alt || '',
+      'data-testid': 'theme-aware-image',
+      // Pass through other DOM-compatible props
+      className: props.className,
+      style: props.style,
+      onClick: props.onClick,
+      onLoad: props.onLoad,
+      onError: props.onError,
+    };
+
+    // Add Next.js specific props as data attributes for testing
+    if (fill) domProps['data-fill'] = 'true';
+    if (priority) domProps['data-priority'] = 'true';
+    if (sizes) domProps['data-sizes'] = sizes;
+    if (placeholder) domProps['data-placeholder'] = placeholder;
+    if (blurDataURL) domProps['data-blur-data-url'] = blurDataURL;
+
+    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+    return <img {...domProps} />;
   };
 });
 
@@ -74,7 +104,7 @@ describe('ThemeAwareImage', () => {
 
     // Assert
     expect(screen.queryByTestId('theme-aware-image')).not.toBeInTheDocument();
-    
+
     // Should render a placeholder div
     const placeholder = screen.getByRole('presentation', { hidden: true });
     expect(placeholder).toBeInTheDocument();
@@ -100,8 +130,11 @@ describe('ThemeAwareImage', () => {
     await waitFor(() => {
       const image = screen.getByTestId('theme-aware-image');
       expect(image).toHaveClass('custom-class');
-      expect(image).toHaveAttribute('priority');
-      expect(image).toHaveAttribute('sizes', '(max-width: 768px) 100vw, 50vw');
+      expect(image).toHaveAttribute('data-priority', 'true');
+      expect(image).toHaveAttribute(
+        'data-sizes',
+        '(max-width: 768px) 100vw, 50vw'
+      );
     });
   });
 
@@ -124,7 +157,7 @@ describe('ThemeAwareImage', () => {
     // Assert
     await waitFor(() => {
       const image = screen.getByTestId('theme-aware-image');
-      expect(image).toHaveAttribute('fill');
+      expect(image).toHaveAttribute('data-fill', 'true');
       expect(image).not.toHaveAttribute('width');
       expect(image).not.toHaveAttribute('height');
     });

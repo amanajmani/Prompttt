@@ -21,7 +21,7 @@ interface ThemeAwareImageProps {
 /**
  * ThemeAwareImage component that displays different images based on the current theme.
  * Useful for logos, illustrations, or any assets that need different styles for light and dark backgrounds.
- * 
+ *
  * @param lightSrc - Image source for light theme
  * @param darkSrc - Image source for dark theme
  * @param alt - Alt text for accessibility
@@ -53,13 +53,14 @@ export function ThemeAwareImage({
   // Don't render anything until theme is resolved to prevent flash
   if (!isThemeResolved) {
     return (
-      <div 
+      <div
         className={className}
-        style={{ 
-          width: fill ? '100%' : width, 
+        style={{
+          width: fill ? '100%' : width,
           height: fill ? '100%' : height,
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
         }}
+        role="presentation"
         aria-hidden="true"
       />
     );
@@ -78,5 +79,5 @@ export function ThemeAwareImage({
     ...(fill ? { fill: true } : { width, height }),
   };
 
-  return <Image {...imageProps} />;
+  return <Image {...imageProps} alt={alt} />;
 }

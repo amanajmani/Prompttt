@@ -44,6 +44,8 @@ describe('ThemeToggle', () => {
     mockUseTheme.mockReturnValue({
       theme: 'light',
       setTheme: mockSetTheme,
+      resolvedTheme: 'light',
+      themes: ['light', 'dark', 'system'],
     });
 
     render(<ThemeToggle />);
@@ -56,6 +58,8 @@ describe('ThemeToggle', () => {
     mockUseTheme.mockReturnValue({
       theme: 'dark',
       setTheme: mockSetTheme,
+      resolvedTheme: 'dark',
+      themes: ['light', 'dark', 'system'],
     });
 
     render(<ThemeToggle />);
@@ -80,6 +84,8 @@ describe('ThemeToggle', () => {
     mockUseTheme.mockReturnValue({
       theme: 'system',
       setTheme: mockSetTheme,
+      resolvedTheme: 'light',
+      themes: ['light', 'dark', 'system'],
     });
 
     render(<ThemeToggle />);
@@ -92,6 +98,8 @@ describe('ThemeToggle', () => {
     mockUseTheme.mockReturnValue({
       theme: 'light',
       setTheme: mockSetTheme,
+      resolvedTheme: 'light',
+      themes: ['light', 'dark', 'system'],
     });
 
     render(<ThemeToggle />);
@@ -108,6 +116,8 @@ describe('ThemeToggle', () => {
     mockUseTheme.mockReturnValue({
       theme: 'dark',
       setTheme: mockSetTheme,
+      resolvedTheme: 'dark',
+      themes: ['light', 'dark', 'system'],
     });
 
     render(<ThemeToggle />);
@@ -125,6 +135,8 @@ describe('ThemeToggle', () => {
     mockUseTheme.mockReturnValue({
       theme: 'light',
       setTheme: mockSetTheme,
+      resolvedTheme: 'light',
+      themes: ['light', 'dark', 'system'],
     });
 
     render(<ThemeToggle />);
@@ -142,6 +154,8 @@ describe('ThemeToggle', () => {
     mockUseTheme.mockReturnValue({
       theme: 'light',
       setTheme: mockSetTheme,
+      resolvedTheme: 'light',
+      themes: ['light', 'dark', 'system'],
     });
 
     render(<ThemeToggle />);
@@ -159,6 +173,8 @@ describe('ThemeToggle', () => {
     mockUseTheme.mockReturnValue({
       theme: 'light',
       setTheme: mockSetTheme,
+      resolvedTheme: 'light',
+      themes: ['light', 'dark', 'system'],
     });
 
     render(<ThemeToggle />);
