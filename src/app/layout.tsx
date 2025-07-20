@@ -23,10 +23,9 @@ import {
   SheetTrigger,
   Button,
 } from '@/components/ui';
-import { WorldClassAuthProvider } from '@/components/auth/supabase-auth-provider';
-import { WorldClassAuthNav } from '@/components/auth/world-class-auth-nav';
+import { SupabaseAuthProvider } from '@/components/auth/supabase-auth-provider';
+import { AuthNav } from '@/components/auth/auth-nav';
 import { Menu } from 'lucide-react';
-import { createInitialAuthState } from '@/lib/auth';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -61,13 +60,11 @@ const navigationItems = [
   { href: '/contact', label: 'Contact' },
 ];
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Create world-class initial auth state for zero flashing
-  const initialAuthState = await createInitialAuthState();
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -77,8 +74,9 @@ export default async function RootLayout({
           jetbrainsMono.variable,
           satoshi.variable
         )}
+        suppressHydrationWarning
       >
-        <WorldClassAuthProvider initialAuthState={initialAuthState}>
+        <SupabaseAuthProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -99,8 +97,8 @@ export default async function RootLayout({
                 {/* Theme Toggle */}
                 <ThemeToggle />
 
-                {/* World-Class Auth Navigation */}
-                <WorldClassAuthNav />
+                {/* Auth Navigation */}
+                <AuthNav />
 
                 {/* Mobile Navigation Sheet */}
                 <Sheet>
@@ -132,7 +130,7 @@ export default async function RootLayout({
 
                       {/* Mobile Auth Section */}
                       <div className="border-t pt-4">
-                        <WorldClassAuthNav />
+                        <AuthNav />
                       </div>
                     </div>
                   </SheetContent>
@@ -148,7 +146,7 @@ export default async function RootLayout({
 
             <Toaster />
           </ThemeProvider>
-        </WorldClassAuthProvider>
+        </SupabaseAuthProvider>
       </body>
     </html>
   );
