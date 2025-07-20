@@ -8,14 +8,11 @@ export { ThemeProvider, useTheme } from './theme-provider';
 export { ThemeToggle } from './theme-toggle';
 export { ThemeAwareImage } from './theme-aware-image';
 
-// World-class authentication exports
-export { WorldClassAuthProvider, useWorldClassAuth } from './auth/supabase-auth-provider';
-export { WorldClassAuthNav } from './auth/world-class-auth-nav';
-
 // Auth components
 export { SupabaseAuthProvider } from './auth/supabase-auth-provider';
-export { LogoutButton } from './auth/logout-button';
 export { AuthNav } from './auth/auth-nav';
+export { ClientLogoutButton } from './auth/client-logout-button';
+// Note: ServerAuthSection is not exported here to avoid server/client conflicts
 
 // UI components
 export {
