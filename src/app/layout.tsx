@@ -24,7 +24,7 @@ import {
   Button,
 } from '@/components/ui';
 import { SupabaseAuthProvider } from '@/components/auth/supabase-auth-provider';
-import { AuthNav } from '@/components/auth/auth-nav';
+import { ServerAuthSection } from '@/components/auth/server-auth-section';
 import { Menu } from 'lucide-react';
 
 const inter = Inter({
@@ -60,7 +60,7 @@ const navigationItems = [
   { href: '/contact', label: 'Contact' },
 ];
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -97,8 +97,8 @@ export default function RootLayout({
                 {/* Theme Toggle */}
                 <ThemeToggle />
 
-                {/* Auth Navigation */}
-                <AuthNav />
+                {/* Server Auth Section - No Flashing */}
+                <ServerAuthSection />
 
                 {/* Mobile Navigation Sheet */}
                 <Sheet>
@@ -130,7 +130,7 @@ export default function RootLayout({
 
                       {/* Mobile Auth Section */}
                       <div className="border-t pt-4">
-                        <AuthNav />
+                        <ServerAuthSection />
                       </div>
                     </div>
                   </SheetContent>
