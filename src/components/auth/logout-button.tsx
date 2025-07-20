@@ -44,12 +44,12 @@ export function LogoutButton({
         return;
       }
 
-      // Redirect to homepage after successful logout
-      router.push('/');
-      router.refresh();
+      // Force a complete page reload to ensure middleware sees the logout
+      // This ensures session cookies are properly cleared and middleware
+      // doesn't redirect based on stale session data
+      window.location.href = '/';
     } catch (err) {
       console.error('Unexpected error during logout:', err);
-    } finally {
       setIsLoading(false);
     }
   };

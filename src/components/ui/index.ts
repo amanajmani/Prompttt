@@ -42,3 +42,15 @@ export {
 export { Toaster } from './toaster';
 export { ErrorBoundary } from './error-boundary';
 export type { ErrorBoundaryProps } from './error-boundary';
+export {
+  Sheet,
+  SheetPortal,
+  SheetOverlay,
+  SheetTrigger,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+} from './sheet';

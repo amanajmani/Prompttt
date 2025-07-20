@@ -12,7 +12,7 @@ describe('Home Page', () => {
     render(<Home />, { wrapper: TestWrapper });
     const heading = screen.getByRole('heading', {
       level: 1,
-      name: 'AI VideoHub',
+      name: 'Welcome to AI VideoHub',
     });
     expect(heading).toBeInTheDocument();
   });
@@ -32,7 +32,7 @@ describe('Home Page', () => {
   it('has proper semantic structure', () => {
     render(<Home />, { wrapper: TestWrapper });
     // Check for the main content container (now a div since layout provides the main element)
-    const contentContainer = screen.getByText('AI VideoHub').closest('div');
+    const contentContainer = screen.getByText('Welcome to AI VideoHub').closest('div');
     expect(contentContainer).toBeInTheDocument();
   });
 });
