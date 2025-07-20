@@ -11,8 +11,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-  /* Optimize workers for CI - use 4 workers for maximum parallel performance */
-  workers: process.env.CI ? 4 : undefined,
+  /* Use 4 workers for optimal local performance */
+  workers: 4,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -23,13 +23,13 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
 
-    /* Optimize timeouts for CI */
-    actionTimeout: process.env.CI ? 30000 : 10000,
-    navigationTimeout: process.env.CI ? 60000 : 30000,
+    /* Optimized for local development */
+    actionTimeout: 10000,
+    navigationTimeout: 30000,
 
-    /* Reduce video and screenshot overhead in CI */
-    video: process.env.CI ? 'retain-on-failure' : 'on-first-retry',
-    screenshot: process.env.CI ? 'only-on-failure' : 'only-on-failure',
+    /* Capture for debugging */
+    video: 'on-first-retry',
+    screenshot: 'only-on-failure',
   },
 
   /* Configure projects for major browsers */
@@ -38,21 +38,7 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        // Optimize for CI performance
-        launchOptions: {
-          args: process.env.CI
-            ? [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-extensions',
-                '--disable-gpu',
-                '--no-first-run',
-                '--no-zygote',
-                '--single-process',
-              ]
-            : [],
-        },
+        // Optimized for local development
       },
     },
 

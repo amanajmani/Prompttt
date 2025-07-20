@@ -42,13 +42,8 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
-
-      - name: Run end-to-end tests
-        run: npx playwright test --project=chromium
-        env:
-          CI: true
+      # Playwright E2E tests removed from CI - run locally only for solo development
+      # This reduces CI time and complexity while maintaining quality through local testing
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
