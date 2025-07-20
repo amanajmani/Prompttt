@@ -19,9 +19,7 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
       storageKey="prompttt-ui-theme"
       {...props}
     >
-      <ThemeSyncManager>
-        {children}
-      </ThemeSyncManager>
+      <ThemeSyncManager>{children}</ThemeSyncManager>
     </NextThemesProvider>
   );
 }
@@ -47,7 +45,9 @@ function ThemeSyncManager({ children }: { children: React.ReactNode }) {
           }
         } else if (response.status === 500) {
           // Server error - likely database schema issue, continue with local theme
-          console.warn('Theme preference service unavailable, using local theme preference');
+          console.warn(
+            'Theme preference service unavailable, using local theme preference'
+          );
         }
       } catch (error) {
         console.warn('Failed to fetch user theme preference:', error);
@@ -81,14 +81,17 @@ export function useTheme() {
           },
           body: JSON.stringify({ theme }),
         });
-        
+
         if (response.ok) {
           const data = await response.json();
           if (data.warning) {
             console.warn('Theme sync warning:', data.warning);
           }
         } else {
-          console.warn('Failed to sync theme preference to database - server returned:', response.status);
+          console.warn(
+            'Failed to sync theme preference to database - server returned:',
+            response.status
+          );
         }
       } catch (error) {
         console.warn('Failed to sync theme preference to database:', error);

@@ -119,7 +119,9 @@ describe('LogoutButton', () => {
     });
 
     // Should not redirect on error
-    expect(mockPush).not.toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockPush).not.toHaveBeenCalled();
+    });
 
     consoleSpy.mockRestore();
   });

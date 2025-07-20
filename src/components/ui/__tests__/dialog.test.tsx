@@ -90,6 +90,9 @@ describe('Dialog', () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Test Dialog</DialogTitle>
+            <DialogDescription>
+              This is a test dialog for keyboard navigation testing.
+            </DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>
@@ -117,6 +120,9 @@ describe('Dialog', () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Test Dialog</DialogTitle>
+            <DialogDescription>
+              This is a test dialog for close button testing.
+            </DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>

@@ -5,7 +5,7 @@ import { useTheme } from './theme-provider';
 import { useState, useRef, useEffect } from 'react';
 
 export function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -41,9 +41,9 @@ export function ThemeToggle() {
         aria-haspopup="true"
       >
         {resolvedTheme === 'light' ? (
-          <Sun className="h-4 w-4" />
+          <Sun className="h-4 w-4" data-testid="sun-icon" />
         ) : (
-          <Moon className="h-4 w-4" />
+          <Moon className="h-4 w-4" data-testid="moon-icon" />
         )}
         <span className="sr-only">Toggle theme</span>
       </button>

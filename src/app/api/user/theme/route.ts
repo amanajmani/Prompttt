@@ -21,7 +21,7 @@ export const PUT = withErrorHandler(async (request: NextRequest) => {
   if (!rateLimitResult.success) {
     return NextResponse.json(
       { error: 'Too many requests. Please try again later.' },
-      { 
+      {
         status: 429,
         headers: rateLimitResult.headers,
       }
@@ -29,8 +29,10 @@ export const PUT = withErrorHandler(async (request: NextRequest) => {
   }
 
   // Verify user authentication
-  const cookieStore = await cookies();
-  const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore });
+  const cookieStore = cookies();
+  const supabase = createRouteHandlerClient<Database>({
+    cookies: () => cookieStore,
+  });
   const {
     data: { session },
     error: authError,
@@ -46,7 +48,7 @@ export const PUT = withErrorHandler(async (request: NextRequest) => {
   // Parse and validate request body
   const body = await request.json();
   const validationResult = themePreferenceSchema.safeParse(body);
-  
+
   if (!validationResult.success) {
     return NextResponse.json(
       {
@@ -65,27 +67,33 @@ export const PUT = withErrorHandler(async (request: NextRequest) => {
   // Update user's theme preference in the database
   const { error: updateError } = await supabase
     .from('profiles')
-    .update({ theme_preference: theme })
+    .update({
+      theme_preference: theme,
+    } as Database['public']['Tables']['profiles']['Update'])
     .eq('id', session.user.id);
 
   if (updateError) {
     // Check if the error is due to missing column (schema not migrated yet)
     if (updateError.code === '42703') {
       // Column doesn't exist yet - gracefully degrade (acknowledge but don't persist)
-      console.warn('Theme preference column not found, theme not persisted. Database migration may be pending.');
+      console.warn(
+        'Theme preference column not found, theme not persisted. Database migration may be pending.'
+      );
       return NextResponse.json(
-        { 
-          message: 'Theme preference updated locally (database persistence pending migration)',
+        {
+          message:
+            'Theme preference updated locally (database persistence pending migration)',
           theme,
-          warning: 'Theme preference not persisted to database - migration required'
+          warning:
+            'Theme preference not persisted to database - migration required',
         },
-        { 
+        {
           status: 200,
           headers: rateLimitResult.headers,
         }
       );
     }
-    
+
     // Other database errors should be logged and handled
     console.error('Error updating theme preference:', updateError);
     return NextResponse.json(
@@ -95,11 +103,11 @@ export const PUT = withErrorHandler(async (request: NextRequest) => {
   }
 
   return NextResponse.json(
-    { 
+    {
       message: 'Theme preference updated successfully',
-      theme 
+      theme,
     },
-    { 
+    {
       status: 200,
       headers: rateLimitResult.headers,
     }
@@ -116,7 +124,7 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
   if (!rateLimitResult.success) {
     return NextResponse.json(
       { error: 'Too many requests. Please try again later.' },
-      { 
+      {
         status: 429,
         headers: rateLimitResult.headers,
       }
@@ -124,8 +132,10 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
   }
 
   // Verify user authentication
-  const cookieStore = await cookies();
-  const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore });
+  const cookieStore = cookies();
+  const supabase = createRouteHandlerClient<Database>({
+    cookies: () => cookieStore,
+  });
   const {
     data: { session },
     error: authError,
@@ -149,18 +159,20 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
     // Check if the error is due to missing column (schema not migrated yet)
     if (fetchError.code === '42703') {
       // Column doesn't exist yet - gracefully degrade to default theme
-      console.warn('Theme preference column not found, using default theme. Database migration may be pending.');
+      console.warn(
+        'Theme preference column not found, using default theme. Database migration may be pending.'
+      );
       return NextResponse.json(
-        { 
-          theme: 'system' // Default theme when schema is not ready
+        {
+          theme: 'system', // Default theme when schema is not ready
         },
-        { 
+        {
           status: 200,
           headers: rateLimitResult.headers,
         }
       );
     }
-    
+
     // Other database errors should be logged and handled
     console.error('Error fetching theme preference:', fetchError);
     return NextResponse.json(
@@ -170,10 +182,11 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
   }
 
   return NextResponse.json(
-    { 
-      theme: profile.theme_preference || 'system' 
+    {
+      theme:
+        (profile?.theme_preference as 'light' | 'dark' | 'system') || 'system',
     },
-    { 
+    {
       status: 200,
       headers: rateLimitResult.headers,
     }

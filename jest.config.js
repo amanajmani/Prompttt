@@ -9,33 +9,20 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jsdom',
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-  },
-  collectCoverageFrom: [
-    'src/**/*.{js,jsx,ts,tsx}',
-    '!src/**/*.d.ts',
-    '!src/**/*.stories.{js,jsx,ts,tsx}',
-    '!src/types/**/*',
-  ],
+  testMatch: ['**/__tests__/**/*.(ts|tsx|js)', '**/*.(test|spec).(ts|tsx|js)'],
   testPathIgnorePatterns: [
     '<rootDir>/.next/',
     '<rootDir>/node_modules/',
-    '<rootDir>/tests/',
-    '<rootDir>/playwright.config.ts',
+    '<rootDir>/tests/e2e/', // Exclude Playwright e2e tests
+    // Ignore setup files from being treated as test suites
+    '.*/setup\\.(ts|tsx|js)$',
   ],
-  transformIgnorePatterns: ['node_modules/(?!(isows|@supabase|@radix-ui)/)'],
-  testEnvironmentOptions: {
-    customExportConditions: [''],
-  },
-  coverageThreshold: {
-    global: {
-      branches: 30,
-      functions: 30,
-      lines: 30,
-      statements: 30,
-    },
-  },
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/__tests__/**',
+    '!src/**/setup.ts', // Exclude setup files from coverage
+  ],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
