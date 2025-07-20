@@ -69,7 +69,7 @@ export const PUT = withErrorHandler(async (request: NextRequest) => {
     .from('profiles')
     .update({
       theme_preference: theme,
-    } as Database['public']['Tables']['profiles']['Update'])
+    })
     .eq('id', session.user.id);
 
   if (updateError) {
@@ -184,7 +184,7 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
   return NextResponse.json(
     {
       theme:
-        (profile?.theme_preference as 'light' | 'dark' | 'system') || 'system',
+        profile?.theme_preference || 'system',
     },
     {
       status: 200,

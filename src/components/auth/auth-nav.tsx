@@ -5,6 +5,7 @@ import { useUser } from '@supabase/auth-helpers-react';
 import { Button } from '@/components/ui/button';
 import { LogoutButton } from './logout-button';
 import { User, LogIn } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export function AuthNav() {
   const user = useUser();
@@ -12,7 +13,7 @@ export function AuthNav() {
   if (user) {
     return (
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
           <User className="h-4 w-4" />
           <span>Welcome back!</span>
         </div>

@@ -2,35 +2,83 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
-import { useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import type { Database } from '@/types/database';
-import type { SupabaseClient } from '@supabase/supabase-js';
+import type { AuthState } from '@/lib/auth';
 
-interface SupabaseAuthProviderProps {
+interface WorldClassAuthProviderProps {
   children: React.ReactNode;
+  initialAuthState: AuthState;
 }
 
-export function SupabaseAuthProvider({ children }: SupabaseAuthProviderProps) {
-  const [supabaseClient, setSupabaseClient] =
-    useState<SupabaseClient<Database> | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
+/**
+ * World-class authentication context
+ * 
+ * Provides auth state that never flashes or causes hydration mismatches.
+ * Uses server-side initial state for perfect SSR/client consistency.
+ */
+const WorldClassAuthContext = createContext<AuthState | null>(null);
+
+export function WorldClassAuthProvider({ 
+  children, 
+  initialAuthState 
+}: WorldClassAuthProviderProps) {
+  const [authState, setAuthState] = useState<AuthState>(initialAuthState);
+  const supabaseClient = createClientComponentClient<Database>();
 
   useEffect(() => {
-    // Only initialize Supabase client on the client side
-    if (typeof window !== 'undefined' && !supabaseClient) {
-      const client = createClientComponentClient<Database>();
-      setSupabaseClient(client);
-      setIsInitialized(true);
-    }
+    // Listen for auth changes and update state
+    const {
+      data: { subscription },
+    } = supabaseClient.auth.onAuthStateChange(async (event, session) => {
+      setAuthState({
+        user: session?.user ?? null,
+        session,
+        isLoading: false,
+      });
+    });
+
+    return () => subscription.unsubscribe();
   }, [supabaseClient]);
 
-  // Don't render the provider until the client is initialized
-  if (!isInitialized || !supabaseClient) {
-    return <>{children}</>;
+  return (
+    <WorldClassAuthContext.Provider value={authState}>
+      <SessionContextProvider 
+        supabaseClient={supabaseClient}
+        initialSession={initialAuthState.session}
+      >
+        {children}
+      </SessionContextProvider>
+    </WorldClassAuthContext.Provider>
+  );
+}
+
+/**
+ * Hook to access world-class auth state
+ * 
+ * This hook provides auth state that never causes flashing
+ * and is always consistent between server and client.
+ */
+export function useWorldClassAuth(): AuthState {
+  const context = useContext(WorldClassAuthContext);
+  if (!context) {
+    throw new Error('useWorldClassAuth must be used within WorldClassAuthProvider');
   }
+  return context;
+}
+
+// Keep the old provider for backward compatibility during migration
+export function SupabaseAuthProvider({ 
+  children, 
+  serverSession 
+}: { children: React.ReactNode; serverSession?: any }) {
+  const supabaseClient = createClientComponentClient<Database>();
 
   return (
-    <SessionContextProvider supabaseClient={supabaseClient}>
+    <SessionContextProvider 
+      supabaseClient={supabaseClient}
+      initialSession={serverSession}
+    >
       {children}
     </SessionContextProvider>
   );

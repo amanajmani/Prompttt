@@ -1,19 +1,32 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import { cn } from '@/lib/utils';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 import {
   ThemeProvider,
   Header,
   Logo,
   DesktopNav,
-  MobileNav,
   ThemeToggle,
+  Footer,
 } from '@/components';
 import { Toaster } from '@/components/ui/toaster';
-import { SupabaseAuthProvider } from '@/components/auth/supabase-auth-provider';
-import { AuthNav } from '@/components/auth/auth-nav';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  Button,
+} from '@/components/ui';
+import { WorldClassAuthProvider } from '@/components/auth/supabase-auth-provider';
+import { WorldClassAuthNav } from '@/components/auth/world-class-auth-nav';
+import { Menu } from 'lucide-react';
+import { createInitialAuthState } from '@/lib/auth';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -48,27 +61,30 @@ const navigationItems = [
   { href: '/contact', label: 'Contact' },
 ];
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Create world-class initial auth state for zero flashing
+  const initialAuthState = await createInitialAuthState();
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'min-h-screen bg-background font-sans antialiased overflow-x-hidden',
           inter.variable,
           jetbrainsMono.variable,
           satoshi.variable
         )}
       >
-        <SupabaseAuthProvider>
+        <WorldClassAuthProvider initialAuthState={initialAuthState}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
+            suppressHydrationWarning
           >
             {/* Site Header with Navigation */}
             <Header>
@@ -83,38 +99,56 @@ export default function RootLayout({
                 {/* Theme Toggle */}
                 <ThemeToggle />
 
-                {/* Auth Navigation */}
-                <AuthNav />
+                {/* World-Class Auth Navigation */}
+                <WorldClassAuthNav />
 
-                {/* Mobile Navigation */}
-                <MobileNav>
-                  <div className="space-y-4">
-                    {/* Mobile Navigation Links */}
-                    {navigationItems.map((item) => (
-                      <a
-                        key={item.href}
-                        href={item.href}
-                        className="block text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
-                      >
-                        {item.label}
-                      </a>
-                    ))}
+                {/* Mobile Navigation Sheet */}
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="md:hidden"
+                      aria-label="Open mobile menu"
+                    >
+                      <Menu className="h-5 w-5" />
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="w-[280px]">
+                    <SheetHeader>
+                      <SheetTitle>Menu</SheetTitle>
+                    </SheetHeader>
+                    <div className="mt-6 space-y-4">
+                      {/* Mobile Navigation Links */}
+                      {navigationItems.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className="block text-sm font-medium text-foreground/80 transition-colors hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background rounded-sm py-2"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
 
-                    {/* Mobile Auth Section */}
-                    <div className="border-t pt-4">
-                      <AuthNav />
+                      {/* Mobile Auth Section */}
+                      <div className="border-t pt-4">
+                        <WorldClassAuthNav />
+                      </div>
                     </div>
-                  </div>
-                </MobileNav>
+                  </SheetContent>
+                </Sheet>
               </div>
             </Header>
 
             {/* Main Content */}
             <main className="flex-1">{children}</main>
 
+            {/* Site Footer */}
+            <Footer />
+
             <Toaster />
           </ThemeProvider>
-        </SupabaseAuthProvider>
+        </WorldClassAuthProvider>
       </body>
     </html>
   );

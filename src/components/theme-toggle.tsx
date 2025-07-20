@@ -7,7 +7,13 @@ import { useState, useRef, useEffect } from 'react';
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Prevent hydration mismatch by only rendering after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -40,7 +46,10 @@ export function ThemeToggle() {
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        {resolvedTheme === 'light' ? (
+        {!mounted ? (
+          // Show a neutral icon during SSR to prevent hydration mismatch
+          <Sun className="h-4 w-4" />
+        ) : resolvedTheme === 'light' ? (
           <Sun className="h-4 w-4" data-testid="sun-icon" />
         ) : (
           <Moon className="h-4 w-4" data-testid="moon-icon" />
