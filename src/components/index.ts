@@ -1,5 +1,9 @@
 // Core components
 export { Container } from './container';
+export { Header } from './header';
+export { Logo } from './logo';
+export { MobileNav } from './mobile-nav';
+export { DesktopNav } from './desktop-nav';
 export { ThemeProvider, useTheme } from './theme-provider';
 export { ThemeToggle } from './theme-toggle';
 export { ThemeAwareImage } from './theme-aware-image';

@@ -3,7 +3,7 @@ import { AuthNav } from '@/components/auth/auth-nav';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background py-8 text-foreground md:py-16">
+    <div className="min-h-screen bg-background py-8 text-foreground md:py-16">
       <Container>
         <div className="space-y-8 md:space-y-12">
           <div className="flex items-center justify-between">
@@ -22,6 +22,6 @@ export default function Home() {
           </div>
         </div>
       </Container>
-    </main>
+    </div>
   );
 }

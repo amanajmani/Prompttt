@@ -264,6 +264,7 @@ export default function SignupPage() {
                 <Link
                   href="/login"
                   className="font-medium text-primary underline-offset-4 hover:underline"
+                  data-testid="signup-page-signin-link"
                 >
                   Sign in
                 </Link>

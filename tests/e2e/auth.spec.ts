@@ -35,7 +35,10 @@ test.describe('Authentication Flow', () => {
 
     if (hasEmailConfirmation) {
       // Email confirmation enabled - verify confirmation screen
-      await expect(page.getByText('Check your email')).toBeVisible();
+      // Should see confirmation message (increased timeout for Supabase response)
+      await expect(page.getByText('Check your email')).toBeVisible({
+        timeout: 15000,
+      });
       await expect(page.getByText(testEmail)).toBeVisible();
       await page.getByRole('link', { name: 'Sign in' }).click();
     } else {
@@ -76,7 +79,7 @@ test.describe('Authentication Flow', () => {
     await expect(
       page.getByRole('button', { name: 'Sign In with Google' })
     ).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Sign up' })).toBeVisible();
+    await expect(page.getByTestId('login-page-signup-link')).toBeVisible();
   });
 
   test('signup page renders correctly', async ({ page }) => {
@@ -96,7 +99,7 @@ test.describe('Authentication Flow', () => {
     await expect(
       page.getByRole('button', { name: 'Sign Up with Google' })
     ).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Sign in' })).toBeVisible();
+    await expect(page.getByTestId('signup-page-signin-link')).toBeVisible();
   });
 
   test('form validation works correctly', async ({ page }) => {
@@ -146,11 +149,11 @@ test.describe('Authentication Flow', () => {
     await expect(page.getByText('Welcome back')).toBeVisible();
 
     // Navigate to signup
-    await page.getByRole('link', { name: 'Sign up' }).click();
+    await page.getByTestId('login-page-signup-link').click();
     await expect(page.getByText('Create your account')).toBeVisible();
 
     // Navigate back to login
-    await page.getByRole('link', { name: 'Sign in' }).click();
+    await page.getByTestId('signup-page-signin-link').click();
     await expect(page.getByText('Welcome back')).toBeVisible();
   });
 

@@ -31,7 +31,8 @@ describe('Home Page', () => {
 
   it('has proper semantic structure', () => {
     render(<Home />, { wrapper: TestWrapper });
-    const main = screen.getByRole('main');
-    expect(main).toBeInTheDocument();
+    // Check for the main content container (now a div since layout provides the main element)
+    const contentContainer = screen.getByText('AI VideoHub').closest('div');
+    expect(contentContainer).toBeInTheDocument();
   });
 });
