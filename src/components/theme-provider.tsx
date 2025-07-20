@@ -31,18 +31,25 @@ function ThemeSyncManager({ children }: { children: React.ReactNode }) {
   const { setTheme } = useNextTheme();
   const user = useUser();
 
-  // Fetch user's theme preference when they log in
+  // Fetch user's theme preference ONCE when they log in (MILESTONE-11 correct implementation)
   useEffect(() => {
     if (!user) return;
+
+    // Only fetch theme once per user session
+    const hasAlreadyFetched = sessionStorage.getItem(`theme-fetched-${user.id}`);
+    if (hasAlreadyFetched) return;
 
     const fetchUserTheme = async () => {
       try {
         const response = await fetch('/api/user/theme');
+        
         if (response.ok) {
           const data = await response.json();
           if (data.theme) {
             setTheme(data.theme);
           }
+          // Mark as fetched for this session
+          sessionStorage.setItem(`theme-fetched-${user.id}`, 'true');
         } else if (response.status === 500) {
           // Server error - likely database schema issue, continue with local theme
           console.warn(
@@ -54,8 +61,11 @@ function ThemeSyncManager({ children }: { children: React.ReactNode }) {
       }
     };
 
-    fetchUserTheme();
-  }, [user, setTheme]);
+    // Small delay to avoid race conditions with auth state
+    const timeoutId = setTimeout(fetchUserTheme, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [user?.id, setTheme]);
 
   return <>{children}</>;
 }

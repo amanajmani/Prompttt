@@ -67,17 +67,15 @@ export function useWorldClassAuth(): AuthState {
   return context;
 }
 
-// Keep the old provider for backward compatibility during migration
+// Clean, simple provider - no complex state management
 export function SupabaseAuthProvider({ 
-  children, 
-  serverSession 
-}: { children: React.ReactNode; serverSession?: any }) {
+  children
+}: { children: React.ReactNode }) {
   const supabaseClient = createClientComponentClient<Database>();
 
   return (
     <SessionContextProvider 
       supabaseClient={supabaseClient}
-      initialSession={serverSession}
     >
       {children}
     </SessionContextProvider>

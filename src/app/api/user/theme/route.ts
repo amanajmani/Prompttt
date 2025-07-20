@@ -3,7 +3,6 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { z } from 'zod';
 import { withErrorHandler } from '@/lib/error-handler';
-import { withRateLimit, authRateLimit } from '@/lib/rate-limit';
 import type { Database } from '@/types/database';
 
 // Validation schema for theme preference update
@@ -16,20 +15,11 @@ const themePreferenceSchema = z.object({
  * Updates the authenticated user's theme preference in their profile
  */
 export const PUT = withErrorHandler(async (request: NextRequest) => {
-  // Apply rate limiting
-  const rateLimitResult = await withRateLimit(request, authRateLimit);
-  if (!rateLimitResult.success) {
-    return NextResponse.json(
-      { error: 'Too many requests. Please try again later.' },
-      {
-        status: 429,
-        headers: rateLimitResult.headers,
-      }
-    );
-  }
+  // Skip rate limiting for theme API - it's not a sensitive endpoint
+  // Theme changes are user-initiated and don't need strict rate limiting
 
   // Verify user authentication
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const supabase = createRouteHandlerClient<Database>({
     cookies: () => cookieStore,
   });
@@ -89,7 +79,6 @@ export const PUT = withErrorHandler(async (request: NextRequest) => {
         },
         {
           status: 200,
-          headers: rateLimitResult.headers,
         }
       );
     }
@@ -109,7 +98,6 @@ export const PUT = withErrorHandler(async (request: NextRequest) => {
     },
     {
       status: 200,
-      headers: rateLimitResult.headers,
     }
   );
 });
@@ -119,20 +107,11 @@ export const PUT = withErrorHandler(async (request: NextRequest) => {
  * Retrieves the authenticated user's theme preference
  */
 export const GET = withErrorHandler(async (request: NextRequest) => {
-  // Apply rate limiting
-  const rateLimitResult = await withRateLimit(request, authRateLimit);
-  if (!rateLimitResult.success) {
-    return NextResponse.json(
-      { error: 'Too many requests. Please try again later.' },
-      {
-        status: 429,
-        headers: rateLimitResult.headers,
-      }
-    );
-  }
+  // Skip rate limiting for theme API - it's not a sensitive endpoint
+  // Theme fetching is infrequent and doesn't need strict rate limiting
 
   // Verify user authentication
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const supabase = createRouteHandlerClient<Database>({
     cookies: () => cookieStore,
   });
@@ -168,7 +147,6 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
         },
         {
           status: 200,
-          headers: rateLimitResult.headers,
         }
       );
     }
@@ -188,7 +166,6 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
     },
     {
       status: 200,
-      headers: rateLimitResult.headers,
     }
   );
 });
