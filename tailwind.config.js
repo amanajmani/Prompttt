@@ -67,5 +67,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    // TODO: Add container queries plugin after npm install
+    // require('@tailwindcss/container-queries'),
+  ],
 };

@@ -55,3 +55,7 @@ export {
   ErrorBoundary,
 } from './ui';
 export type { ErrorBoundaryProps } from './ui';
+
+// Layout components
+export { VideoGrid } from './video-grid';
+export type { VideoItem, VideoGridProps } from './video-grid';
