@@ -29,7 +29,9 @@ export function WorldClassAuthProvider({
   useEffect(() => {
     // Get initial session on client mount
     const getInitialSession = async () => {
-      const { data: { session } } = await supabaseClient.auth.getSession();
+      const {
+        data: { session },
+      } = await supabaseClient.auth.getSession();
       setAuthState({
         user: session?.user ?? null,
         session,
