@@ -47,6 +47,18 @@ jest.mock('../logout-button', () => ({
   LogoutButton: () => <button>Sign Out</button>,
 }));
 
+// Mock Supabase client creation to prevent env var issues in tests
+jest.mock('@supabase/auth-helpers-nextjs', () => ({
+  createClientComponentClient: () => ({
+    auth: {
+      getSession: jest.fn().mockResolvedValue({ data: { session: null } }),
+      onAuthStateChange: jest.fn().mockReturnValue({
+        data: { subscription: { unsubscribe: jest.fn() } }
+      }),
+    },
+  }),
+}));
+
 // Wrapper component for tests
 function TestWrapper({
   children,
