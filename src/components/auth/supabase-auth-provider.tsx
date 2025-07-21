@@ -24,19 +24,40 @@ export function WorldClassAuthProvider({
   initialAuthState,
 }: WorldClassAuthProviderProps) {
   const [authState, setAuthState] = useState<AuthState>(initialAuthState);
-  const supabaseClient = createClientComponentClient<Database>();
+  
+  // Only create Supabase client if environment variables are available
+  const supabaseClient = useMemo(() => {
+    if (typeof window !== 'undefined' && 
+        process.env.NEXT_PUBLIC_SUPABASE_URL && 
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      return createClientComponentClient<Database>();
+    }
+    return null;
+  }, []);
 
   useEffect(() => {
+    // Skip if no Supabase client (missing env vars or SSR)
+    if (!supabaseClient) return;
+
     // Get initial session on client mount
     const getInitialSession = async () => {
-      const {
-        data: { session },
-      } = await supabaseClient.auth.getSession();
-      setAuthState({
-        user: session?.user ?? null,
-        session,
-        isLoading: false,
-      });
+      try {
+        const {
+          data: { session },
+        } = await supabaseClient.auth.getSession();
+        setAuthState({
+          user: session?.user ?? null,
+          session,
+          isLoading: false,
+        });
+      } catch (error) {
+        console.warn('Failed to get initial session:', error);
+        setAuthState({
+          user: null,
+          session: null,
+          isLoading: false,
+        });
+      }
     };
 
     getInitialSession();
@@ -57,12 +78,16 @@ export function WorldClassAuthProvider({
 
   return (
     <WorldClassAuthContext.Provider value={authState}>
-      <SessionContextProvider
-        supabaseClient={supabaseClient}
-        initialSession={initialAuthState.session}
-      >
-        {children}
-      </SessionContextProvider>
+      {supabaseClient ? (
+        <SessionContextProvider
+          supabaseClient={supabaseClient}
+          initialSession={initialAuthState.session}
+        >
+          {children}
+        </SessionContextProvider>
+      ) : (
+        children
+      )}
     </WorldClassAuthContext.Provider>
   );
 }
