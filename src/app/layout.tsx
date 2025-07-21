@@ -4,8 +4,6 @@ import { Inter, JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import { cn } from '@/lib/utils';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import {
   ThemeProvider,
   Header,
@@ -25,7 +23,6 @@ import {
 } from '@/components/ui';
 import { WorldClassAuthProvider } from '@/components/auth/supabase-auth-provider';
 import { WorldClassAuthNav } from '@/components/auth/world-class-auth-nav';
-import { createInitialAuthState } from '@/lib/auth';
 import { Menu } from 'lucide-react';
 
 const inter = Inter({
@@ -66,27 +63,31 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Get initial auth state on server to prevent flashing
-  const initialAuthState = await createInitialAuthState();
+  // Create default auth state for static generation
+  // The WorldClassAuthProvider will handle real auth state on the client
+  const defaultAuthState = {
+    user: null,
+    session: null,
+    isLoading: false,
+  };
 
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased overflow-x-hidden',
+          'min-h-screen overflow-x-hidden bg-background font-sans antialiased',
           inter.variable,
           jetbrainsMono.variable,
           satoshi.variable
         )}
         suppressHydrationWarning
       >
-        <WorldClassAuthProvider initialAuthState={initialAuthState}>
+        <WorldClassAuthProvider initialAuthState={defaultAuthState}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-            suppressHydrationWarning
           >
             {/* Site Header with Navigation */}
             <Header>
@@ -126,7 +127,7 @@ export default async function RootLayout({
                         <Link
                           key={item.href}
                           href={item.href}
-                          className="block text-sm font-medium text-foreground/80 transition-colors hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background rounded-sm py-2"
+                          className="block rounded-sm py-2 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
                         >
                           {item.label}
                         </Link>

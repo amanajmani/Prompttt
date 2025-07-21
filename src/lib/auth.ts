@@ -2,10 +2,11 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { cache } from 'react';
 import type { Database } from '@/types/database';
+import type { User, Session } from '@supabase/supabase-js';
 
 /**
  * World-class server-side authentication utilities
- * 
+ *
  * Provides cached, optimized auth state for Server Components
  * with zero client-side flashing.
  */
@@ -16,7 +17,7 @@ import type { Database } from '@/types/database';
  */
 export const getServerSession = cache(async () => {
   const supabase = createServerComponentClient<Database>({ cookies });
-  
+
   try {
     const {
       data: { session },
@@ -62,7 +63,7 @@ export const getServerUserProfile = cache(async () => {
   if (!user) return null;
 
   const supabase = createServerComponentClient<Database>({ cookies });
-  
+
   try {
     const { data: profile, error } = await supabase
       .from('profiles')
@@ -87,8 +88,8 @@ export const getServerUserProfile = cache(async () => {
  * This ensures consistent auth state without flashing
  */
 export interface AuthState {
-  user: any | null;
-  session: any | null;
+  user: User | null;
+  session: Session | null;
   isLoading: boolean;
 }
 
@@ -98,7 +99,7 @@ export interface AuthState {
  */
 export async function createInitialAuthState(): Promise<AuthState> {
   const session = await getServerSession();
-  
+
   return {
     user: session?.user ?? null,
     session,

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
@@ -24,7 +23,6 @@ export function LogoutButton({
   className,
 }: LogoutButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const supabase = useSupabaseClient();
   const user = useUser();
 

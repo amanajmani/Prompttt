@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 
 /**
  * Enterprise-grade authentication navigation component
- * 
+ *
  * Features:
  * - Prevents hydration mismatches with proper mounting detection
  * - Real-time auth state synchronization
@@ -40,7 +40,7 @@ export function AuthNav() {
   if (user && session) {
     return (
       <div className="flex items-center gap-4">
-        <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="hidden items-center gap-2 text-sm text-muted-foreground sm:flex">
           <User className="h-4 w-4" />
           <span>Welcome back!</span>
         </div>

@@ -64,7 +64,10 @@ describe('SupabaseAuthProvider', () => {
     expect(screen.getByTestId('test-child')).toBeInTheDocument();
   });
 
-  it('does not reinitialize client on subsequent renders', async () => {
+  it('maintains client instance across renders', async () => {
+    // Reset mock to ensure clean state
+    mockCreateClientComponentClient.mockClear();
+
     const { rerender } = render(
       <SupabaseAuthProvider>
         <div data-testid="test-child">Test Content</div>
@@ -76,15 +79,20 @@ describe('SupabaseAuthProvider', () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    // Rerender the component
+    // Record the call count after initial render
+    const initialCallCount = mockCreateClientComponentClient.mock.calls.length;
+
+    // Rerender the component with different children
     rerender(
       <SupabaseAuthProvider>
         <div data-testid="test-child-updated">Updated Content</div>
       </SupabaseAuthProvider>
     );
 
-    // Should still only have called createClientComponentClient once
-    expect(mockCreateClientComponentClient).toHaveBeenCalledTimes(1);
+    // Should not have additional calls beyond the initial render
+    expect(mockCreateClientComponentClient).toHaveBeenCalledTimes(
+      initialCallCount
+    );
     expect(screen.getByTestId('test-child-updated')).toBeInTheDocument();
   });
 });

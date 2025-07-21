@@ -7,7 +7,7 @@ export interface Database {
           username: string;
           avatar_url: string | null;
           bio: string | null;
-          theme_preference: string | null;
+          theme_preference: 'light' | 'dark' | 'system' | null;
           created_at: string;
         };
         Insert: {
@@ -15,7 +15,7 @@ export interface Database {
           username: string;
           avatar_url?: string | null;
           bio?: string | null;
-          theme_preference?: string | null;
+          theme_preference?: 'light' | 'dark' | 'system' | null;
           created_at?: string;
         };
         Update: {
@@ -23,7 +23,7 @@ export interface Database {
           username?: string;
           avatar_url?: string | null;
           bio?: string | null;
-          theme_preference?: string | null;
+          theme_preference?: 'light' | 'dark' | 'system' | null;
           created_at?: string;
         };
       };

@@ -69,15 +69,30 @@ describe('LogoutButton', () => {
     mockUseUser.mockReturnValue({ id: 'test-user-id' });
     mockSignOut.mockResolvedValue({ error: null });
 
+    // Mock window.location.href
+    const mockLocation = { href: '' };
+    Object.defineProperty(window, 'location', {
+      value: mockLocation,
+      writable: true,
+    });
+
     render(<LogoutButton />);
 
     const logoutButton = screen.getByRole('button', { name: 'Sign Out' });
     fireEvent.click(logoutButton);
 
+    // Wait for signOut to complete first
     await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith('/');
-      expect(mockRefresh).toHaveBeenCalled();
+      expect(mockSignOut).toHaveBeenCalledTimes(1);
     });
+
+    // Then check for navigation via window.location.href
+    await waitFor(
+      () => {
+        expect(window.location.href).toBe('/');
+      },
+      { timeout: 3000 }
+    );
   });
 
   it('shows loading state when signing out', async () => {
@@ -107,6 +122,13 @@ describe('LogoutButton', () => {
       .spyOn(console, 'error')
       .mockImplementation(() => {});
 
+    // Mock window.location.href
+    const mockLocation = { href: '' };
+    Object.defineProperty(window, 'location', {
+      value: mockLocation,
+      writable: true,
+    });
+
     render(<LogoutButton />);
 
     const logoutButton = screen.getByRole('button', { name: 'Sign Out' });
@@ -118,8 +140,8 @@ describe('LogoutButton', () => {
       });
     });
 
-    // Should not redirect on error - the early return prevents router.push
-    expect(mockPush).not.toHaveBeenCalled();
+    // Should not redirect on error - the early return prevents navigation
+    expect(window.location.href).toBe('');
 
     consoleSpy.mockRestore();
   });
