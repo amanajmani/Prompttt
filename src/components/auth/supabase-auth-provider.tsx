@@ -24,12 +24,14 @@ export function WorldClassAuthProvider({
   initialAuthState,
 }: WorldClassAuthProviderProps) {
   const [authState, setAuthState] = useState<AuthState>(initialAuthState);
-  
+
   // Only create Supabase client if environment variables are available
   const supabaseClient = useMemo(() => {
-    if (typeof window !== 'undefined' && 
-        process.env.NEXT_PUBLIC_SUPABASE_URL && 
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    if (
+      typeof window !== 'undefined' &&
+      process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    ) {
       return createClientComponentClient<Database>();
     }
     return null;

@@ -53,7 +53,7 @@ jest.mock('@supabase/auth-helpers-nextjs', () => ({
     auth: {
       getSession: jest.fn().mockResolvedValue({ data: { session: null } }),
       onAuthStateChange: jest.fn().mockReturnValue({
-        data: { subscription: { unsubscribe: jest.fn() } }
+        data: { subscription: { unsubscribe: jest.fn() } },
       }),
     },
   }),
