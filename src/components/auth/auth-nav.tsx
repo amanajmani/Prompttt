@@ -1,16 +1,43 @@
 'use client';
 
 import Link from 'next/link';
-import { useUser } from '@supabase/auth-helpers-react';
+import { useUser, useSession } from '@supabase/auth-helpers-react';
 import { Button } from '@/components/ui/button';
 import { LogoutButton } from './logout-button';
 import { User, LogIn } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
+/**
+ * Enterprise-grade authentication navigation component
+ * 
+ * Features:
+ * - Prevents hydration mismatches with proper mounting detection
+ * - Real-time auth state synchronization
+ * - Smooth transitions without flashing
+ * - Optimistic UI patterns
+ */
 export function AuthNav() {
   const user = useUser();
+  const session = useSession();
+  const [isMounted, setIsMounted] = useState(false);
 
-  if (user) {
+  // Prevent hydration mismatches by only rendering after mount
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Show skeleton during SSR and initial hydration
+  if (!isMounted) {
+    return (
+      <div className="flex items-center gap-2">
+        <div className="h-10 w-20 animate-pulse rounded bg-muted/30" />
+        <div className="h-10 w-16 animate-pulse rounded bg-muted/30" />
+      </div>
+    );
+  }
+
+  // Authenticated state - real-time sync with Supabase
+  if (user && session) {
     return (
       <div className="flex items-center gap-4">
         <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
@@ -22,6 +49,7 @@ export function AuthNav() {
     );
   }
 
+  // Unauthenticated state
   return (
     <div className="flex items-center gap-2">
       <Button variant="ghost" asChild>

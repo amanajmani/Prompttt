@@ -23,8 +23,9 @@ import {
   SheetTrigger,
   Button,
 } from '@/components/ui';
-import { SupabaseAuthProvider } from '@/components/auth/supabase-auth-provider';
-import { ServerAuthSection } from '@/components/auth/server-auth-section';
+import { WorldClassAuthProvider } from '@/components/auth/supabase-auth-provider';
+import { WorldClassAuthNav } from '@/components/auth/world-class-auth-nav';
+import { createInitialAuthState } from '@/lib/auth';
 import { Menu } from 'lucide-react';
 
 const inter = Inter({
@@ -65,6 +66,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Get initial auth state on server to prevent flashing
+  const initialAuthState = await createInitialAuthState();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -76,7 +80,7 @@ export default async function RootLayout({
         )}
         suppressHydrationWarning
       >
-        <SupabaseAuthProvider>
+        <WorldClassAuthProvider initialAuthState={initialAuthState}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -97,8 +101,8 @@ export default async function RootLayout({
                 {/* Theme Toggle */}
                 <ThemeToggle />
 
-                {/* Server Auth Section - No Flashing */}
-                <ServerAuthSection />
+                {/* World-Class Auth Section - No Flashing */}
+                <WorldClassAuthNav />
 
                 {/* Mobile Navigation Sheet */}
                 <Sheet>
@@ -130,7 +134,7 @@ export default async function RootLayout({
 
                       {/* Mobile Auth Section */}
                       <div className="border-t pt-4">
-                        <ServerAuthSection />
+                        <WorldClassAuthNav />
                       </div>
                     </div>
                   </SheetContent>
@@ -146,7 +150,7 @@ export default async function RootLayout({
 
             <Toaster />
           </ThemeProvider>
-        </SupabaseAuthProvider>
+        </WorldClassAuthProvider>
       </body>
     </html>
   );
