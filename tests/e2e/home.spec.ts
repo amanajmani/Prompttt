@@ -10,10 +10,12 @@ test.describe('Home Page - Design System', () => {
     // Check for the main heading
     const heading = page.getByRole('heading', { level: 1 });
     await expect(heading).toBeVisible();
-    await expect(heading).toHaveText('AI VideoHub');
+    await expect(heading).toHaveText('Welcome to AI VideoHub');
 
-    // Check for description text
-    const description = page.getByText(/definitive, curated gallery/i);
+    // Check for description text in main content
+    const description = page
+      .getByRole('main')
+      .getByText(/definitive, curated gallery/i);
     await expect(description).toBeVisible();
   });
 
@@ -44,10 +46,12 @@ test.describe('Home Page - Design System', () => {
     await expect(heading).toBeVisible();
 
     // Verify heading content
-    await expect(heading).toHaveText('AI VideoHub');
+    await expect(heading).toHaveText('Welcome to AI VideoHub');
 
     // Check description uses muted foreground color
-    const description = page.getByText(/definitive, curated gallery/i);
+    const description = page
+      .getByRole('main')
+      .getByText(/definitive, curated gallery/i);
     await expect(description).toHaveClass(/text-muted-foreground/);
   });
 });

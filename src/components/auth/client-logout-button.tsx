@@ -7,10 +7,10 @@ import { LogOut } from 'lucide-react';
 
 /**
  * Client Component for logout functionality
- * 
+ *
  * This is the ONLY part that needs to be a client component
  * since it handles user interaction (logout click).
- * 
+ *
  * Separated from the main auth display to minimize client-side
  * JavaScript and eliminate hydration issues.
  */

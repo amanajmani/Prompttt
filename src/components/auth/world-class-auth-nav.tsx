@@ -8,7 +8,7 @@ import { useWorldClassAuth } from './supabase-auth-provider';
 
 /**
  * World-class authentication navigation component
- * 
+ *
  * Features:
  * - Zero visual flashing or hydration mismatches
  * - Server-side auth state consistency
@@ -32,7 +32,7 @@ export function WorldClassAuthNav() {
   if (user) {
     return (
       <div className="flex items-center gap-4">
-        <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="hidden items-center gap-2 text-sm text-muted-foreground sm:flex">
           <User className="h-4 w-4" />
           <span>Welcome back!</span>
         </div>

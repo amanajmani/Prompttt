@@ -23,6 +23,16 @@ const customJestConfig = {
     '!src/**/__tests__/**',
     '!src/**/setup.ts', // Exclude setup files from coverage
   ],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+    // Mock problematic ESM modules
+    '^jose$': '<rootDir>/src/__mocks__/jose.js',
+    '^isows$': '<rootDir>/src/__mocks__/isows.js',
+    '^ws$': '<rootDir>/src/__mocks__/ws.js',
+  },
+  transformIgnorePatterns: [
+    'node_modules/(?!(jose|@supabase|@panva|@auth|uuid|isows|ws)/)',
+  ],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

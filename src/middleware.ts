@@ -5,7 +5,7 @@ import type { Database } from '@/types/database';
 
 /**
  * World-class authentication middleware
- * 
+ *
  * Handles authentication at the edge before any component renders,
  * eliminating auth state flashing and providing optimal performance.
  */
@@ -21,10 +21,10 @@ export async function middleware(req: NextRequest) {
   // Define protected and auth-only routes
   const protectedRoutes = ['/dashboard', '/profile', '/upload'];
   const authOnlyRoutes = ['/login', '/signup'];
-  const isProtectedRoute = protectedRoutes.some(route => 
+  const isProtectedRoute = protectedRoutes.some((route) =>
     req.nextUrl.pathname.startsWith(route)
   );
-  const isAuthOnlyRoute = authOnlyRoutes.some(route => 
+  const isAuthOnlyRoute = authOnlyRoutes.some((route) =>
     req.nextUrl.pathname.startsWith(route)
   );
 

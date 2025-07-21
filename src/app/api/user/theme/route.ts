@@ -19,9 +19,8 @@ export const PUT = withErrorHandler(async (request: NextRequest) => {
   // Theme changes are user-initiated and don't need strict rate limiting
 
   // Verify user authentication
-  const cookieStore = await cookies();
   const supabase = createRouteHandlerClient<Database>({
-    cookies: () => cookieStore,
+    cookies,
   });
   const {
     data: { session },
@@ -106,14 +105,13 @@ export const PUT = withErrorHandler(async (request: NextRequest) => {
  * GET /api/user/theme
  * Retrieves the authenticated user's theme preference
  */
-export const GET = withErrorHandler(async (request: NextRequest) => {
+export const GET = withErrorHandler(async () => {
   // Skip rate limiting for theme API - it's not a sensitive endpoint
   // Theme fetching is infrequent and doesn't need strict rate limiting
 
   // Verify user authentication
-  const cookieStore = await cookies();
   const supabase = createRouteHandlerClient<Database>({
-    cookies: () => cookieStore,
+    cookies,
   });
   const {
     data: { session },
@@ -162,7 +160,7 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
   return NextResponse.json(
     {
       theme:
-        profile?.theme_preference || 'system',
+        (profile?.theme_preference as 'light' | 'dark' | 'system') || 'system',
     },
     {
       status: 200,

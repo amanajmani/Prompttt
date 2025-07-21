@@ -6,10 +6,10 @@ import { ClientLogoutButton } from './client-logout-button';
 
 /**
  * Server Component for authentication section
- * 
+ *
  * This renders the correct auth state on the server, eliminating
  * the 1-second flash between sign-in and sign-out states.
- * 
+ *
  * Uses Server Components for static content and Client Components
  * only for interactive elements (logout button).
  */
@@ -21,7 +21,7 @@ export async function ServerAuthSection() {
   if (user) {
     return (
       <div className="flex items-center gap-4">
-        <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="hidden items-center gap-2 text-sm text-muted-foreground sm:flex">
           <User className="h-4 w-4" />
           <span>Welcome back!</span>
         </div>

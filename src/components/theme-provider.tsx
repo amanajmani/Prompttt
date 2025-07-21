@@ -36,13 +36,15 @@ function ThemeSyncManager({ children }: { children: React.ReactNode }) {
     if (!user) return;
 
     // Only fetch theme once per user session
-    const hasAlreadyFetched = sessionStorage.getItem(`theme-fetched-${user.id}`);
+    const hasAlreadyFetched = sessionStorage.getItem(
+      `theme-fetched-${user.id}`
+    );
     if (hasAlreadyFetched) return;
 
     const fetchUserTheme = async () => {
       try {
         const response = await fetch('/api/user/theme');
-        
+
         if (response.ok) {
           const data = await response.json();
           if (data.theme) {
@@ -65,7 +67,7 @@ function ThemeSyncManager({ children }: { children: React.ReactNode }) {
     const timeoutId = setTimeout(fetchUserTheme, 500);
 
     return () => clearTimeout(timeoutId);
-  }, [user?.id, setTheme]);
+  }, [user, setTheme]);
 
   return <>{children}</>;
 }

@@ -5,7 +5,7 @@ import { Container } from '@/components';
 
 /**
  * Site footer component
- * 
+ *
  * Features:
  * - Responsive layout with proper spacing
  * - Navigation links organized by category
@@ -25,7 +25,8 @@ export function Footer() {
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">AI VideoHub</h3>
               <p className="text-sm text-muted-foreground">
-                The definitive, curated gallery for the world&apos;s best AI-generated video art.
+                The definitive, curated gallery for the world&apos;s best
+                AI-generated video art.
               </p>
             </div>
 
