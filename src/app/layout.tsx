@@ -26,25 +26,7 @@ import { WorldClassAuthNav } from '@/components/auth/world-class-auth-nav';
 import { Menu } from 'lucide-react';
 import PerformanceMonitor from './performance-monitor';
 import PerformanceBudget from '@/components/ui/performance-budget';
-
-// Analytics component - will be null if package not installed
-// Create Analytics component with proper error handling
-function createAnalyticsComponent(): React.ComponentType {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { Analytics: VercelAnalytics } = require('@vercel/analytics/react');
-    const AnalyticsComponent = () => <VercelAnalytics />;
-    AnalyticsComponent.displayName = 'VercelAnalytics';
-    return AnalyticsComponent;
-  } catch {
-    // Package not installed, use null component
-    const NullComponent = () => null;
-    NullComponent.displayName = 'NullAnalytics';
-    return NullComponent;
-  }
-}
-
-const Analytics = createAnalyticsComponent();
+import Analytics from '@/components/analytics';
 
 const inter = Inter({
   subsets: ['latin'],
