@@ -3,15 +3,37 @@ import { OptimizedImage } from '../optimized-image';
 
 // Mock Next.js Image component
 jest.mock('next/image', () => {
-  return function MockImage({ onLoad, onError, alt, ...props }: any) {
+  return function MockImage({
+    onLoad,
+    onError,
+    alt,
+    src,
+    width,
+    height,
+    className,
+    // Destructure and ignore Next.js specific props to prevent DOM warnings
+    blurDataURL,
+    placeholder,
+    priority,
+    fill,
+    sizes,
+    quality,
+    loading,
+    unoptimized,
+    ...ignoredProps
+  }: any) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        {...props}
+        src={src}
         alt={alt || 'Test image'}
+        width={width}
+        height={height}
+        className={className}
         onLoad={() => onLoad?.()}
         onError={() => onError?.()}
         data-testid="next-image"
+        // Do NOT spread other props to avoid DOM warnings
       />
     );
   };
