@@ -1,6 +1,7 @@
 import { Grid } from '@/components/ui/grid';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 import { cn } from '@/lib/utils';
 
 interface VideoItem {
@@ -113,11 +114,15 @@ function VideoGridItem({ video }: { video: VideoItem }) {
       <CardContent className="p-0">
         {/* Video Thumbnail with Aspect Ratio */}
         <div className="relative aspect-video overflow-hidden bg-muted">
-          <img
+          <OptimizedImage
             src={video.thumbnail_url}
             alt={`Thumbnail for ${video.title}`}
-            className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
-            loading="lazy"
+            fill
+            className="object-cover transition-transform duration-200 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority={false}
+            placeholder="empty"
+            showPlaceholder={true}
           />
 
           {/* Play Button Overlay */}
@@ -152,12 +157,17 @@ function VideoGridItem({ video }: { video: VideoItem }) {
 
           {/* Creator Info */}
           <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-full bg-muted">
+            <div className="h-6 w-6 overflow-hidden rounded-full bg-muted">
               {video.user.avatar_url ? (
-                <img
+                <OptimizedImage
                   src={video.user.avatar_url}
                   alt={`${video.user.username}'s avatar`}
-                  className="h-full w-full rounded-full object-cover"
+                  width={24}
+                  height={24}
+                  className="rounded-full object-cover"
+                  sizes="24px"
+                  placeholder="empty"
+                  showPlaceholder={false}
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">

@@ -77,14 +77,14 @@ ResponsiveContainer.displayName = 'ResponsiveContainer';
 interface ContainerQueryWrapperProps
   extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  breakpoint?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }
 
 const ContainerQueryWrapper = forwardRef<
   HTMLDivElement,
   ContainerQueryWrapperProps
->(({ children, breakpoint = 'md', className, ...props }, ref) => {
-  // Container query breakpoint classes
+>(({ children, className, ...props }, ref) => {
+  // Container query breakpoint classes (for future use)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const breakpointClasses = {
     xs: '@xs:', // 320px
     sm: '@sm:', // 384px

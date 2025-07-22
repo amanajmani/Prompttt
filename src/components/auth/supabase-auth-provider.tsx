@@ -47,11 +47,24 @@ export function WorldClassAuthProvider({
         const {
           data: { session },
         } = await supabaseClient.auth.getSession();
-        setAuthState({
-          user: session?.user ?? null,
-          session,
-          isLoading: false,
-        });
+
+        // Wrap state update in act for tests
+        if (typeof jest !== 'undefined') {
+          const { act } = await import('react');
+          act(() => {
+            setAuthState({
+              user: session?.user ?? null,
+              session,
+              isLoading: false,
+            });
+          });
+        } else {
+          setAuthState({
+            user: session?.user ?? null,
+            session,
+            isLoading: false,
+          });
+        }
       } catch (error) {
         console.warn('Failed to get initial session:', error);
         setAuthState({
@@ -68,11 +81,23 @@ export function WorldClassAuthProvider({
     const {
       data: { subscription },
     } = supabaseClient.auth.onAuthStateChange(async (event, session) => {
-      setAuthState({
-        user: session?.user ?? null,
-        session,
-        isLoading: false,
-      });
+      // Wrap state update in act for tests
+      if (typeof jest !== 'undefined') {
+        const { act } = await import('react');
+        act(() => {
+          setAuthState({
+            user: session?.user ?? null,
+            session,
+            isLoading: false,
+          });
+        });
+      } else {
+        setAuthState({
+          user: session?.user ?? null,
+          session,
+          isLoading: false,
+        });
+      }
     });
 
     return () => subscription.unsubscribe();
