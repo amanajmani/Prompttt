@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance optimizations for mobile touch interactions */
+@layer base {
+  /* Optimize touch scrolling performance */
+  html {
+    touch-action: manipulation;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent text selection on touch for interactive elements */
+  button,
+  [role='button'],
+  .touch-optimized {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Optimize image rendering */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  /* Improve font rendering on mobile */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
 @layer base {
   * {
     box-sizing: border-box;

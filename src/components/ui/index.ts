@@ -75,3 +75,8 @@ export type {
   ResponsiveSidebarProps,
   SidebarOverlayProps,
 } from './two-column-layout';
+export { OptimizedImage } from './optimized-image';
+export type { OptimizedImageProps } from './optimized-image';
+export { TouchOptimizedButton } from './touch-optimized-button';
+export type { TouchOptimizedButtonProps } from './touch-optimized-button';
+export { default as PerformanceBudget } from './performance-budget';

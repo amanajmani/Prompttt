@@ -3,6 +3,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -24,6 +25,7 @@ describe('Sheet Component System', () => {
         <SheetContent>
           <SheetHeader>
             <SheetTitle>Test Sheet</SheetTitle>
+            <SheetDescription>Test sheet description</SheetDescription>
           </SheetHeader>
           <p>Sheet content</p>
         </SheetContent>
@@ -44,6 +46,7 @@ describe('Sheet Component System', () => {
         <SheetContent>
           <SheetHeader>
             <SheetTitle>Test Sheet</SheetTitle>
+            <SheetDescription>Test sheet description</SheetDescription>
           </SheetHeader>
           <p>Sheet content</p>
         </SheetContent>
@@ -64,6 +67,7 @@ describe('Sheet Component System', () => {
         <SheetContent>
           <SheetHeader>
             <SheetTitle>Test Sheet</SheetTitle>
+            <SheetDescription>Test sheet description</SheetDescription>
           </SheetHeader>
           <p>Sheet content</p>
         </SheetContent>
@@ -88,6 +92,7 @@ describe('Sheet Component System', () => {
         <SheetContent side="left" data-testid="sheet-content">
           <SheetHeader>
             <SheetTitle>Left Sheet</SheetTitle>
+            <SheetDescription>Left sheet description</SheetDescription>
           </SheetHeader>
           <p>Left side content</p>
         </SheetContent>
@@ -111,6 +116,7 @@ describe('Sheet Component System', () => {
         <SheetContent>
           <SheetHeader>
             <SheetTitle>Accessible Sheet</SheetTitle>
+            <SheetDescription>Accessible sheet description</SheetDescription>
           </SheetHeader>
           <p>Accessible content</p>
         </SheetContent>
@@ -136,6 +142,7 @@ describe('Sheet Component System', () => {
         <SheetContent>
           <SheetHeader>
             <SheetTitle>Closeable Sheet</SheetTitle>
+            <SheetDescription>Closeable sheet description</SheetDescription>
           </SheetHeader>
           <p>Closeable content</p>
         </SheetContent>
